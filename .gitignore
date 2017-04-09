@@ -11,3 +11,6 @@ AngularOpenidImplicitFlowClient/angularApp/polyfills.js.map
 AngularOpenidImplicitFlowClient/angularApp/vendor.js.map
 AngularOpenidImplicitFlowClient/wwwroot/assets
 AngularOpenidImplicitFlowClient/angularApp/vendor.js
+AngularOpenidImplicitFlowClient/aot
+AngularOpenidImplicitFlowClient/node_modules
+AngularOpenidImplicitFlowClient/wwwroot
