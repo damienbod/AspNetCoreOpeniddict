@@ -1,3 +1,13 @@
 AngularOpenidImplicitFlowClient/obj
 AspNetCoreResourceServer/obj
 OpeniddictServer/obj
+AngularOpenidImplicitFlowClient/angularApp/app/**/*.js
+AngularOpenidImplicitFlowClient/angularApp/app/**/*.js.map
+AngularOpenidImplicitFlowClient/angularApp/main.js
+AngularOpenidImplicitFlowClient/angularApp/main.js.map
+AngularOpenidImplicitFlowClient/angularApp/main-aot.js
+AngularOpenidImplicitFlowClient/angularApp/polyfills.js
+AngularOpenidImplicitFlowClient/angularApp/polyfills.js.map
+AngularOpenidImplicitFlowClient/angularApp/vendor.js.map
+AngularOpenidImplicitFlowClient/wwwroot/assets
+AngularOpenidImplicitFlowClient/angularApp/vendor.js
