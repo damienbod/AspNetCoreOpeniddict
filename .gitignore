@@ -18,3 +18,4 @@ OpeniddictServer/bin
 AngularOpenidImplicitFlowClient/bin
 .vs/AspNetCoreOpeniddictAngularImplicitFlow/v15/.suo
 AngularOpenidImplicitFlowClient/wwwroot/Index.html
+AspNetCoreResourceServer/bin

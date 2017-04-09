@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using IdentityServer4.AccessTokenValidation;
 
-namespace AspNet5SQLite
+namespace AspNetCoreResourceServer
 {
     public class Startup
     {
