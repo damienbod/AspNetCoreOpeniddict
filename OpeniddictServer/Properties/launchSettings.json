@@ -1,9 +1,9 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:15134/",
+      "applicationUrl": "http://localhost:12345",
       "sslPort": 0
     }
   },
@@ -15,13 +15,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "OpeniddictServer": {
+    "AuthorizationServer": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:12345",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:15135"
+      }
     }
   }
 }
