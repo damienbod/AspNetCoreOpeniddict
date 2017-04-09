@@ -90,7 +90,15 @@ namespace OpeniddictServer
                 options.UseJsonWebTokens();
             });
 
-            services.AddCors();
+            var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
+
+            policy.Headers.Add("*");
+            policy.Methods.Add("*");
+            policy.Origins.Add("*");
+            policy.SupportsCredentials = true;
+
+            services.AddCors(x => x.AddPolicy("corsGlobalPolicy", policy));
+
             services.AddMvc();
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -99,12 +107,7 @@ namespace OpeniddictServer
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("http://localhost:9000");
-                builder.WithMethods("GET");
-                builder.WithHeaders("Authorization");
-            });
+            app.UseCors("corsGlobalPolicy");
 
             app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
             {
@@ -142,7 +145,7 @@ namespace OpeniddictServer
                         ClientId = "angular4client",
                         DisplayName = "Angular 4 client SPA",
                         LogoutRedirectUri = "https://localhost:44308/Unauthorized",
-                        RedirectUri = "http://localhost:9000/signin-oidc" 
+                        RedirectUri = "https://localhost:44308/authorized"
                     };
 
                     await manager.CreateAsync(application, cancellationToken);
