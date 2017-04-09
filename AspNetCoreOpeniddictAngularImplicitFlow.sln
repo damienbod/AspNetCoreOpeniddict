@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpeniddictServer", "OpeniddictServer\OpeniddictServer.csproj", "{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularOpenidImplicitFlowClient", "AngularOpenidImplicitFlowClient\AngularOpenidImplicitFlowClient.csproj", "{F70BFCFE-BB9D-436F-A707-F2851CD7F736}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreResourceServer", "AspNetCoreResourceServer\AspNetCoreResourceServer.csproj", "{8206AB4E-E954-4A70-B85E-EE956A42A34E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70BFCFE-BB9D-436F-A707-F2851CD7F736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70BFCFE-BB9D-436F-A707-F2851CD7F736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70BFCFE-BB9D-436F-A707-F2851CD7F736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70BFCFE-BB9D-436F-A707-F2851CD7F736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8206AB4E-E954-4A70-B85E-EE956A42A34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8206AB4E-E954-4A70-B85E-EE956A42A34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8206AB4E-E954-4A70-B85E-EE956A42A34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8206AB4E-E954-4A70-B85E-EE956A42A34E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
