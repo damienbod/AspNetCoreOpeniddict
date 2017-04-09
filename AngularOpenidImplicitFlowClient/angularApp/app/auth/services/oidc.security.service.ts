@@ -286,7 +286,7 @@ export class OidcSecurityService {
 
     private getUserData = (): Observable<string[]> => {
         this.setHeaders();
-        return this._http.get(this._configuration.server + '/connect/userinfo', {
+        return this._http.get(this._configuration.server + '/api/userinfo', {
             headers: this.headers,
             body: ''
         }).map(res => res.json());
