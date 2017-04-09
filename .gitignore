@@ -14,3 +14,7 @@ AngularOpenidImplicitFlowClient/angularApp/vendor.js
 AngularOpenidImplicitFlowClient/aot
 AngularOpenidImplicitFlowClient/node_modules
 AngularOpenidImplicitFlowClient/wwwroot
+OpeniddictServer/bin
+AngularOpenidImplicitFlowClient/bin
+.vs/AspNetCoreOpeniddictAngularImplicitFlow/v15/.suo
+AngularOpenidImplicitFlowClient/wwwroot/Index.html
