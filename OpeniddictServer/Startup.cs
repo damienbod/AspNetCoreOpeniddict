@@ -87,7 +87,7 @@ namespace OpeniddictServer
                 // Note: to use JWT access tokens instead of the default
                 // encrypted format, the following line is required:
                 //
-                // options.UseJsonWebTokens();
+                options.UseJsonWebTokens();
             });
 
             services.AddCors();
@@ -135,27 +135,27 @@ namespace OpeniddictServer
 
                 var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication>>();
 
-                if (await manager.FindByClientIdAsync("aurelia", cancellationToken) == null)
+                if (await manager.FindByClientIdAsync("angular4client", cancellationToken) == null)
                 {
                     var application = new OpenIddictApplication
                     {
                         ClientId = "angular4client",
                         DisplayName = "Angular 4 client SPA",
-                        LogoutRedirectUri = "http://localhost:9000/signout-oidc",
-                        RedirectUri = "http://localhost:9000/signin-oidc"
+                        LogoutRedirectUri = "https://localhost:44308/Unauthorized",
+                        RedirectUri = "http://localhost:9000/signin-oidc" 
                     };
 
                     await manager.CreateAsync(application, cancellationToken);
                 }
 
-                if (await manager.FindByClientIdAsync("resource-server-1", cancellationToken) == null)
+                if (await manager.FindByClientIdAsync("dataEventRecords", cancellationToken) == null)
                 {
                     var application = new OpenIddictApplication
                     {
-                        ClientId = "resource-server-1"
+                        ClientId = "dataEventRecords"
                     };
 
-                    await manager.CreateAsync(application, "846B62D0-DEF9-4215-A99D-86E6B8DAB342", cancellationToken);
+                    await manager.CreateAsync(application, "77be52c7-06a2-4830-90bc-715b03b97119", cancellationToken);
                 }
             }
         }

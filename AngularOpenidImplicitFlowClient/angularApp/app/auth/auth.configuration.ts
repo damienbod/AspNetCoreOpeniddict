@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 export class AuthConfiguration {
 
     // The Issuer Identifier for the OpenID Provider (which is typically obtained during Discovery) MUST exactly match the value of the iss (issuer) Claim.
-    public iss = 'https://localhost:44318';
+    public iss = 'https://localhost:44319';
 
-    public server = 'https://localhost:44318';
+    public server = 'https://localhost:44319';
 
-    public redirect_url = 'https://localhost:44311';
+    public redirect_url = 'https://localhost:44308';
 
     // This is required to get the signing keys so that the signiture of the Jwt can be validated.
     public jwks_url = 'https://localhost:44318/.well-known/openid-configuration/jwks';
@@ -19,7 +19,7 @@ export class AuthConfiguration {
 
     public response_type = 'id_token token';
 
-    public scope = 'dataEventRecords securedFiles openid';
+    public scope = 'dataEventRecords openid';
 
-    public post_logout_redirect_uri = 'https://localhost:44311/Unauthorized';
+    public post_logout_redirect_uri = 'https://localhost:44308/Unauthorized';
 }

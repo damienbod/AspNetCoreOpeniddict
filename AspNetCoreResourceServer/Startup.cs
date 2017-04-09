@@ -96,9 +96,9 @@ namespace AspNetCoreResourceServer
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             IdentityServerAuthenticationOptions identityServerValidationOptions = new IdentityServerAuthenticationOptions
             {
-                Authority = "https://localhost:44318/",
+                Authority = "https://localhost:44319/",
                 AllowedScopes = new List<string> { "dataEventRecords" },
-                ApiSecret = "dataEventRecordsSecret",
+                ApiSecret = "77be52c7-06a2-4830-90bc-715b03b97119",
                 ApiName = "dataEventRecords",
                 AutomaticAuthenticate = true,
                 SupportedTokens = SupportedTokens.Both,
