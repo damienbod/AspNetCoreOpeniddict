@@ -116,7 +116,7 @@ namespace OpeniddictServer.Controllers
                 OpenIddictConstants.Scopes.Roles
             }.Intersect(request.GetScopes()));
 
-            ticket.SetResources("resource-server-1", "resource-server-2");
+            ticket.SetResources("dataEventRecords");
 
             // Note: by default, claims are NOT automatically included in the access and identity tokens.
             // To allow OpenIddict to serialize them, you must attach them a destination, that specifies

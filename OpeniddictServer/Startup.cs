@@ -145,7 +145,7 @@ namespace OpeniddictServer
                         ClientId = "angular4client",
                         DisplayName = "Angular 4 client SPA",
                         LogoutRedirectUri = "https://localhost:44308/Unauthorized",
-                        RedirectUri = "https://localhost:44308/authorized"
+                        RedirectUri = "https://localhost:44308"
                     };
 
                     await manager.CreateAsync(application, cancellationToken);
