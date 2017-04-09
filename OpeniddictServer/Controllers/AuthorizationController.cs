@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
 using AspNet.Security.OpenIdConnect.Server;
-using AuthorizationServer.Models;
-using AuthorizationServer.ViewModels.Shared;
+using OpeniddictServer.Models;
+using OpeniddictServer.ViewModels.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.Authentication;
@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpenIddict.Core;
 
-namespace AuthorizationServer.Controllers
+namespace OpeniddictServer.Controllers
 {
     public class AuthorizationController : Controller
     {

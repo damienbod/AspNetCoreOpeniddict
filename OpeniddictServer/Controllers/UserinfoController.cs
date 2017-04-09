@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using AspNet.Security.OAuth.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
-using AuthorizationServer.Models;
+using OpeniddictServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using OpenIddict.Core;
 
-namespace AuthorizationServer.Controllers
+namespace OpeniddictServer.Controllers
 {
     [Route("api")]
     public class UserinfoController : Controller

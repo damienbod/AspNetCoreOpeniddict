@@ -2,9 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
-using AuthorizationServer.Extensions;
-using AuthorizationServer.Models;
-using AuthorizationServer.Services;
+using OpeniddictServer.Models;
+using OpeniddictServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
-namespace AuthorizationServer
+namespace OpeniddictServer
 {
     public class Startup
     {
@@ -140,8 +139,8 @@ namespace AuthorizationServer
                 {
                     var application = new OpenIddictApplication
                     {
-                        ClientId = "aurelia",
-                        DisplayName = "Aurelia client application",
+                        ClientId = "angular4client",
+                        DisplayName = "Angular 4 client SPA",
                         LogoutRedirectUri = "http://localhost:9000/signout-oidc",
                         RedirectUri = "http://localhost:9000/signin-oidc"
                     };
@@ -157,16 +156,6 @@ namespace AuthorizationServer
                     };
 
                     await manager.CreateAsync(application, "846B62D0-DEF9-4215-A99D-86E6B8DAB342", cancellationToken);
-                }
-
-                if (await manager.FindByClientIdAsync("resource-server-2", cancellationToken) == null)
-                {
-                    var application = new OpenIddictApplication
-                    {
-                        ClientId = "resource-server-2"
-                    };
-
-                    await manager.CreateAsync(application, "C744604A-CD05-4092-9CF8-ECB7DC3499A2", cancellationToken);
                 }
             }
         }

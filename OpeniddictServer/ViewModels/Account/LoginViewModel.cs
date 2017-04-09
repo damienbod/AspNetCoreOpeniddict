@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthorizationServer.ViewModels.Account
+namespace OpeniddictServer.ViewModels.Account
 {
     public class LoginViewModel
     {

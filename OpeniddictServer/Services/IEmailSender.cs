@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace AuthorizationServer.Services
+namespace OpeniddictServer.Services
 {
     public interface IEmailSender
     {

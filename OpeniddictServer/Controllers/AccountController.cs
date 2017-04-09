@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AuthorizationServer.Models;
-using AuthorizationServer.Services;
-using AuthorizationServer.ViewModels.Account;
+using OpeniddictServer.Models;
+using OpeniddictServer.Services;
+using OpeniddictServer.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AuthorizationServer.Controllers
+namespace OpeniddictServer.Controllers
 {
     [Authorize]
     public class AccountController : Controller

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthorizationServer.Models
+namespace OpeniddictServer.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

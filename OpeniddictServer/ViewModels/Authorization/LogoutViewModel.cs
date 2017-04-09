@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace AuthorizationServer.ViewModels.Authorization
+namespace OpeniddictServer.ViewModels.Authorization
 {
     public class LogoutViewModel
     {

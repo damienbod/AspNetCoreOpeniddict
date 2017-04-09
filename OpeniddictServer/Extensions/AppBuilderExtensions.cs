@@ -1,49 +1,52 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿////using System;
+////using Microsoft.AspNetCore.Builder;
+////using Microsoft.AspNetCore.Hosting;
+////using Microsoft.AspNetCore.Http;
+////using Microsoft.Extensions.DependencyInjection;
+////using Microsoft.AspNetCore.Hosting.Builder;
 
-namespace AuthorizationServer.Extensions
-{
-    public static class AppBuilderExtensions
-    {
-        public static IApplicationBuilder UseWhen(this IApplicationBuilder app,
-            Func<HttpContext, bool> condition, Action<IApplicationBuilder> configuration)
-        {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
+////namespace OpeniddictServer.Extensions
+////{
+////    public static class ApplicationBuilderExtensions
+////    {
+////        public static IApplicationBuilder UseBranchWithServices(this IApplicationBuilder app, PathString path,
+////            Action<IServiceCollection> servicesConfiguration, Action<IApplicationBuilder> appBuilderConfiguration)
+////        {
+////            var webHost = new WebHostBuilder().UseKestrel().ConfigureServices(servicesConfiguration).UseStartup<EmptyStartup>().Build();
+////            var serviceProvider = webHost.Services;
+////            var serverFeatures = webHost.ServerFeatures;
 
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
+////            var appBuilderFactory = serviceProvider.GetRequiredService<IApplicationBuilderFactory>();
+////            var branchBuilder = appBuilderFactory.CreateBuilder(serverFeatures);
+////            var factory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
 
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+////            branchBuilder.Use(async (context, next) =>
+////            {
+////                using (var scope = factory.CreateScope())
+////                {
+////                    context.RequestServices = scope.ServiceProvider;
+////                    await next();
+////                }
+////            });
 
-            var builder = app.New();
-            configuration(builder);
+////            appBuilderConfiguration(branchBuilder);
 
-            return app.Use(next =>
-            {
-                builder.Run(next);
+////            var branchDelegate = branchBuilder.Build();
 
-                var branch = builder.Build();
+////            return app.Map(path, builder =>
+////            {
+////                builder.Use(async (context, next) =>
+////                {
+////                    await branchDelegate(context);
+////                });
+////            });
+////        }
 
-                return context =>
-                {
-                    if (condition(context))
-                    {
-                        return branch(context);
-                    }
+////        private class EmptyStartup
+////        {
+////            public void ConfigureServices(IServiceCollection services) { }
 
-                    return next(context);
-                };
-            });
-        }
-    }
-}
+////            public void Configure(IApplicationBuilder app) { }
+////        }
+////    }
+////}

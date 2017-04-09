@@ -4,11 +4,11 @@
  * the license and the contributors participating to this project.
  */
 
-using AuthorizationServer.ViewModels.Shared;
+using OpeniddictServer.ViewModels.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthorizationServer.Controllers
+namespace OpeniddictServer.Controllers
 {
     public class ErrorController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AuthorizationServer.Controllers
+namespace OpeniddictServer.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthorizationServer.ViewModels.Shared
+namespace OpeniddictServer.ViewModels.Shared
 {
     public class ErrorViewModel
     {
