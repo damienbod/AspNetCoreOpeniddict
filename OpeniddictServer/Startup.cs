@@ -13,7 +13,6 @@ using OpeniddictServer.Services;
 using OpenIddict.Core;
 using OpenIddict.Models;
 using System;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Microsoft.IdentityModel.Tokens;

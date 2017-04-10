@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpenIddict.Core;
+using System.Security.Claims;
 
 namespace OpeniddictServer.Controllers
 {
@@ -98,32 +99,16 @@ namespace OpeniddictServer.Controllers
 
         private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user)
         {
-            // Create a new ClaimsPrincipal containing the claims that
-            // will be used to create an id_token, a token or a code.
+            var identity = new ClaimsIdentity(OpenIdConnectServerDefaults.AuthenticationScheme);
+
+            // When access_token and id_token are specified,
+            // the claim will be serialized in both tokens.
+            ////identity.AddClaim("username", "Pinpoint",
+            ////    OpenIdConnectConstants.Destinations.AccessToken,
+            ////    OpenIdConnectConstants.Destinations.IdentityToken);
+
             var principal = await _signInManager.CreateUserPrincipalAsync(user);
-
-            // Create a new authentication ticket holding the user identity.
-            var ticket = new AuthenticationTicket(principal,
-                new AuthenticationProperties(),
-                OpenIdConnectServerDefaults.AuthenticationScheme);
-
-            // Set the list of scopes granted to the client application.
-            ticket.SetScopes(new[]
-            {
-                OpenIdConnectConstants.Scopes.OpenId,
-                OpenIdConnectConstants.Scopes.Email,
-                OpenIdConnectConstants.Scopes.Profile,
-                OpenIddictConstants.Scopes.Roles,
-                "dataEventRecords"
-            }.Intersect(request.GetScopes()));
-
-            ticket.SetResources("dataEventRecords");
-
-            // Note: by default, claims are NOT automatically included in the access and identity tokens.
-            // To allow OpenIddict to serialize them, you must attach them a destination, that specifies
-            // whether they should be included in access tokens, in identity tokens or in both.
-
-            foreach (var claim in ticket.Principal.Claims)
+            foreach (var claim in principal.Claims)
             {
                 // Never include the security stamp in the access and identity tokens, as it's a secret value.
                 if (claim.Type == _identityOptions.Value.ClaimsIdentity.SecurityStampClaimType)
@@ -136,19 +121,48 @@ namespace OpeniddictServer.Controllers
                     OpenIdConnectConstants.Destinations.AccessToken
                 };
 
-                // Only add the iterated claim to the id_token if the corresponding scope was granted to the client application.
-                // The other claims will only be added to the access_token, which is encrypted when using the default format.
-                if ((claim.Type == OpenIdConnectConstants.Claims.Name && ticket.HasScope(OpenIdConnectConstants.Scopes.Profile)) ||
-                    (claim.Type == OpenIdConnectConstants.Claims.Email && ticket.HasScope(OpenIdConnectConstants.Scopes.Email)) ||
-                    (claim.Type == OpenIdConnectConstants.Claims.Role && ticket.HasScope(OpenIddictConstants.Claims.Roles)) ||
-                    (claim.Type == OpenIdConnectConstants.Claims.Role && ticket.HasScope("dataEventRecords")))
+                if ((claim.Type == OpenIdConnectConstants.Claims.Name) ||
+                    (claim.Type == OpenIdConnectConstants.Claims.Email) ||
+                    (claim.Type == OpenIdConnectConstants.Claims.Role)  )
                 {
                     destinations.Add(OpenIdConnectConstants.Destinations.IdentityToken);
                 }
 
-              
                 claim.SetDestinations(destinations);
+
+                identity.AddClaim(claim);
             }
+
+            // Add custom claims
+            var claimdataEventRecordsAdmin = new Claim("role", "dataEventRecords.admin");
+            claimdataEventRecordsAdmin.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken);
+
+            var claimAdmin = new Claim("role", "admin");
+            claimAdmin.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken);
+
+            var claimUser = new Claim("role", "dataEventRecords.user");
+            claimUser.SetDestinations(OpenIdConnectConstants.Destinations.AccessToken);
+
+            identity.AddClaim(claimdataEventRecordsAdmin);
+            identity.AddClaim(claimAdmin);
+            identity.AddClaim(claimUser);
+
+            // Create a new authentication ticket holding the user identity.
+            var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity),
+            new AuthenticationProperties(),
+            OpenIdConnectServerDefaults.AuthenticationScheme);
+
+            // Set the list of scopes granted to the client application.
+            ticket.SetScopes(new[]
+            {
+                OpenIdConnectConstants.Scopes.OpenId,
+                OpenIdConnectConstants.Scopes.Email,
+                OpenIdConnectConstants.Scopes.Profile,
+                "role",
+                "dataEventRecords"
+            }.Intersect(request.GetScopes()));
+
+            ticket.SetResources("dataEventRecords");
 
             return ticket;
         }
