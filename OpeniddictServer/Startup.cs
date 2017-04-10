@@ -13,6 +13,10 @@ using OpeniddictServer.Services;
 using OpenIddict.Core;
 using OpenIddict.Models;
 using System;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace OpeniddictServer
 {
@@ -35,8 +39,12 @@ namespace OpeniddictServer
 
         public IConfigurationRoot Configuration { get; }
 
+        private X509Certificate2 _cert;
+
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var _cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "damienbodserver.pfx"), "");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // Configure the context to use an in-memory store.
@@ -93,16 +101,17 @@ namespace OpeniddictServer
                 // On production, using a X.509 certificate stored in the machine store is recommended.
                 // You can generate a self-signed certificate using Pluralsight's self-cert utility:
                 // https://s3.amazonaws.com/pluralsight-free/keith-brown/samples/SelfCert.zip
-                //
+                options.AddSigningCertificate(_cert);
+
                 // options.AddSigningCertificate("7D2A741FE34CC2C7369237A5F2078988E17A6A75");
                 //
                 // Alternatively, you can also store the certificate as an embedded .pfx resource
                 // directly in this assembly or in a file published alongside this project:
                 //
-                // options.AddSigningCertificate(
-                //     assembly: typeof(Startup).GetTypeInfo().Assembly,
-                //     resource: "AuthorizationServer.Certificate.pfx",
-                //     password: "OpenIddict");
+                //options.AddSigningCertificate(
+                //    assembly: typeof(Startup).GetTypeInfo().Assembly,
+                //    resource: "damienbodserver.pfx",
+                //    password: "");
 
                 // Note: to use JWT access tokens instead of the default
                 // encrypted format, the following line is required:
@@ -144,6 +153,20 @@ namespace OpeniddictServer
 
             app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
             {
+                var jwtOptions = new JwtBearerOptions()
+                {
+                    AutomaticAuthenticate = true,
+                    AutomaticChallenge = true,
+                    RequireHttpsMetadata = false,
+                    Audience = "https://localhost:44319",
+                    ClaimsIssuer = "https://localhost:44319/"
+                };
+
+                ////jwtOptions.TokenValidationParameters.ValidAudience = "https://localhost:44319";
+                ////jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+                ////jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+                app.UseJwtBearerAuthentication(jwtOptions);
+
                 branch.UseIdentity();
             });
 
@@ -151,6 +174,8 @@ namespace OpeniddictServer
             {
                 branch.UseOAuthValidation();
             });
+
+
 
             app.UseOpenIddict();
 
