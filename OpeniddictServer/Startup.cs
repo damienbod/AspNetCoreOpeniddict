@@ -26,6 +26,8 @@ namespace OpeniddictServer
 
         public Startup(IHostingEnvironment env)
         {
+            _cert = new X509Certificate2(Path.Combine(env.ContentRootPath, "damienbodserver.pfx"), "");
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -43,8 +45,6 @@ namespace OpeniddictServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            var _cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "damienbodserver.pfx"), "");
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // Configure the context to use an in-memory store.
@@ -96,7 +96,7 @@ namespace OpeniddictServer
                 // Register a new ephemeral key, that is discarded when the application
                 // shuts down. Tokens signed using this key are automatically invalidated.
                 // This method should only be used during development.
-                options.AddEphemeralSigningKey();
+                //options.AddEphemeralSigningKey();
 
                 // On production, using a X.509 certificate stored in the machine store is recommended.
                 // You can generate a self-signed certificate using Pluralsight's self-cert utility:
@@ -151,28 +151,43 @@ namespace OpeniddictServer
 
             app.UseCors("corsGlobalPolicy");
 
+            var jwtOptions = new JwtBearerOptions()
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                RequireHttpsMetadata = true,
+                Audience = "dataEventRecords",
+                ClaimsIssuer = "https://localhost:44319/"
+            };
+
+            jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
+            jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+            jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+            app.UseJwtBearerAuthentication(jwtOptions);
+
             app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
             {
-                var jwtOptions = new JwtBearerOptions()
-                {
-                    AutomaticAuthenticate = true,
-                    AutomaticChallenge = true,
-                    RequireHttpsMetadata = false,
-                    Audience = "https://localhost:44319",
-                    ClaimsIssuer = "https://localhost:44319/"
-                };
-
-                ////jwtOptions.TokenValidationParameters.ValidAudience = "https://localhost:44319";
-                ////jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-                ////jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-                app.UseJwtBearerAuthentication(jwtOptions);
+                
 
                 branch.UseIdentity();
             });
 
             app.UseWhen(context => context.Request.Path.StartsWithSegments("/api"), branch =>
             {
-                branch.UseOAuthValidation();
+                //var jwtOptions = new JwtBearerOptions()
+                //{
+                //    AutomaticAuthenticate = true,
+                //    AutomaticChallenge = true,
+                //    RequireHttpsMetadata = false,
+                //    Audience = "https://localhost:44319",
+                //    ClaimsIssuer = "https://localhost:44319/"
+                //};
+
+                //jwtOptions.TokenValidationParameters.ValidAudience = "https://localhost:44319";
+                //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+                //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+                //branch.UseJwtBearerAuthentication(jwtOptions);
+                //branch.UseOAuthValidation();
             });
 
 
