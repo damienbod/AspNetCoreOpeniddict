@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using OpenIddict.Core;
 using System.Collections.Generic;
 
 namespace OpeniddictServer.Controllers
@@ -38,8 +37,6 @@ namespace OpeniddictServer.Controllers
             }
 
             var claims = new JObject();
-
-            // Note: the "sub" claim is a mandatory claim and must be included in the JSON response.
             claims[OpenIdConnectConstants.Claims.Subject] = await _userManager.GetUserIdAsync(user);
 
             if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIdConnectConstants.Scopes.Email))
@@ -54,28 +51,8 @@ namespace OpeniddictServer.Controllers
                 claims[OpenIdConnectConstants.Claims.PhoneNumberVerified] = await _userManager.IsPhoneNumberConfirmedAsync(user);
             }
 
-            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords.admin"));
-            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords.user"));
-            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords"));
-            //destinations.Add(new Claim(JwtClaimTypes.Scope, "dataEventRecords"));
-
             List<string> roles = new List<string> { "dataEventRecords", "dataEventRecords.admin", "admin", "dataEventRecords.user" };
             claims["role"] = JArray.FromObject(roles);
-
-            //claims["roles"] = "admin";
-            //claims["roles"] = "dataEventRecords";
-            //claims["roles"] = "dataEventRecords.admin";
-
-            //if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
-            //{
-            //    List<string> roles = new List<string> { "dataEventRecords.admin", "admin" };
-            //    claims["roles"] = JArray.FromObject(roles);
-            //    // TODO  fix
-            //    // claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
-            //}
-
-            // Note: the complete list of standard claims supported by the OpenID Connect specification
-            // can be found here: http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
 
             return Json(claims);
         }
