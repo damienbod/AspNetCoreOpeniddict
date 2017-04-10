@@ -86,6 +86,7 @@ export class OidcSecurityService {
             error => this.HandleError(error),
             () => {
                 for (let i = 0; i < this.UserData.role.length; i++) {
+                    console.log(this.UserData.role[i]);
                     if (this.UserData.role[i] === 'dataEventRecords.admin') {
                         this.HasAdminRole = true;
                         this.store('HasAdminRole', true);

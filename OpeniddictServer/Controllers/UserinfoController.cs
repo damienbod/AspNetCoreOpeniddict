@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using OpenIddict.Core;
+using System.Collections.Generic;
 
 namespace OpeniddictServer.Controllers
 {
@@ -55,7 +56,10 @@ namespace OpeniddictServer.Controllers
 
             if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
             {
-                claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
+                List<string> roles = new List<string> { "dataEventRecords.admin", "admin" };
+                claims["roles"] = JArray.FromObject(roles);
+                // TODO  fix
+                // claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
             }
 
             // Note: the complete list of standard claims supported by the OpenID Connect specification
