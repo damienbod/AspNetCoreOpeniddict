@@ -23,6 +23,7 @@ export class DataEventRecordsService {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+        this.headers.append('Cache-Control', 'no-cache');
 
         let token = this._securityService.GetToken();
         if (token !== '') {
@@ -36,7 +37,7 @@ export class DataEventRecordsService {
         this.setHeaders();
         let options = new RequestOptions({ headers: this.headers, body: '' });
 
-        return this._http.get(this.actionUrl, options).map(res => res.json());
+        return this._http.get(this.actionUrl + '' + Date.now, options).map(res => res.json());
     }
 
     public GetById = (id: number): Observable<DataEventRecord> => {

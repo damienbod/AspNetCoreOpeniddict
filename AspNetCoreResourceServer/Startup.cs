@@ -14,6 +14,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.IdentityModel.Tokens;
+using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace AspNetCoreResourceServer
 {
@@ -94,20 +96,35 @@ namespace AspNetCoreResourceServer
             app.UseStaticFiles();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            IdentityServerAuthenticationOptions identityServerValidationOptions = new IdentityServerAuthenticationOptions
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 Authority = "https://localhost:44319/",
-                AllowedScopes = new List<string> { "dataEventRecords" },
-                ApiSecret = "77be52c7-06a2-4830-90bc-715b03b97119",
-                ApiName = "dataEventRecords",
-                AutomaticAuthenticate = true,
-                SupportedTokens = SupportedTokens.Both,
-                // TokenRetriever = _tokenRetriever,
-                // required if you want to return a 403 and not a 401 for forbidden responses
-                AutomaticChallenge = true,                
-            };
+                Audience = "dataEventRecords",
+                RequireHttpsMetadata = true,
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = OpenIdConnectConstants.Claims.Subject,
+                    RoleClaimType = OpenIdConnectConstants.Claims.Role
+                }
+            });
 
-            app.UseIdentityServerAuthentication(identityServerValidationOptions);
+            ////JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            ////IdentityServerAuthenticationOptions identityServerValidationOptions = new IdentityServerAuthenticationOptions
+            ////{
+            ////    Authority = "https://localhost:44319/",
+            ////    AllowedScopes = new List<string> { "dataEventRecords" },
+            ////    ApiSecret = "77be52c7-06a2-4830-90bc-715b03b97119",
+            ////    ApiName = "dataEventRecords",
+            ////    AutomaticAuthenticate = true,
+            ////    SupportedTokens = SupportedTokens.Both,
+            ////    // TokenRetriever = _tokenRetriever,
+            ////    // required if you want to return a 403 and not a 401 for forbidden responses
+            ////    AutomaticChallenge = true,                
+            ////};
+
+            ////app.UseIdentityServerAuthentication(identityServerValidationOptions);
 
             app.UseMvc(routes =>
             {

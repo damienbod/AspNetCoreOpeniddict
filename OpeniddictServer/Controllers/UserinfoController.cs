@@ -59,7 +59,7 @@ namespace OpeniddictServer.Controllers
             //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords"));
             //destinations.Add(new Claim(JwtClaimTypes.Scope, "dataEventRecords"));
 
-            List<string> roles = new List<string> { "dataEventRecords", "dataEventRecords.admin", "admin" };
+            List<string> roles = new List<string> { "dataEventRecords", "dataEventRecords.admin", "admin", "dataEventRecords.user" };
             claims["role"] = JArray.FromObject(roles);
 
             //claims["roles"] = "admin";
