@@ -113,7 +113,8 @@ namespace OpeniddictServer.Controllers
                 OpenIdConnectConstants.Scopes.OpenId,
                 OpenIdConnectConstants.Scopes.Email,
                 OpenIdConnectConstants.Scopes.Profile,
-                OpenIddictConstants.Scopes.Roles
+                OpenIddictConstants.Scopes.Roles,
+                "dataEventRecords"
             }.Intersect(request.GetScopes()));
 
             ticket.SetResources("dataEventRecords");
