@@ -54,13 +54,25 @@ namespace OpeniddictServer.Controllers
                 claims[OpenIdConnectConstants.Claims.PhoneNumberVerified] = await _userManager.IsPhoneNumberConfirmedAsync(user);
             }
 
-            if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
-            {
-                List<string> roles = new List<string> { "dataEventRecords.admin", "admin" };
-                claims["roles"] = JArray.FromObject(roles);
-                // TODO  fix
-                // claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
-            }
+            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords.admin"));
+            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords.user"));
+            //destinations.Add(new Claim(JwtClaimTypes.Role, "dataEventRecords"));
+            //destinations.Add(new Claim(JwtClaimTypes.Scope, "dataEventRecords"));
+
+            List<string> roles = new List<string> { "dataEventRecords", "dataEventRecords.admin", "admin" };
+            claims["role"] = JArray.FromObject(roles);
+
+            //claims["roles"] = "admin";
+            //claims["roles"] = "dataEventRecords";
+            //claims["roles"] = "dataEventRecords.admin";
+
+            //if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
+            //{
+            //    List<string> roles = new List<string> { "dataEventRecords.admin", "admin" };
+            //    claims["roles"] = JArray.FromObject(roles);
+            //    // TODO  fix
+            //    // claims["roles"] = JArray.FromObject(await _userManager.GetRolesAsync(user));
+            //}
 
             // Note: the complete list of standard claims supported by the OpenID Connect specification
             // can be found here: http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims

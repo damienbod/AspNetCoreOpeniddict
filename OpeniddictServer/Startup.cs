@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace OpeniddictServer
 {
@@ -151,13 +152,21 @@ namespace OpeniddictServer
 
             app.UseCors("corsGlobalPolicy");
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
             var jwtOptions = new JwtBearerOptions()
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 RequireHttpsMetadata = true,
                 Audience = "dataEventRecords",
-                ClaimsIssuer = "https://localhost:44319/"
+                ClaimsIssuer = "https://localhost:44319/",
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = OpenIdConnectConstants.Claims.Name,
+                    RoleClaimType = OpenIdConnectConstants.Claims.Role
+                }
             };
 
             jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
@@ -165,30 +174,32 @@ namespace OpeniddictServer
             jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
             app.UseJwtBearerAuthentication(jwtOptions);
 
-            app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
-            {
+            app.UseIdentity();
+
+            ////app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
+            ////{
                 
 
-                branch.UseIdentity();
-            });
+                
+            ////});
 
-            app.UseWhen(context => context.Request.Path.StartsWithSegments("/api"), branch =>
-            {
-                //var jwtOptions = new JwtBearerOptions()
-                //{
-                //    AutomaticAuthenticate = true,
-                //    AutomaticChallenge = true,
-                //    RequireHttpsMetadata = false,
-                //    Audience = "https://localhost:44319",
-                //    ClaimsIssuer = "https://localhost:44319/"
-                //};
+            ////app.UseWhen(context => context.Request.Path.StartsWithSegments("/api"), branch =>
+            ////{
+            ////    //var jwtOptions = new JwtBearerOptions()
+            ////    //{
+            ////    //    AutomaticAuthenticate = true,
+            ////    //    AutomaticChallenge = true,
+            ////    //    RequireHttpsMetadata = false,
+            ////    //    Audience = "https://localhost:44319",
+            ////    //    ClaimsIssuer = "https://localhost:44319/"
+            ////    //};
 
-                //jwtOptions.TokenValidationParameters.ValidAudience = "https://localhost:44319";
-                //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-                //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-                //branch.UseJwtBearerAuthentication(jwtOptions);
-                //branch.UseOAuthValidation();
-            });
+            ////    //jwtOptions.TokenValidationParameters.ValidAudience = "https://localhost:44319";
+            ////    //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+            ////    //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+            ////    //branch.UseJwtBearerAuthentication(jwtOptions);
+            ////    //branch.UseOAuthValidation();
+            ////});
 
 
 
