@@ -1,26 +1,46 @@
-using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
 using OpeniddictServer.Models;
 using OpeniddictServer.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using OpenIddict.Core;
 using OpenIddict.Models;
+using System;
 
 namespace OpeniddictServer
 {
     public class Startup
     {
+        private readonly IHostingEnvironment _environment;
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            _environment = env;
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
+        public IConfigurationRoot Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // Configure the context to use an in-memory store.
-                options.UseInMemoryDatabase();
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
 
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need
@@ -105,8 +125,21 @@ namespace OpeniddictServer
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             app.UseCors("corsGlobalPolicy");
 
             app.UseWhen(context => !context.Request.Path.StartsWithSegments("/api"), branch =>
@@ -125,7 +158,7 @@ namespace OpeniddictServer
 
             // Seed the database with the sample applications.
             // Note: in a real world application, this step should be part of a setup script.
-            InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
+            // InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
