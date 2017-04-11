@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpeniddictServer", "OpeniddictServer\OpeniddictServer.csproj", "{D12043A7-436F-4C60-AE8D-4A4D8EB6076C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularOpenidImplicitFlowClient", "AngularOpenidImplicitFlowClient\AngularOpenidImplicitFlowClient.csproj", "{F70BFCFE-BB9D-436F-A707-F2851CD7F736}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreResourceServer", "AspNetCoreResourceServer\AspNetCoreResourceServer.csproj", "{8206AB4E-E954-4A70-B85E-EE956A42A34E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{03B25853-92B2-4FAF-85FB-E68AA2F24B6F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

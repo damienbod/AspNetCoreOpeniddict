@@ -110,22 +110,6 @@ namespace AspNetCoreResourceServer
                 }
             });
 
-            ////JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            ////IdentityServerAuthenticationOptions identityServerValidationOptions = new IdentityServerAuthenticationOptions
-            ////{
-            ////    Authority = "https://localhost:44319/",
-            ////    AllowedScopes = new List<string> { "dataEventRecords" },
-            ////    ApiSecret = "77be52c7-06a2-4830-90bc-715b03b97119",
-            ////    ApiName = "dataEventRecords",
-            ////    AutomaticAuthenticate = true,
-            ////    SupportedTokens = SupportedTokens.Both,
-            ////    // TokenRetriever = _tokenRetriever,
-            ////    // required if you want to return a 403 and not a 401 for forbidden responses
-            ////    AutomaticChallenge = true,                
-            ////};
-
-            ////app.UseIdentityServerAuthentication(identityServerValidationOptions);
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
