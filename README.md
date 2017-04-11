@@ -1,6 +1,6 @@
 # Implementing OpenID Implicit Flow using OpenIddict and Angular
 
-## Blog:
+## Blog: https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/
 
 ## Links:
 
