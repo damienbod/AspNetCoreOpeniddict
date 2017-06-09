@@ -13,8 +13,10 @@ import { DataEventRecord } from './models/DataEventRecord';
 
 export class DataEventRecordsListComponent implements OnInit {
 
-    public message: string;
-    public DataEventRecords: DataEventRecord[];
+    message: string;
+    DataEventRecords: DataEventRecord[];
+
+    hasAdminRole = false;
 
     constructor(
         private _dataEventRecordsService: DataEventRecordsService,
@@ -24,6 +26,14 @@ export class DataEventRecordsListComponent implements OnInit {
     }
 
     ngOnInit() {
+        let userData = this.securityService.getUserData();
+
+        for (let i = 0; i < userData.role.length; i++) {
+            if (userData.role[i] === 'dataEventRecords.admin') {
+                this.hasAdminRole = true;
+            }
+        }
+
         this.getData();
     }
 
@@ -31,7 +41,7 @@ export class DataEventRecordsListComponent implements OnInit {
         console.log('Try to delete' + id);
         this._dataEventRecordsService.Delete(id)
             .subscribe((() => console.log('subscribed')),
-            error => this.securityService.HandleError(error),
+            error => this.securityService.handleError(error),
             () => this.getData());
     }
 
@@ -40,7 +50,7 @@ export class DataEventRecordsListComponent implements OnInit {
         this._dataEventRecordsService
             .GetAll()
             .subscribe(data => this.DataEventRecords = data,
-            error => this.securityService.HandleError(error),
+            error => this.securityService.handleError(error),
             () => console.log('Get all completed'));
     }
 

@@ -25,7 +25,7 @@ export class DataEventRecordsService {
         this.headers.append('Accept', 'application/json');
         this.headers.append('Cache-Control', 'no-cache');
 
-        let token = this._securityService.GetToken();
+        let token = this._securityService.getToken();
         if (token !== '') {
             let tokenValue = 'Bearer ' + token;
             console.log('tokenValue:' + tokenValue);
