@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -6,131 +6,78 @@ import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { AuthConfiguration } from '../auth.configuration';
 import { OidcSecurityValidation } from './oidc.security.validation';
+import { OidcSecurityCheckSession } from './oidc.security.check-session';
+import { OidcSecuritySilentRenew } from './oidc.security.silent-renew';
+import { OidcSecurityUserService } from './oidc.security.user-service';
+import { OidcSecurityCommon } from './oidc.security.common';
 import { JwtKeys } from './jwtkeys';
 
 @Injectable()
 export class OidcSecurityService {
 
-    public HasAdminRole: boolean;
-    public HasUserAdminRole: boolean;
-    public UserData: any;
+    @Output() onUserDataLoaded: EventEmitter<any> = new EventEmitter<any>(true);
 
-    private _isAuthorized: boolean;
-    private actionUrl: string;
+    checkSessionChanged: boolean;
+    isAuthorized: boolean;
+
     private headers: Headers;
-    private storage: any;
     private oidcSecurityValidation: OidcSecurityValidation;
-
     private errorMessage: string;
     private jwtKeys: JwtKeys;
 
-    constructor(private _http: Http, private _configuration: AuthConfiguration, private _router: Router) {
-
-        this.actionUrl = _configuration.server + 'api/DataEventRecords/';
-        this.oidcSecurityValidation = new OidcSecurityValidation();
+    constructor(
+        private http: Http,
+        private authConfiguration: AuthConfiguration,
+        private router: Router,
+        private oidcSecurityCheckSession: OidcSecurityCheckSession,
+        private oidcSecuritySilentRenew: OidcSecuritySilentRenew,
+        private oidcSecurityUserService: OidcSecurityUserService,
+        private oidcSecurityCommon: OidcSecurityCommon
+    ) {
+        this.oidcSecurityValidation = new OidcSecurityValidation(this.oidcSecurityCommon);
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
-        this.storage = sessionStorage; //localStorage;
 
-        if (this.retrieve('_isAuthorized') !== '') {
-            this.HasAdminRole = this.retrieve('HasAdminRole');
-            this._isAuthorized = this.retrieve('_isAuthorized');
-        }
-    }
-
-    public IsAuthorized(): boolean {
-        if (this._isAuthorized) {
-            if (this.oidcSecurityValidation.IsTokenExpired(this.retrieve('authorizationDataIdToken'))) {
-                console.log('IsAuthorized: isTokenExpired');
-                this.ResetAuthorizationData();
-                return false;
-            }
-
-            return true;
+        if (this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_is_authorized) !== '') {
+            this.isAuthorized = this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_is_authorized);
         }
 
-        return false;
+        this.oidcSecurityCheckSession.onCheckSessionChanged.subscribe(() => { this.onCheckSessionChanged(); });
     }
 
-    public GetToken(): any {
-        return this.retrieve('authorizationData');
+    getToken(): any {
+        return this.oidcSecurityCommon.getAccessToken();
     }
 
-    public ResetAuthorizationData() {
-        this.store('authorizationData', '');
-        this.store('authorizationDataIdToken', '');
-
-        this._isAuthorized = false;
-        this.HasAdminRole = false;
-        this.store('HasAdminRole', false);
-        this.store('_isAuthorized', false);
-    }
-
-    public SetAuthorizationData(token: any, id_token: any) {
-        if (this.retrieve('authorizationData') !== '') {
-            this.store('authorizationData', '');
+    getUserData(): any {
+        if (!this.isAuthorized) {
+            this.oidcSecurityCommon.logError('User must be logged in before you can get the user data!')
         }
 
-        console.log(token);
-        console.log(id_token);
-        console.log('storing to storage, getting the roles');
-        this.store('authorizationData', token);
-        this.store('authorizationDataIdToken', id_token);
-        this._isAuthorized = true;
-        this.store('_isAuthorized', true);
-
-        this.getUserData()
-            .subscribe(data => this.UserData = data,
-            error => this.HandleError(error),
-            () => {
-                for (let i = 0; i < this.UserData.role.length; i++) {
-                    console.log(this.UserData.role[i]);
-                    if (this.UserData.role[i] === 'dataEventRecords.admin') {
-                        this.HasAdminRole = true;
-                        this.store('HasAdminRole', true);
-                    }
-                    if (this.UserData.role[i] === 'admin') {
-                        this.HasUserAdminRole = true;
-                        this.store('HasUserAdminRole', true);
-                    }
-                }
-            });
+        return this.oidcSecurityUserService.userData;
     }
 
-    public Authorize() {
-        this.ResetAuthorizationData();
+    authorize() {
+        this.resetAuthorizationData();
 
-        console.log('BEGIN Authorize, no auth data');
+        this.oidcSecurityCommon.logDebug('BEGIN Authorize, no auth data');
 
-        let authorizationUrl = this._configuration.server + '/connect/authorize';
-        let client_id = this._configuration.client_id;
-        let redirect_uri = this._configuration.redirect_url;
-        let response_type = this._configuration.response_type;
-        let scope = this._configuration.scope;
         let nonce = 'N' + Math.random() + '' + Date.now();
         let state = Date.now() + '' + Math.random();
 
-        this.store('authStateControl', state);
-        this.store('authNonce', nonce);
-        console.log('AuthorizedController created. adding myautostate: ' + this.retrieve('authStateControl'));
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_state_control, state);
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_nonce, nonce);
+        this.oidcSecurityCommon.logDebug('AuthorizedController created. local state: ' + this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_auth_state_control));
 
-        let url =
-            authorizationUrl + '?' +
-            'response_type=' + encodeURI(response_type) + '&' +
-            'client_id=' + encodeURI(client_id) + '&' +
-            'redirect_uri=' + encodeURI(redirect_uri) + '&' +
-            'scope=' + encodeURI(scope) + '&' +
-            'nonce=' + encodeURI(nonce) + '&' +
-            'state=' + encodeURI(state);
-
+        let url = this.createAuthorizeUrl(nonce, state);
         window.location.href = url;
     }
 
-    public AuthorizedCallback() {
-        console.log('BEGIN AuthorizedCallback, no auth data');
-        this.ResetAuthorizationData();
+    authorizedCallback() {
+        this.oidcSecurityCommon.logDebug('BEGIN AuthorizedCallback, no auth data');
+        this.resetAuthorizationData();
 
         let hash = window.location.hash.substr(1);
 
@@ -140,8 +87,8 @@ export class OidcSecurityService {
             return result;
         }, {});
 
-        console.log(result);
-        console.log('AuthorizedCallback created, begin token validation');
+        this.oidcSecurityCommon.logDebug(result);
+        this.oidcSecurityCommon.logDebug('AuthorizedCallback created, begin token validation');
 
         let token = '';
         let id_token = '';
@@ -154,79 +101,170 @@ export class OidcSecurityService {
                 if (!result.error) {
 
                     // validate state
-                    if (this.oidcSecurityValidation.ValidateStateFromHashCallback(result.state, this.retrieve('authStateControl'))) {
+                    if (this.oidcSecurityValidation.validateStateFromHashCallback(result.state, this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_auth_state_control))) {
                         token = result.access_token;
                         id_token = result.id_token;
                         let decoded: any;
                         let headerDecoded;
-                        decoded = this.oidcSecurityValidation.GetPayloadFromToken(id_token, false);
-                        headerDecoded = this.oidcSecurityValidation.GetHeaderFromToken(id_token, false);
+                        decoded = this.oidcSecurityValidation.getPayloadFromToken(id_token, false);
+                        headerDecoded = this.oidcSecurityValidation.getHeaderFromToken(id_token, false);
 
                         // validate jwt signature
-                        if (this.oidcSecurityValidation.Validate_signature_id_token(id_token, this.jwtKeys)) {
+                        if (this.oidcSecurityValidation.validate_signature_id_token(id_token, this.jwtKeys)) {
                             // validate nonce
-                            if (this.oidcSecurityValidation.Validate_id_token_nonce(decoded, this.retrieve('authNonce'))) {
+                            if (this.oidcSecurityValidation.validate_id_token_nonce(decoded, this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_auth_nonce))) {
                                 // validate iss
-                                if (this.oidcSecurityValidation.Validate_id_token_iss(decoded, this._configuration.iss)) {
+                                if (this.oidcSecurityValidation.validate_id_token_iss(decoded, this.authConfiguration.iss)) {
                                     // validate aud
-                                    if (this.oidcSecurityValidation.Validate_id_token_aud(decoded, this._configuration.client_id)) {
+                                    if (this.oidcSecurityValidation.validate_id_token_aud(decoded, this.authConfiguration.client_id)) {
                                         // valiadate at_hash and access_token
-                                        if (this.oidcSecurityValidation.Validate_id_token_at_hash(token, decoded.at_hash) || !token) {
-                                            this.store('authNonce', '');
-                                            this.store('authStateControl', '');
+                                        if (this.oidcSecurityValidation.validate_id_token_at_hash(token, decoded.at_hash) || !token) {
+                                            this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_nonce, '');
+                                            this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_state_control, '');
 
                                             authResponseIsValid = true;
-                                            console.log('AuthorizedCallback state, nonce, iss, aud, signature validated, returning token');
+                                            this.oidcSecurityCommon.logDebug('AuthorizedCallback state, nonce, iss, aud, signature validated, returning token');
                                         } else {
-                                            console.log('AuthorizedCallback incorrect aud');
+                                            this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect aud');
                                         }
                                     } else {
-                                        console.log('AuthorizedCallback incorrect aud');
+                                        this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect aud');
                                     }
                                 } else {
-                                    console.log('AuthorizedCallback incorrect iss');
+                                    this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect iss');
                                 }
                             } else {
-                                console.log('AuthorizedCallback incorrect nonce');
+                                this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect nonce');
                             }
                         } else {
-                            console.log('AuthorizedCallback incorrect Signature id_token');
+                            this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect Signature id_token');
                         }
                     } else {
-                        console.log('AuthorizedCallback incorrect state');
+                        this.oidcSecurityCommon.logWarning('AuthorizedCallback incorrect state');
                     }
                 }
 
                 if (authResponseIsValid) {
-                    this.SetAuthorizationData(token, id_token);
-                    console.log(this.retrieve('authorizationData'));
+                    this.setAuthorizationData(token, id_token);
+                    this.oidcSecurityUserService.initUserData()
+                        .subscribe(() => {
+                            this.onUserDataLoaded.emit();
+                            this.oidcSecurityCommon.logDebug(this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_access_token));
+                            this.oidcSecurityCommon.logDebug(this.oidcSecurityUserService.userData);
+                            if (this.authConfiguration.start_checksession) {
+                                this.oidcSecurityCheckSession.init().then(() => {
+                                    this.oidcSecurityCheckSession.pollServerSession(result.session_state, this.authConfiguration.client_id);
+                                });
+                            }
 
-                    // router navigate to DataEventRecordsList
-                    this._router.navigate(['/dataeventrecords/list']);
+                            if (this.authConfiguration.silent_renew) {
+                                this.oidcSecuritySilentRenew.initRenew();
+                            }
+
+                            this.runTokenValidatation();
+
+                            this.router.navigate([this.authConfiguration.startup_route]);
+                        });
+
                 } else {
-                    this.ResetAuthorizationData();
-                    this._router.navigate(['/Unauthorized']);
+                    this.resetAuthorizationData();
+                    this.router.navigate([this.authConfiguration.unauthorized_route]);
                 }
             });
     }
 
-    public Logoff() {
+    logoff() {
         // /connect/endsession?id_token_hint=...&post_logout_redirect_uri=https://myapp.com
-        console.log('BEGIN Authorize, no auth data');
+        this.oidcSecurityCommon.logDebug('BEGIN Authorize, no auth data');
 
-        let authorizationEndsessionUrl = this._configuration.logoutEndSession_url;
+        let authorizationEndsessionUrl = this.authConfiguration.logoutEndSession_url;
 
-        let id_token_hint = this.retrieve('authorizationDataIdToken');
-        let post_logout_redirect_uri = this._configuration.post_logout_redirect_uri;
+        let id_token_hint = this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_id_token);
+        let post_logout_redirect_uri = this.authConfiguration.post_logout_redirect_uri;
 
         let url =
             authorizationEndsessionUrl + '?' +
             'id_token_hint=' + encodeURI(id_token_hint) + '&' +
             'post_logout_redirect_uri=' + encodeURI(post_logout_redirect_uri);
 
-        this.ResetAuthorizationData();
+        this.resetAuthorizationData();
 
-        window.location.href = url;
+        if (this.authConfiguration.start_checksession && this.checkSessionChanged) {
+            this.oidcSecurityCommon.logDebug('only local login cleaned up, server session has changed');
+        } else {
+            window.location.href = url;
+        }
+    }
+
+    refreshSession() {
+        this.oidcSecurityCommon.logDebug('BEGIN refresh session Authorize');
+
+        let nonce = 'N' + Math.random() + '' + Date.now();
+        let state = Date.now() + '' + Math.random();
+
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_state_control, state);
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_auth_nonce, nonce);
+        this.oidcSecurityCommon.logDebug('RefreshSession created. adding myautostate: ' + this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_auth_state_control));
+
+        let url = this.createAuthorizeUrl(nonce, state);
+
+        this.oidcSecuritySilentRenew.startRenew(url);
+    }
+
+    private setAuthorizationData(access_token: any, id_token: any) {
+        if (this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_access_token) !== '') {
+            this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_access_token, '');
+        }
+
+        this.oidcSecurityCommon.logDebug(access_token);
+        this.oidcSecurityCommon.logDebug(id_token);
+        this.oidcSecurityCommon.logDebug('storing to storage, getting the roles');
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_access_token, access_token);
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_id_token, id_token);
+        this.isAuthorized = true;
+        this.oidcSecurityCommon.store(this.oidcSecurityCommon.storage_is_authorized, true);
+    }
+
+    private createAuthorizeUrl(nonce: string, state: string): string {
+
+        let authorizationUrl = this.authConfiguration.authorise_url;
+        let client_id = this.authConfiguration.client_id;
+        let redirect_uri = this.authConfiguration.redirect_url;
+        let response_type = this.authConfiguration.response_type;
+        let scope = this.authConfiguration.scope;
+
+        let url =
+            authorizationUrl + '?' +
+            'response_type=' + encodeURI(response_type) + '&' +
+            'client_id=' + encodeURI(client_id) + '&' +
+            'redirect_uri=' + encodeURI(redirect_uri) + '&' +
+            'scope=' + encodeURI(scope) + '&' +
+            'nonce=' + encodeURI(nonce) + '&' +
+            'state=' + encodeURI(state);
+
+        return url;
+
+    }
+
+    private resetAuthorizationData() {
+        this.isAuthorized = false;
+        this.oidcSecurityCommon.resetStorageData();
+        this.checkSessionChanged = false;
+    }
+
+    handleError(error: any) {
+        this.oidcSecurityCommon.logError(error);
+        if (error.status == 403) {
+            this.router.navigate([this.authConfiguration.forbidden_route]);
+        } else if (error.status == 401) {
+            this.resetAuthorizationData();
+            this.router.navigate([this.authConfiguration.unauthorized_route]);
+        }
+    }
+
+    private onCheckSessionChanged() {
+        this.oidcSecurityCommon.logDebug('onCheckSessionChanged');
+        this.checkSessionChanged = true;
     }
 
     private runGetSigningKeys() {
@@ -237,9 +275,9 @@ export class OidcSecurityService {
     }
 
     private getSigningKeys(): Observable<JwtKeys> {
-        return this._http.get(this._configuration.jwks_url)
+        return this.http.get(this.authConfiguration.jwks_url)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch(this.handleErrorGetSigningKeys);
     }
 
     private extractData(res: Response) {
@@ -247,7 +285,7 @@ export class OidcSecurityService {
         return body;
     }
 
-    private handleError(error: Response | any) {
+    private handleErrorGetSigningKeys(error: Response | any) {
         // In a real world app, you might use a remote logging infrastructure
         let errMsg: string;
         if (error instanceof Response) {
@@ -257,51 +295,34 @@ export class OidcSecurityService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
+        this.oidcSecurityCommon.logError(errMsg);
         return Observable.throw(errMsg);
     }
 
-    public HandleError(error: any) {
-        console.log(error);
-        if (error.status == 403) {
-            this._router.navigate(['/Forbidden']);
-        } else if (error.status == 401) {
-            this.ResetAuthorizationData();
-            this._router.navigate(['/Unauthorized']);
-        }
-    }
+    private runTokenValidatation() {
+        let source = Observable.timer(3000, 3000)
+            .timeInterval()
+            .pluck('interval')
+            .take(10000);
 
-    private retrieve(key: string): any {
-        let item = this.storage.getItem(key);
+        let subscription = source.subscribe(() => {
+            if (this.isAuthorized) {
+                if (this.oidcSecurityValidation.isTokenExpired(this.oidcSecurityCommon.retrieve(this.oidcSecurityCommon.storage_id_token))) {
+                    this.oidcSecurityCommon.logDebug('IsAuthorized: id_token isTokenExpired, start silent renew if active');
 
-        if (item && item !== 'undefined') {
-            return JSON.parse(this.storage.getItem(key));
-        }
-
-        return;
-    }
-
-    private store(key: string, value: any) {
-        this.storage.setItem(key, JSON.stringify(value));
-    }
-
-    private getUserData = (): Observable<string[]> => {
-        this.setHeaders();
-        return this._http.get(this._configuration.userinfo_url, {
-            headers: this.headers,
-            body: ''
-        }).map(res => res.json());
-    }
-
-    private setHeaders() {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
-        this.headers.append('Accept', 'application/json');
-
-        let token = this.GetToken();
-
-        if (token !== '') {
-            this.headers.append('Authorization', 'Bearer ' + token);
-        }
+                    if (this.authConfiguration.silent_renew) {
+                        this.refreshSession();
+                    } else {
+                        this.resetAuthorizationData();
+                    }
+                }
+            }
+        },
+        function (err: any) {
+            this.oidcSecurityCommon.logError('Error: ' + err);
+        },
+        function () {
+            this.oidcSecurityCommon.logDebug('Completed');
+        });
     }
 }

@@ -16,8 +16,8 @@
                     <li><a [routerLink]="['/dataeventrecords/list']">DataEventRecords</a></li>
                     <li><a [routerLink]="['/dataeventrecords/create']">Create DataEventRecord</a></li>
 
-                    <li><a class="navigationLinkButton" *ngIf="!securityService.IsAuthorized()" (click)="Login()">Login</a></li>
-                    <li><a class="navigationLinkButton" *ngIf="securityService.IsAuthorized()" (click)="Logout()">Logout</a></li>
+                    <li><a class="navigationLinkButton" *ngIf="!securityService.isAuthorized" (click)="Login()">Login</a></li>
+                    <li><a class="navigationLinkButton" *ngIf="securityService.isAuthorized" (click)="Logout()">Logout</a></li>
               
                 </ul>
             </div><!--/.nav-collapse -->
