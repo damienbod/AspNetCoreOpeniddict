@@ -23,3 +23,7 @@ https://blogs.msdn.microsoft.com/webdev/2017/04/06/jwt-validation-and-authorizat
 https://jwt.io/
 
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
+
+## History
+
+2017.06.09 Updated Auth Module, and angular to 4.1.3
