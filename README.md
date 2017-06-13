@@ -26,4 +26,7 @@ https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
 
 ## History
 
+
+2017-06-13 Updated using angular-auth-oidc-client 0.0.4 and Angular to 4.2.2
+
 2017.06.09 Updated Auth Module, and angular to 4.1.3
