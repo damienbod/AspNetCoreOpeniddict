@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OidcSecurityService } from '../auth/services/oidc.security.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 import { DataEventRecordsService } from '../dataeventrecords/DataEventRecordsService';
 import { DataEventRecord } from './models/DataEventRecord';

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Configuration } from './app.constants';
 
-import { OidcSecurityService } from './auth/services/oidc.security.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { DataEventRecordsService } from './dataeventrecords/DataEventRecordsService';
 import { DataEventRecord } from './dataeventrecords/models/DataEventRecord';
 
@@ -28,8 +28,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('ngOnInit _securityService.AuthorizedCallback');
-
         if (window.location.hash) {
             this.securityService.authorizedCallback();
         }
