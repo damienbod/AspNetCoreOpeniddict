@@ -41,7 +41,7 @@
     "zone.js": "0.8.8",
     "bootstrap": "^3.3.7",
     "ie-shim": "~0.1.0",
-    "angular-auth-oidc-client": "0.0.9"
+    "angular-auth-oidc-client": "0.0.10"
   },
   "devDependencies": {
     "@types/node": "7.0.13",
