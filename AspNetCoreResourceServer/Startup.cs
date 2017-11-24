@@ -63,7 +63,7 @@ namespace AspNetCoreResourceServer
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
               .AddIdentityServerAuthentication(options =>
               {
-                  options.Authority = "https://localhost:44318/";
+                  options.Authority = "https://localhost:44319/";
                   options.ApiName = "dataEventRecords";
                   options.ApiSecret = "dataEventRecordsSecret";
               });

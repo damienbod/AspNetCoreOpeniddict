@@ -20,3 +20,4 @@ AngularOpenidImplicitFlowClient/bin
 AngularOpenidImplicitFlowClient/wwwroot/Index.html
 AspNetCoreResourceServer/bin
 /.vs
+/.vs/config/applicationhost.config
