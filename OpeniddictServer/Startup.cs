@@ -17,7 +17,6 @@ using System.IO;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace OpeniddictServer
 {
@@ -98,24 +97,11 @@ namespace OpeniddictServer
                 // This method should only be used during development.
                 options.AddEphemeralSigningKey();
 
-                // On production, using a X.509 certificate stored in the machine store is recommended.
-                // You can generate a self-signed certificate using Pluralsight's self-cert utility:
-                // https://s3.amazonaws.com/pluralsight-free/keith-brown/samples/SelfCert.zip
-                //
-                // options.AddSigningCertificate("7D2A741FE34CC2C7369237A5F2078988E17A6A75");
-                //
-                // Alternatively, you can also store the certificate as an embedded .pfx resource
-                // directly in this assembly or in a file published alongside this project:
-                //
-                // options.AddSigningCertificate(
-                //     assembly: typeof(Startup).GetTypeInfo().Assembly,
-                //     resource: "AuthorizationServer.Certificate.pfx",
-                //     password: "OpenIddict");
+                options.AllowImplicitFlow();
 
-                // Note: to use JWT access tokens instead of the default
-                // encrypted format, the following line is required:
-                //
-                // options.UseJsonWebTokens();
+                options.AddSigningCertificate(_cert);
+
+                options.UseJsonWebTokens();
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -134,25 +120,6 @@ namespace OpeniddictServer
                     };
                 });
 
-            //    //var jwtOptions = new JwtBearerOptions()
-            //    //{
-            //    //    AutomaticAuthenticate = true,
-            //    //    AutomaticChallenge = true,
-            //    //    RequireHttpsMetadata = true,
-            //    //    Audience = "dataEventRecords",
-            //    //    ClaimsIssuer = "https://localhost:44319/",
-            //    //    TokenValidationParameters = new TokenValidationParameters
-            //    //    {
-            //    //        NameClaimType = OpenIdConnectConstants.Claims.Name,
-            //    //        RoleClaimType = OpenIdConnectConstants.Claims.Role
-            //    //    }
-            //    //};
-
-            //    //jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
-            //    //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-            //    //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-            //    //app.UseJwtBearerAuthentication(jwtOptions);
-
             var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
 
             policy.Headers.Add("*");
@@ -167,88 +134,6 @@ namespace OpeniddictServer
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
-
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-
-        //    services.AddDbContext<ApplicationDbContext>(options =>
-        //        options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
-        //    services.AddAuthentication();
-
-
-        //    JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-        //    JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
-
-        //    //var jwtOptions = new JwtBearerOptions()
-        //    //{
-        //    //    AutomaticAuthenticate = true,
-        //    //    AutomaticChallenge = true,
-        //    //    RequireHttpsMetadata = true,
-        //    //    Audience = "dataEventRecords",
-        //    //    ClaimsIssuer = "https://localhost:44319/",
-        //    //    TokenValidationParameters = new TokenValidationParameters
-        //    //    {
-        //    //        NameClaimType = OpenIdConnectConstants.Claims.Name,
-        //    //        RoleClaimType = OpenIdConnectConstants.Claims.Role
-        //    //    }
-        //    //};
-
-        //    //jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
-        //    //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-        //    //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-        //    //app.UseJwtBearerAuthentication(jwtOptions);
-
-
-        //    services.AddIdentity<ApplicationUser, IdentityRole>()
-        //        .AddEntityFrameworkStores<ApplicationDbContext>();
-
-        //    services.Configure<IdentityOptions>(options =>
-        //    {
-        //        options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-        //        options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-        //        options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
-        //    });
-        //    services.AddOpenIddict<ApplicationDbContext>();
-
-        //    services.AddOpenIddict(options =>
-        //    {
-        //        options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-
-        //        // Register the ASP.NET Core MVC binder used by OpenIddict.
-        //        // Note: if you don't call this method, you won't be able to
-        //        // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-        //        options.AddMvcBinders();
-
-        //        options.EnableAuthorizationEndpoint("/connect/authorize")
-        //               .EnableLogoutEndpoint("/connect/logout")
-        //               .EnableIntrospectionEndpoint("/connect/introspect")
-        //               .EnableUserinfoEndpoint("/api/userinfo");
-
-        //        options.AllowImplicitFlow();
-
-        //        options.AddSigningCertificate(_cert);
-
-        //        options.UseJsonWebTokens();
-        //    });
-
-        //    services.AddAuthentication()
-        //        .AddOAuthValidation();
-
-        //    var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
-
-        //    policy.Headers.Add("*");
-        //    policy.Methods.Add("*");
-        //    policy.Origins.Add("*");
-        //    policy.SupportsCredentials = true;
-
-        //    services.AddCors(x => x.AddPolicy("corsGlobalPolicy", policy));
-
-        //    services.AddMvc();
-
-        //    services.AddTransient<IEmailSender, AuthMessageSender>();
-        //    services.AddTransient<ISmsSender, AuthMessageSender>();
-        //}
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
