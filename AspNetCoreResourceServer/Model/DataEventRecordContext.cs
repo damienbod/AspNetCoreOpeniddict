@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNet5SQLite.Model
+namespace AspNetCoreResourceServer.Model
 {
     // >dotnet ef migration add testMigration
     public class DataEventRecordContext : DbContext
