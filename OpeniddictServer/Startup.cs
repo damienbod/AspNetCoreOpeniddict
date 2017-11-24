@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +16,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace OpeniddictServer
 {
@@ -164,8 +165,8 @@ namespace OpeniddictServer
                     {
                         ClientId = "angular4client",
                         DisplayName = "Angular 4 client SPA",
-                        LogoutRedirectUri = "https://localhost:44308/Unauthorized",
-                        RedirectUri = "https://localhost:44308"
+                        PostLogoutRedirectUris = "https://localhost:44308/Unauthorized",
+                        RedirectUris = "https://localhost:44308"
                     };
 
                     await manager.CreateAsync(application, cancellationToken);
