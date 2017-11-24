@@ -1,30 +1,62 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import './app.component.css';
 
 @Component({
     selector: 'my-app',
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.html',
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-    constructor(public securityService: OidcSecurityService) {
-    }
+    title: string;
 
-    ngOnInit() {
-        if (window.location.hash) {
-            this.securityService.authorizedCallback();
+    isAuthorizedSubscription: Subscription;
+    isAuthorized: boolean;
+
+    constructor(
+        public oidcSecurityService: OidcSecurityService
+    ) {
+        if (this.oidcSecurityService.moduleSetup) {
+            this.doCallbackLogicIfRequired();
+        } else {
+            this.oidcSecurityService.onModuleSetup.subscribe(() => {
+                this.doCallbackLogicIfRequired();
+            });
         }
     }
 
-    public Login() {
-        console.log('Do login logic');
-        this.securityService.authorize();
+    ngOnInit() {
+        this.isAuthorizedSubscription = this.oidcSecurityService.getIsAuthorized().subscribe(
+            (isAuthorized: boolean) => {
+                this.isAuthorized = isAuthorized;
+            });
     }
 
-    public Logout() {
-        console.log('Do logout logic');
-        this.securityService.logoff();
+    ngOnDestroy(): void {
+        this.isAuthorizedSubscription.unsubscribe();
+        this.oidcSecurityService.onModuleSetup.unsubscribe();
+    }
+
+    login() {
+        console.log('start login');
+        this.oidcSecurityService.authorize();
+    }
+
+    refreshSession() {
+        console.log('start refreshSession');
+        this.oidcSecurityService.authorize();
+    }
+
+    logout() {
+        console.log('start logoff');
+        this.oidcSecurityService.logoff();
+    }
+
+    private doCallbackLogicIfRequired() {
+        if (window.location.hash) {
+            this.oidcSecurityService.authorizedCallback();
+        }
     }
 }
