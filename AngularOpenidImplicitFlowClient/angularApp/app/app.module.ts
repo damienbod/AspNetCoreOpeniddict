@@ -7,17 +7,12 @@ import { Configuration } from './app.constants';
 import { routing } from './app.routes';
 import { HttpModule, JsonpModule } from '@angular/http';
 
-import { DataEventRecordsService } from './dataeventrecords/DataEventRecordsService';
-import { DataEventRecord } from './dataeventrecords/models/DataEventRecord';
-
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
-import { DataEventRecordsListComponent } from './dataeventrecords/dataeventrecords-list.component';
-import { DataEventRecordsCreateComponent } from './dataeventrecords/dataeventrecords-create.component';
-import { DataEventRecordsEditComponent } from './dataeventrecords/dataeventrecords-edit.component';
 import { AuthModule, OpenIDImplicitFlowConfiguration, OidcSecurityService } from 'angular-auth-oidc-client';
+import { DataEventRecordsModule } from './dataeventrecords/dataeventrecords.module';
 
 @NgModule({
     imports: [
@@ -33,14 +28,10 @@ import { AuthModule, OpenIDImplicitFlowConfiguration, OidcSecurityService } from
         AppComponent,
         ForbiddenComponent,
         HomeComponent,
-        UnauthorizedComponent,
-        DataEventRecordsListComponent,
-        DataEventRecordsCreateComponent,
-        DataEventRecordsEditComponent
+        UnauthorizedComponent
     ],
     providers: [
         OidcSecurityService,
-        DataEventRecordsService,
         Configuration
     ],
     bootstrap:    [AppComponent],
@@ -61,7 +52,7 @@ export class AppModule {
         openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'https://localhost:44308/Unauthorized';
         openIDImplicitFlowConfiguration.start_checksession = false;
         openIDImplicitFlowConfiguration.silent_renew = true;
-        openIDImplicitFlowConfiguration.startup_route = '/dataeventrecords/list';
+        openIDImplicitFlowConfiguration.post_login_route = '/dataeventrecords/list';
         // HTTP 403
         openIDImplicitFlowConfiguration.forbidden_route = '/Forbidden';
         // HTTP 401
