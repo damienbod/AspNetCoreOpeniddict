@@ -26,6 +26,7 @@ import { AuthModule, OpenIDImplicitFlowConfiguration, OidcSecurityService } from
         routing,
         HttpModule,
         JsonpModule,
+		DataEventRecordsModule,
         AuthModule.forRoot(),
     ],
     declarations: [
