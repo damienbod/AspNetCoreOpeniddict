@@ -46,11 +46,35 @@ namespace OpeniddictServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-                options.UseOpenIddict();
-            });
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAuthentication();
+
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
+            //var jwtOptions = new JwtBearerOptions()
+            //{
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true,
+            //    RequireHttpsMetadata = true,
+            //    Audience = "dataEventRecords",
+            //    ClaimsIssuer = "https://localhost:44319/",
+            //    TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        NameClaimType = OpenIdConnectConstants.Claims.Name,
+            //        RoleClaimType = OpenIdConnectConstants.Claims.Role
+            //    }
+            //};
+
+            //jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
+            //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+            //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+            //app.UseJwtBearerAuthentication(jwtOptions);
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -115,37 +139,9 @@ namespace OpeniddictServer
 
             app.UseCors("corsGlobalPolicy");
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
-
-            var jwtOptions = new JwtBearerOptions()
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                RequireHttpsMetadata = true,
-                Audience = "dataEventRecords",
-                ClaimsIssuer = "https://localhost:44319/",
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = OpenIdConnectConstants.Claims.Name,
-                    RoleClaimType = OpenIdConnectConstants.Claims.Role
-                }
-            };
-
-            jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
-            jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-            jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-            app.UseJwtBearerAuthentication(jwtOptions);
-
-            app.UseIdentity();
-
-            app.UseOpenIddict();
+            app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
-
-            // Seed the database with the sample applications.
-            // Note: in a real world application, this step should be part of a setup script.
-            // InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
