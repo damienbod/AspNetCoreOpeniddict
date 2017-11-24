@@ -57,12 +57,11 @@ namespace OpeniddictServer
                 options.UseOpenIddict();
             });
 
+            // Register the Identity services.
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            // Configure Identity to use the same JWT claims as OpenIddict instead
-            // of the legacy WS-Federation claims it uses by default (ClaimTypes),
-            // which saves you from doing the mapping in your authorization controller.
             services.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
@@ -119,8 +118,40 @@ namespace OpeniddictServer
                 // options.UseJsonWebTokens();
             });
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
             services.AddAuthentication()
-                .AddOAuthValidation();
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:44319/";
+                    options.Audience = "dataEventRecords";
+                    options.RequireHttpsMetadata = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = OpenIdConnectConstants.Claims.Name,
+                        RoleClaimType = OpenIdConnectConstants.Claims.Role
+                    };
+                });
+
+            //    //var jwtOptions = new JwtBearerOptions()
+            //    //{
+            //    //    AutomaticAuthenticate = true,
+            //    //    AutomaticChallenge = true,
+            //    //    RequireHttpsMetadata = true,
+            //    //    Audience = "dataEventRecords",
+            //    //    ClaimsIssuer = "https://localhost:44319/",
+            //    //    TokenValidationParameters = new TokenValidationParameters
+            //    //    {
+            //    //        NameClaimType = OpenIdConnectConstants.Claims.Name,
+            //    //        RoleClaimType = OpenIdConnectConstants.Claims.Role
+            //    //    }
+            //    //};
+
+            //    //jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
+            //    //jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
+            //    //jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
+            //    //app.UseJwtBearerAuthentication(jwtOptions);
 
             var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
 
@@ -239,6 +270,8 @@ namespace OpeniddictServer
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
+
+            InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
