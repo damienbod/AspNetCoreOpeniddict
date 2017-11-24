@@ -1,10 +1,10 @@
-using AspNet5SQLite.Model;
-using AspNet5SQLite.Repositories;
+using AspNetCoreResourceServer.Model;
+using AspNetCoreResourceServer.Repositories;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNet5SQLite.Controllers
+namespace AspNetCoreResourceServer.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

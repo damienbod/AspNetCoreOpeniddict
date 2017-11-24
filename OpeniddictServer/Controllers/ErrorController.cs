@@ -7,6 +7,7 @@
 using OpeniddictServer.ViewModels.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace OpeniddictServer.Controllers
 {

@@ -1,5 +1,5 @@
-using AspNet5SQLite.Model;
-using AspNet5SQLite.Repositories;
+using AspNetCoreResourceServer.Model;
+using AspNetCoreResourceServer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +14,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using IdentityServer4.AccessTokenValidation;
-using Microsoft.IdentityModel.Tokens;
-using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace AspNetCoreResourceServer
 {
@@ -62,6 +60,14 @@ namespace AspNetCoreResourceServer
                 .RequireClaim("scope", "dataEventRecords")
                 .Build();
 
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+              .AddIdentityServerAuthentication(options =>
+              {
+                  options.Authority = "https://localhost:44319/";
+                  options.ApiName = "dataEventRecords";
+                  options.ApiSecret = "dataEventRecordsSecret";
+              });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("dataEventRecordsAdmin", policyAdmin =>
@@ -72,7 +78,10 @@ namespace AspNetCoreResourceServer
                 {
                     policyUser.RequireClaim("role",  "dataEventRecords.user");
                 });
-
+                options.AddPolicy("dataEventRecords", policyUser =>
+                {
+                    policyUser.RequireClaim("scope", "dataEventRecords");
+                });
             });
 
             services.AddMvc(options =>
@@ -95,21 +104,7 @@ namespace AspNetCoreResourceServer
             app.UseCors("corsGlobalPolicy");
             app.UseStaticFiles();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                Authority = "https://localhost:44319/",
-                Audience = "dataEventRecords",
-                RequireHttpsMetadata = true,
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = OpenIdConnectConstants.Claims.Subject,
-                    RoleClaimType = OpenIdConnectConstants.Claims.Role
-                }
-            });
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +16,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
 
 namespace OpeniddictServer
 {
@@ -47,12 +47,19 @@ namespace OpeniddictServer
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
+                // Configure the context to use Microsoft SQL Server.
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+
+                // Register the entity sets needed by OpenIddict.
+                // Note: use the generic overload if you need
+                // to replace the default OpenIddict entities.
                 options.UseOpenIddict();
             });
 
+            // Register the Identity services.
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -61,8 +68,10 @@ namespace OpeniddictServer
                 options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
+            // Register the OpenIddict services.
             services.AddOpenIddict(options =>
             {
+                // Register the Entity Framework stores.
                 options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
 
                 // Register the ASP.NET Core MVC binder used by OpenIddict.
@@ -70,10 +79,23 @@ namespace OpeniddictServer
                 // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
                 options.AddMvcBinders();
 
+                // Enable the authorization, logout, userinfo, and introspection endpoints.
                 options.EnableAuthorizationEndpoint("/connect/authorize")
                        .EnableLogoutEndpoint("/connect/logout")
                        .EnableIntrospectionEndpoint("/connect/introspect")
                        .EnableUserinfoEndpoint("/api/userinfo");
+
+                // Note: the sample only uses the implicit code flow but you can enable
+                // the other flows if you need to support implicit, password or client credentials.
+                options.AllowImplicitFlow();
+
+                // During development, you can disable the HTTPS requirement.
+                options.DisableHttpsRequirement();
+
+                // Register a new ephemeral key, that is discarded when the application
+                // shuts down. Tokens signed using this key are automatically invalidated.
+                // This method should only be used during development.
+                options.AddEphemeralSigningKey();
 
                 options.AllowImplicitFlow();
 
@@ -81,6 +103,22 @@ namespace OpeniddictServer
 
                 options.UseJsonWebTokens();
             });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+
+            services.AddAuthentication()
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:44319/";
+                    options.Audience = "dataEventRecords";
+                    options.RequireHttpsMetadata = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = OpenIdConnectConstants.Claims.Name,
+                        RoleClaimType = OpenIdConnectConstants.Claims.Role
+                    };
+                });
 
             var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
 
@@ -114,37 +152,11 @@ namespace OpeniddictServer
 
             app.UseCors("corsGlobalPolicy");
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
-
-            var jwtOptions = new JwtBearerOptions()
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                RequireHttpsMetadata = true,
-                Audience = "dataEventRecords",
-                ClaimsIssuer = "https://localhost:44319/",
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = OpenIdConnectConstants.Claims.Name,
-                    RoleClaimType = OpenIdConnectConstants.Claims.Role
-                }
-            };
-
-            jwtOptions.TokenValidationParameters.ValidAudience = "dataEventRecords";
-            jwtOptions.TokenValidationParameters.ValidIssuer = "https://localhost:44319/";
-            jwtOptions.TokenValidationParameters.IssuerSigningKey = new RsaSecurityKey(_cert.GetRSAPrivateKey().ExportParameters(false));
-            app.UseJwtBearerAuthentication(jwtOptions);
-
-            app.UseIdentity();
-
-            app.UseOpenIddict();
+            app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
 
-            // Seed the database with the sample applications.
-            // Note: in a real world application, this step should be part of a setup script.
-            // InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
+            InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
@@ -164,8 +176,8 @@ namespace OpeniddictServer
                     {
                         ClientId = "angular4client",
                         DisplayName = "Angular 4 client SPA",
-                        LogoutRedirectUri = "https://localhost:44308/Unauthorized",
-                        RedirectUri = "https://localhost:44308"
+                        PostLogoutRedirectUris = "https://localhost:44308/Unauthorized",
+                        RedirectUris = "https://localhost:44308"
                     };
 
                     await manager.CreateAsync(application, cancellationToken);

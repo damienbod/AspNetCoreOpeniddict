@@ -53,7 +53,7 @@ namespace OpeniddictServer.Controllers
                 // return an error indicating that the user is not logged in.
                 if (request.HasPrompt(OpenIdConnectConstants.Prompts.None))
                 {
-                    var properties = new AuthenticationProperties(new Dictionary<string, string>
+                    var properties = new Microsoft.AspNetCore.Authentication.AuthenticationProperties(new Dictionary<string, string>
                     {
                         [OpenIdConnectConstants.Properties.Error] = OpenIdConnectConstants.Errors.LoginRequired,
                         [OpenIdConnectConstants.Properties.ErrorDescription] = "The user is not logged in."
@@ -149,7 +149,7 @@ namespace OpeniddictServer.Controllers
 
             // Create a new authentication ticket holding the user identity.
             var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity),
-            new AuthenticationProperties(),
+            new Microsoft.AspNetCore.Authentication.AuthenticationProperties(),
             OpenIdConnectServerDefaults.AuthenticationScheme);
 
             // Set the list of scopes granted to the client application.
