@@ -39,7 +39,7 @@
     "core-js": "2.5.3",
     "ie-shim": "0.1.0",
     "rxjs": "5.5.6",
-    "angular-auth-oidc-client": "file:../../../angular2Tests/angular-auth-oidc-client/angular-auth-oidc-client-4.0.0.tgz",
+    "angular-auth-oidc-client": "4.0.0",
     "zone.js": "0.8.20"
   },
   "devDependencies": {
