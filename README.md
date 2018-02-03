@@ -26,6 +26,8 @@ https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
 
 ## History
 
+2018-02-03 Updating npm and nuget packages, Angular 5.2.3, angular-auth-oidc-client 4.0.1
+
 2017-11-24 Updated ASP.NET Core 2, Angular 5.0.3, angular-auth-oidc-client
 
 2017-06-13 Updated using angular-auth-oidc-client 0.0.4 and Angular to 4.2.2
