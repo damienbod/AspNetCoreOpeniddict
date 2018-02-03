@@ -1,6 +1,5 @@
 ﻿import 'jquery/src/jquery';
-import 'bootstrap/dist/js/bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import './css/bootstrap.css';
-import './css/bootstrap-theme.css';
 
