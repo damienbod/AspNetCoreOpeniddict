@@ -10,10 +10,10 @@ import './app.component.css';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-    title: string;
+    title = '';
 
-    isAuthorizedSubscription: Subscription;
-    isAuthorized: boolean;
+    isAuthorizedSubscription: Subscription | undefined;
+    isAuthorized = false;
 
     constructor(
         public oidcSecurityService: OidcSecurityService
@@ -35,7 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.isAuthorizedSubscription.unsubscribe();
+        if (this.isAuthorizedSubscription) {
+            this.isAuthorizedSubscription.unsubscribe();
+        }
         this.oidcSecurityService.onModuleSetup.unsubscribe();
     }
 
