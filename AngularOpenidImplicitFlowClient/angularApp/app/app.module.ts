@@ -33,7 +33,7 @@ export function loadConfig(oidcConfigService: OidcConfigService) {
         routing,
         HttpModule,
         JsonpModule,
-		DataEventRecordsModule,
+        DataEventRecordsModule,
         AuthModule.forRoot(),
     ],
     declarations: [
@@ -62,7 +62,7 @@ export class AppModule {
         private oidcConfigService: OidcConfigService,
     ) {
         this.oidcConfigService.onConfigurationLoaded.subscribe(() => {
-        let openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
+        const openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
 
         openIDImplicitFlowConfiguration.stsServer = 'https://localhost:44319';
         openIDImplicitFlowConfiguration.redirect_url = 'https://localhost:44308';

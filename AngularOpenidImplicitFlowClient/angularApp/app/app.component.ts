@@ -4,7 +4,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import './app.component.css';
 
 @Component({
-    selector: 'my-app',
+    selector: 'app-component',
     templateUrl: 'app.component.html',
 })
 
