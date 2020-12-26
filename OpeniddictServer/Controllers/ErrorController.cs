@@ -4,12 +4,11 @@
  * the license and the contributors participating to this project.
  */
 
-using OpeniddictServer.ViewModels.Shared;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+using Mvc.Server.ViewModels.Shared;
 
-namespace OpeniddictServer.Controllers
+namespace Mvc.Server
 {
     public class ErrorController : Controller
     {
@@ -18,8 +17,8 @@ namespace OpeniddictServer.Controllers
         {
             // If the error was not caused by an invalid
             // OIDC request, display a generic error page.
-            var response = HttpContext.GetOpenIdConnectResponse();
-            if (response == null)
+            var response = HttpContext.GetOpenIddictServerResponse();
+            if (response is null)
             {
                 return View(new ErrorViewModel());
             }

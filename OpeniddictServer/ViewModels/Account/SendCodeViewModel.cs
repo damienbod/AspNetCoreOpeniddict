@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace OpeniddictServer.ViewModels.Account
+namespace Mvc.Server.ViewModels.Account
 {
     public class SendCodeViewModel
     {

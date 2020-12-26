@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace OpeniddictServer.Services
+namespace Mvc.Server.Services
 {
     public interface ISmsSender
     {

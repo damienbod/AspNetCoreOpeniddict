@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace OpeniddictServer.Controllers
+namespace Mvc.Server.Controllers
 {
     public class HomeController : Controller
     {
@@ -8,6 +8,21 @@ namespace OpeniddictServer.Controllers
         {
             return View();
         }
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View("~/Views/Shared/Error.cshtml");

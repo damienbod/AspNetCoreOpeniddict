@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OpeniddictServer.ViewModels.Account
+namespace Mvc.Server.ViewModels.Account
 {
     public class ExternalLoginConfirmationViewModel
     {
