@@ -5,10 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using IdentityServer4.AccessTokenValidation;
 using System;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using OpenIddict.Validation.AspNetCore;
 
 namespace ResourceServer
 {
@@ -49,13 +48,32 @@ namespace ResourceServer
                 .RequireClaim("scope", "dataEventRecords")
                 .Build();
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-              .AddIdentityServerAuthentication(options =>
-              {
-                  options.Authority = "https://localhost:44395/";
-                  options.ApiName = "dataEventRecordsApi";
-                  options.ApiSecret = "dataEventRecordsSecret";
-              });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+            });
+
+            // Register the OpenIddict validation components.
+            services.AddOpenIddict()
+                .AddValidation(options =>
+                {
+                    // Note: the validation handler uses OpenID Connect discovery
+                    // to retrieve the address of the introspection endpoint.
+                    options.SetIssuer("https://localhost:44395/");
+                    options.AddAudiences("resource_server");
+
+                    // Configure the validation handler to use introspection and register the client
+                    // credentials used when communicating with the remote introspection endpoint.
+                    options.UseIntrospection()
+                           .SetClientId("rs_dataEventRecordsApi")
+                           .SetClientSecret("dataEventRecordsSecret");
+
+                    // Register the System.Net.Http integration.
+                    options.UseSystemNetHttp();
+
+                    // Register the ASP.NET Core host.
+                    options.UseAspNetCore();
+                });
 
             services.AddAuthorization(options =>
             {
@@ -76,25 +94,25 @@ namespace ResourceServer
             services.AddSwaggerGen(c =>
             {
                 // add JWT Authentication
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Name = "JWT Authentication",
-                    Description = "Enter JWT Bearer token **_only_**",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // must be lower case
-                    BearerFormat = "JWT",
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
-                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {securityScheme, new string[] { }}
-                });
+                //var securityScheme = new OpenApiSecurityScheme
+                //{
+                //    Name = "JWT Authentication",
+                //    Description = "Enter JWT Bearer token **_only_**",
+                //    In = ParameterLocation.Header,
+                //    Type = SecuritySchemeType.Http,
+                //    Scheme = "bearer", // must be lower case
+                //    BearerFormat = "JWT",
+                //    Reference = new OpenApiReference
+                //    {
+                //        Id = JwtBearerDefaults.AuthenticationScheme,
+                //        Type = ReferenceType.SecurityScheme
+                //    }
+                //};
+                //c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                //{
+                //    {securityScheme, new string[] { }}
+                //});
 
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {

@@ -31,12 +31,12 @@ namespace OpeniddictServer
             {
                 var manager = provider.GetRequiredService<IOpenIddictApplicationManager>();
 
+                // Angular UI client
                 if (await manager.FindByClientIdAsync("angularclient") is null)
                 {
                     await manager.CreateAsync(new OpenIddictApplicationDescriptor
                     {
                         ClientId = "angularclient",
-                       // ClientSecret = "901564A5-E7FE-42CB-B10D-61EF6A8F3654",
                         ConsentType = ConsentTypes.Explicit,
                         DisplayName = "angular client PKCE",
                         DisplayNames =
@@ -72,42 +72,23 @@ namespace OpeniddictServer
                     });
                 }
 
-                // To test this sample with Postman, use the following settings:
-                //
-                // * Authorization URL: https://localhost:44395/connect/authorize
-                // * Access token URL: https://localhost:44395/connect/token
-                // * Client ID: postman
-                // * Client secret: [blank] (not used with public clients)
-                // * Scope: openid email profile roles
-                // * Grant type: authorization code
-                // * Request access token locally: yes
-                if (await manager.FindByClientIdAsync("postman") is null)
+                // API
+                if (await manager.FindByClientIdAsync("rs_dataEventRecordsApi") == null)
                 {
-                    await manager.CreateAsync(new OpenIddictApplicationDescriptor
+                    var descriptor = new OpenIddictApplicationDescriptor
                     {
-                        ClientId = "postman",
-                        ConsentType = ConsentTypes.Systematic,
-                        DisplayName = "Postman",
-                        RedirectUris =
-                        {
-                            new Uri("urn:postman")
-                        },
+                        ClientId = "rs_dataEventRecordsApi",
+                        ClientSecret = "dataEventRecordsSecret",
                         Permissions =
                         {
-                            Permissions.Endpoints.Authorization,
-                            Permissions.Endpoints.Device,
-                            Permissions.Endpoints.Token,
-                            Permissions.GrantTypes.AuthorizationCode,
-                            Permissions.GrantTypes.DeviceCode,
-                            Permissions.GrantTypes.Password,
-                            Permissions.GrantTypes.RefreshToken,
-                            Permissions.ResponseTypes.Code,
-                            Permissions.Scopes.Email,
-                            Permissions.Scopes.Profile,
-                            Permissions.Scopes.Roles
+                            Permissions.Endpoints.Introspection
                         }
-                    });
+                    };
+
+                    await manager.CreateAsync(descriptor);
                 }
+
+
             }
 
             static async Task RegisterScopesAsync(IServiceProvider provider)

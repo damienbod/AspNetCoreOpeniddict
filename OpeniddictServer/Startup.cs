@@ -71,7 +71,7 @@ namespace OpeniddictServer
             });
 
             // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
-            //services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
             services.AddOpenIddict()
 
@@ -89,7 +89,7 @@ namespace OpeniddictServer
                     //        .UseDatabase(new MongoClient().GetDatabase("openiddict"));
 
                     // Enable Quartz.NET integration.
-                    //options.UseQuartz();
+                    options.UseQuartz();
                 })
 
                 // Register the OpenIddict server components.
@@ -99,6 +99,7 @@ namespace OpeniddictServer
                     options.SetAuthorizationEndpointUris("/connect/authorize")
                            .SetDeviceEndpointUris("/connect/device")
                            .SetLogoutEndpointUris("/connect/logout")
+                           .SetIntrospectionEndpointUris("/connect/introspect")
                            .SetTokenEndpointUris("/connect/token")
                            .SetUserinfoEndpointUris("/connect/userinfo")
                            .SetVerificationEndpointUris("/connect/verify");
@@ -151,7 +152,7 @@ namespace OpeniddictServer
                     // Note: when issuing access tokens used by third-party APIs
                     // you don't own, you can disable access token encryption:
                     //
-                    // options.DisableAccessTokenEncryption();
+                    options.DisableAccessTokenEncryption();
                 })
 
                 // Register the OpenIddict validation components.
