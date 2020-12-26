@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ResourceServer.Controllers
 {
-    //[Authorize("dataEventRecordsPolicy")]
-    [Authorize]
+    [Authorize("dataEventRecordsPolicy")]
+    //[Authorize]
     [Route("api/[controller]")]
     public class DataEventRecordsController : Controller
     {
