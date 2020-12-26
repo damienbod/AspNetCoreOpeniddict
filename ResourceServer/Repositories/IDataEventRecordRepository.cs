@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using AspNetCoreResourceServer.Model;
+using ResourceServer.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCoreResourceServer.Repositories
+namespace ResourceServer.Repositories
 {
     public interface IDataEventRecordRepository
     {

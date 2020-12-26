@@ -1,12 +1,11 @@
-using AspNetCoreResourceServer.Model;
-using AspNetCoreResourceServer.Repositories;
-
+using ResourceServer.Model;
+using ResourceServer.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCoreResourceServer.Controllers
+namespace ResourceServer.Controllers
 {
-    [Authorize]
+    [Authorize("dataEventRecords")]
     [Route("api/[controller]")]
     public class DataEventRecordsController : Controller
     {
