@@ -40,7 +40,7 @@ export class DataEventRecordsListComponent implements OnInit {
             if (userData) {
                 console.log('userData: ', userData);
 
-                if (userData !== '') {
+                if (userData !== '' && userData.role) {
                     for (let i = 0; i < userData.role.length; i++) {
                         if (userData.role[i] === 'dataEventRecords.admin') {
                             this.hasAdminRole = true;
