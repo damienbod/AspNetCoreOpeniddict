@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace Mvc.Server.ViewModels.Manage
+namespace OpeniddictServer.ViewModels.Manage
 {
     public class ManageLoginsViewModel
     {

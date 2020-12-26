@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mvc.Server.ViewModels.Manage
+namespace OpeniddictServer.ViewModels.Manage
 {
     public class AddPhoneNumberViewModel
     {

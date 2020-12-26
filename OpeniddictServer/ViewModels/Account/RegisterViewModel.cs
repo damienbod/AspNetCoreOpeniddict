@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mvc.Server.ViewModels.Account
+namespace OpeniddictServer.ViewModels.Account
 {
     public class RegisterViewModel
     {

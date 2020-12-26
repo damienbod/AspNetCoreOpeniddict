@@ -16,14 +16,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using Mvc.Server.Helpers;
-using Mvc.Server.Models;
-using Mvc.Server.ViewModels.Authorization;
+using OpeniddictServer.Helpers;
+using OpeniddictServer.Models;
+using OpeniddictServer.ViewModels.Authorization;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Mvc.Server
+namespace OpeniddictServer
 {
     public class AuthorizationController : Controller
     {

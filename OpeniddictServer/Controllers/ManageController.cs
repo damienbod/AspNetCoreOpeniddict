@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Mvc.Server.Models;
-using Mvc.Server.Services;
-using Mvc.Server.ViewModels.Manage;
+using OpeniddictServer.Models;
+using OpeniddictServer.Services;
+using OpeniddictServer.ViewModels.Manage;
 
-namespace Mvc.Server.Controllers
+namespace OpeniddictServer.Controllers
 {
     [Authorize]
     public class ManageController : Controller

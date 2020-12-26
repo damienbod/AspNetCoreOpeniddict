@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mvc.Server.ViewModels.Authorization
+namespace OpeniddictServer.ViewModels.Authorization
 {
     public class AuthorizeViewModel
     {

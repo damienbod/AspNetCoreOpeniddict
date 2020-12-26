@@ -1,4 +1,4 @@
-﻿namespace Mvc.Server.ViewModels.Manage
+﻿namespace OpeniddictServer.ViewModels.Manage
 {
     public class FactorViewModel
     {

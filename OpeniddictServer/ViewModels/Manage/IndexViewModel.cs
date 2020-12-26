@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace Mvc.Server.ViewModels.Manage
+namespace OpeniddictServer.ViewModels.Manage
 {
     public class IndexViewModel
     {

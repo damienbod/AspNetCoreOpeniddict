@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Mvc.Server.Controllers
+namespace OpeniddictServer.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Mvc.Server.Models
+namespace OpeniddictServer.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

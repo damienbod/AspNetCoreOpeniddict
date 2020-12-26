@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Mvc.Server.Models;
-using Mvc.Server.Services;
+using OpeniddictServer.Models;
+using OpeniddictServer.Services;
 using Quartz;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Mvc.Server
+namespace OpeniddictServer
 {
     public class Startup
     {

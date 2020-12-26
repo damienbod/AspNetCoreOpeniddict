@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Mvc.Server.Models;
-using Mvc.Server.Services;
-using Mvc.Server.ViewModels.Account;
+using OpeniddictServer.Models;
+using OpeniddictServer.Services;
+using OpeniddictServer.ViewModels.Account;
 
-namespace Mvc.Server.Controllers
+namespace OpeniddictServer.Controllers
 {
     [Authorize]
     public class AccountController : Controller

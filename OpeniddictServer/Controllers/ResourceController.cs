@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Mvc.Server.Models;
+using OpeniddictServer.Models;
 using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Mvc.Server.Controllers
+namespace OpeniddictServer.Controllers
 {
     [Route("api")]
     public class ResourceController : Controller
