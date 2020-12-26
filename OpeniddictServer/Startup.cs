@@ -96,8 +96,8 @@ namespace Mvc.Server
                            .AllowPasswordFlow()
                            .AllowRefreshTokenFlow();
 
-                    // Mark the "email", "profile", "roles" and "demo_api" scopes as supported scopes.
-                    options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "demo_api");
+                    // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.
+                    options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
 
                     // Register the signing and encryption credentials.
                     options.AddDevelopmentEncryptionCertificate()

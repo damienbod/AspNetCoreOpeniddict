@@ -62,7 +62,7 @@ namespace Mvc.Server
                             Permissions.Scopes.Email,
                             Permissions.Scopes.Profile,
                             Permissions.Scopes.Roles,
-                            Permissions.Prefixes.Scope + "demo_api"
+                            Permissions.Prefixes.Scope + "dataEventRecords"
                         },
                         Requirements =
                         {
@@ -113,16 +113,16 @@ namespace Mvc.Server
             {
                 var manager = provider.GetRequiredService<IOpenIddictScopeManager>();
 
-                if (await manager.FindByNameAsync("demo_api") is null)
+                if (await manager.FindByNameAsync("dataEventRecords") is null)
                 {
                     await manager.CreateAsync(new OpenIddictScopeDescriptor
                     {
-                        DisplayName = "Demo API access",
+                        DisplayName = "dataEventRecords API access",
                         DisplayNames =
                         {
                             [CultureInfo.GetCultureInfo("fr-FR")] = "Accès à l'API de démo"
                         },
-                        Name = "demo_api",
+                        Name = "dataEventRecords",
                         Resources =
                         {
                             "resource_server"

@@ -13,7 +13,7 @@ import { AuthModule, OidcConfigService, LogLevel } from 'angular-auth-oidc-clien
 export function configureAuth(oidcConfigService: OidcConfigService): any {
   return () =>
       oidcConfigService.withConfig({
-          stsServer: 'https://localhost:44337',
+          stsServer: 'https://localhost:44395',
           redirectUrl: window.location.origin,
           postLogoutRedirectUri: window.location.origin,
           clientId: 'angularclient',

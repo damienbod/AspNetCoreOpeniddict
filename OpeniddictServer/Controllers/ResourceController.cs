@@ -23,19 +23,19 @@ namespace Mvc.Server.Controllers
         [HttpGet("message")]
         public async Task<IActionResult> GetMessage()
         {
-            // This demo action requires that the client application be granted the "demo_api" scope.
+            // This demo action requires that the client application be granted the "dataEventRecords" scope.
             // If it was not granted, a detailed error is returned to the client application to inform it
             // that the authorization process must be restarted with the specified scope to access this API.
-            if (!User.HasScope("demo_api"))
+            if (!User.HasScope("dataEventRecords"))
             {
                 return Forbid(
                     authenticationSchemes: OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme,
                     properties: new AuthenticationProperties(new Dictionary<string, string>
                     {
-                        [OpenIddictValidationAspNetCoreConstants.Properties.Scope] = "demo_api",
+                        [OpenIddictValidationAspNetCoreConstants.Properties.Scope] = "dataEventRecords",
                         [OpenIddictValidationAspNetCoreConstants.Properties.Error] = Errors.InsufficientScope,
                         [OpenIddictValidationAspNetCoreConstants.Properties.ErrorDescription] =
-                            "The 'demo_api' scope is required to perform this action."
+                            "The 'dataEventRecords' scope is required to perform this action."
                     }));
             }
 
