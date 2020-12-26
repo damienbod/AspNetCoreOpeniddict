@@ -26,3 +26,4 @@ AspNetCoreResourceServer/bin
 /APIResourceServer.txt
 **/node_modules/
 /Sts.txt
+/api.txt

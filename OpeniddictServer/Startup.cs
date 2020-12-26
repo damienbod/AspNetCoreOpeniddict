@@ -37,6 +37,20 @@ namespace OpeniddictServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder
+                            .AllowCredentials()
+                            .WithOrigins(
+                                "https://localhost:4200")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             // Configure Identity to use the same JWT claims as OpenIddict instead
             // of the legacy WS-Federation claims it uses by default (ClaimTypes),
             // which saves you from doing the mapping in your authorization controller.
@@ -174,6 +188,8 @@ namespace OpeniddictServer
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseStaticFiles();
 
