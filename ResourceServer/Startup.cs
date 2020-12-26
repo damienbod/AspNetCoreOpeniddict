@@ -75,11 +75,13 @@ namespace ResourceServer
                     options.UseAspNetCore();
                 });
 
+            services.AddScoped<IAuthorizationHandler, RequireScopeHandler>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("dataEventRecordsPolicy", policyUser =>
                 {
-                    policyUser.RequireClaim("scope", "dataEventRecords");
+                    policyUser.Requirements.Add(new RequireScope());
                 });
             });
 
