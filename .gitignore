@@ -24,3 +24,4 @@ AspNetCoreResourceServer/bin
 **/bin/
 **/obj/
 /APIResourceServer.txt
+**/node_modules/
