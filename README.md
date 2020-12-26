@@ -20,7 +20,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
-2020-12-26 Updating to .NET 5
+2020-12-26 Updating to .NET 5, Angular 11
 
 2018-05-27 Updating to .NET Core 2.1
 
