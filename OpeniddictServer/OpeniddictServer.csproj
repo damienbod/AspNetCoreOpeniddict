@@ -18,9 +18,10 @@
     <PackageReference Include="OpenIddict" Version="3.0.0" />
     <PackageReference Include="OpenIddict.AspNetCore" Version="3.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="OpenIddict.Quartz" Version="3.0.0" />
     <PackageReference Include="OpenIddict.Server.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.2.3" />
-	<PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+	  <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
   </ItemGroup>
 
    <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('node_modules') ">
