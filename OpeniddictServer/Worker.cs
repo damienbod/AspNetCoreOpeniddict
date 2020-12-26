@@ -31,31 +31,32 @@ namespace OpeniddictServer
             {
                 var manager = provider.GetRequiredService<IOpenIddictApplicationManager>();
 
-                if (await manager.FindByClientIdAsync("mvc") is null)
+                if (await manager.FindByClientIdAsync("angularclient") is null)
                 {
                     await manager.CreateAsync(new OpenIddictApplicationDescriptor
                     {
-                        ClientId = "mvc",
-                        ClientSecret = "901564A5-E7FE-42CB-B10D-61EF6A8F3654",
+                        ClientId = "angularclient",
+                       // ClientSecret = "901564A5-E7FE-42CB-B10D-61EF6A8F3654",
                         ConsentType = ConsentTypes.Explicit,
-                        DisplayName = "MVC client application",
+                        DisplayName = "angular client PKCE",
                         DisplayNames =
                         {
                             [CultureInfo.GetCultureInfo("fr-FR")] = "Application cliente MVC"
                         },
                         PostLogoutRedirectUris =
                         {
-                            new Uri("https://localhost:44381/signout-callback-oidc")
+                            new Uri("https://localhost:4200")
                         },
                         RedirectUris =
                         {
-                            new Uri("https://localhost:44381/signin-oidc")
+                            new Uri("https://localhost:4200")
                         },
                         Permissions =
                         {
                             Permissions.Endpoints.Authorization,
                             Permissions.Endpoints.Logout,
                             Permissions.Endpoints.Token,
+                            Permissions.Endpoints.Revocation,
                             Permissions.GrantTypes.AuthorizationCode,
                             Permissions.GrantTypes.RefreshToken,
                             Permissions.ResponseTypes.Code,
