@@ -152,7 +152,7 @@ namespace OpeniddictServer
                     // Note: when issuing access tokens used by third-party APIs
                     // you don't own, you can disable access token encryption:
                     //
-                    options.DisableAccessTokenEncryption();
+                    // options.DisableAccessTokenEncryption();
                 })
 
                 // Register the OpenIddict validation components.
