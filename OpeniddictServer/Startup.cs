@@ -1,51 +1,26 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
-using AspNet.Security.OpenIdConnect.Primitives;
 using OpeniddictServer.Models;
 using OpeniddictServer.Services;
-using OpenIddict.Core;
-using OpenIddict.Models;
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.IO;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Quartz;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace OpeniddictServer
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _environment;
+        public Startup(IConfiguration configuration)
+            => Configuration = configuration;
 
-        public Startup(IHostingEnvironment env)
-        {
-            _cert = new X509Certificate2(Path.Combine(env.ContentRootPath, "damienbodserver.pfx"), "");
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            _environment = env;
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; }
-
-        private X509Certificate2 _cert;
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 // Configure the context to use Microsoft SQL Server.
@@ -62,138 +37,180 @@ namespace OpeniddictServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder
+                            .AllowCredentials()
+                            .WithOrigins(
+                                "https://localhost:4200")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+            // Configure Identity to use the same JWT claims as OpenIddict instead
+            // of the legacy WS-Federation claims it uses by default (ClaimTypes),
+            // which saves you from doing the mapping in your authorization controller.
             services.Configure<IdentityOptions>(options =>
             {
-                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+                options.ClaimsIdentity.UserNameClaimType = Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = Claims.Role;
             });
 
-            // Register the OpenIddict services.
-            services.AddOpenIddict(options =>
+            // OpenIddict offers native integration with Quartz.NET to perform scheduled tasks
+            // (like pruning orphaned authorizations/tokens from the database) at regular intervals.
+            services.AddQuartz(options =>
             {
-                // Register the Entity Framework stores.
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-
-                // Register the ASP.NET Core MVC binder used by OpenIddict.
-                // Note: if you don't call this method, you won't be able to
-                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-                options.AddMvcBinders();
-
-                // Enable the authorization, logout, userinfo, and introspection endpoints.
-                options.EnableAuthorizationEndpoint("/connect/authorize")
-                       .EnableLogoutEndpoint("/connect/logout")
-                       .EnableIntrospectionEndpoint("/connect/introspect")
-                       .EnableUserinfoEndpoint("/api/userinfo");
-
-                // Note: the sample only uses the implicit code flow but you can enable
-                // the other flows if you need to support implicit, password or client credentials.
-                options.AllowImplicitFlow();
-
-                // During development, you can disable the HTTPS requirement.
-                options.DisableHttpsRequirement();
-
-                // Register a new ephemeral key, that is discarded when the application
-                // shuts down. Tokens signed using this key are automatically invalidated.
-                // This method should only be used during development.
-                options.AddEphemeralSigningKey();
-
-                options.AllowImplicitFlow();
-
-                options.AddSigningCertificate(_cert);
-
-                options.UseJsonWebTokens();
+                options.UseMicrosoftDependencyInjectionJobFactory();
+                options.UseSimpleTypeLoader();
+                options.UseInMemoryStore();
             });
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+            // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
-            services.AddAuthentication()
-                .AddJwtBearer(options =>
+            services.AddOpenIddict()
+
+                // Register the OpenIddict core components.
+                .AddCore(options =>
                 {
-                    options.Authority = "https://localhost:44319/";
-                    options.Audience = "dataEventRecords";
-                    options.RequireHttpsMetadata = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = OpenIdConnectConstants.Claims.Name,
-                        RoleClaimType = OpenIdConnectConstants.Claims.Role
-                    };
+                    // Configure OpenIddict to use the Entity Framework Core stores and models.
+                    // Note: call ReplaceDefaultEntities() to replace the default OpenIddict entities.
+                    options.UseEntityFrameworkCore()
+                           .UseDbContext<ApplicationDbContext>();
+
+                    // Developers who prefer using MongoDB can remove the previous lines
+                    // and configure OpenIddict to use the specified MongoDB database:
+                    // options.UseMongoDb()
+                    //        .UseDatabase(new MongoClient().GetDatabase("openiddict"));
+
+                    // Enable Quartz.NET integration.
+                    options.UseQuartz();
+                })
+
+                // Register the OpenIddict server components.
+                .AddServer(options =>
+                {
+                    // Enable the authorization, device, logout, token, userinfo and verification endpoints.
+                    options.SetAuthorizationEndpointUris("/connect/authorize")
+                           .SetDeviceEndpointUris("/connect/device")
+                           .SetLogoutEndpointUris("/connect/logout")
+                           .SetIntrospectionEndpointUris("/connect/introspect")
+                           .SetTokenEndpointUris("/connect/token")
+                           .SetUserinfoEndpointUris("/connect/userinfo")
+                           .SetVerificationEndpointUris("/connect/verify");
+
+                    // Note: this sample uses the code, device code, password and refresh token flows, but you
+                    // can enable the other flows if you need to support implicit or client credentials.
+                    options.AllowAuthorizationCodeFlow()
+                           .AllowDeviceCodeFlow()
+                           .AllowHybridFlow()
+                           .AllowRefreshTokenFlow();
+
+                    // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.
+                    options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
+
+                    // Register the signing and encryption credentials.
+                    options.AddDevelopmentEncryptionCertificate()
+                           .AddDevelopmentSigningCertificate();
+
+                    // Force client applications to use Proof Key for Code Exchange (PKCE).
+                    options.RequireProofKeyForCodeExchange();
+
+                    // Register the ASP.NET Core host and configure the ASP.NET Core-specific options.
+                    options.UseAspNetCore()
+                           .EnableStatusCodePagesIntegration()
+                           .EnableAuthorizationEndpointPassthrough()
+                           .EnableLogoutEndpointPassthrough()
+                           .EnableTokenEndpointPassthrough()
+                           .EnableUserinfoEndpointPassthrough()
+                           .EnableVerificationEndpointPassthrough()
+                           .DisableTransportSecurityRequirement(); // During development, you can disable the HTTPS requirement.
+
+                    // Note: if you don't want to specify a client_id when sending
+                    // a token or revocation request, uncomment the following line:
+                    //
+                    // options.AcceptAnonymousClients();
+
+                    // Note: if you want to process authorization and token requests
+                    // that specify non-registered scopes, uncomment the following line:
+                    //
+                    // options.DisableScopeValidation();
+
+                    // Note: if you don't want to use permissions, you can disable
+                    // permission enforcement by uncommenting the following lines:
+                    //
+                    // options.IgnoreEndpointPermissions()
+                    //        .IgnoreGrantTypePermissions()
+                    //        .IgnoreResponseTypePermissions()
+                    //        .IgnoreScopePermissions();
+
+                    // Note: when issuing access tokens used by third-party APIs
+                    // you don't own, you can disable access token encryption:
+                    //
+                    options.DisableAccessTokenEncryption();
+                })
+
+                // Register the OpenIddict validation components.
+                .AddValidation(options =>
+                {
+                    // Configure the audience accepted by this resource server.
+                    // The value MUST match the audience associated with the
+                    // "demo_api" scope, which is used by ResourceController.
+                    options.AddAudiences("rs_dataEventRecordsApi");
+
+                    // Import the configuration from the local OpenIddict server instance.
+                    options.UseLocalServer();
+
+                    // Register the ASP.NET Core host.
+                    options.UseAspNetCore();
+
+                    // For applications that need immediate access token or authorization
+                    // revocation, the database entry of the received tokens and their
+                    // associated authorizations can be validated for each API call.
+                    // Enabling these options may have a negative impact on performance.
+                    //
+                    // options.EnableAuthorizationEntryValidation();
+                    // options.EnableTokenEntryValidation();
                 });
-
-            var policy = new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy();
-
-            policy.Headers.Add("*");
-            policy.Methods.Add("*");
-            policy.Origins.Add("*");
-            policy.SupportsCredentials = true;
-
-            services.AddCors(x => x.AddPolicy("corsGlobalPolicy", policy));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            // Register the worker responsible of seeding the database with the sample clients.
+            // Note: in a real world application, this step should be part of a setup script.
+            services.AddHostedService<Worker>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            app.UseDeveloperExceptionPage();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseCors("AllowAllOrigins");
 
-            app.UseCors("corsGlobalPolicy");
+            app.UseStaticFiles();
+
+            app.UseStatusCodePagesWithReExecute("/error");
+
+            app.UseRouting();
+
+            app.UseRequestLocalization(options =>
+            {
+                options.AddSupportedCultures("en-US", "fr-FR");
+                options.AddSupportedUICultures("en-US", "fr-FR");
+                options.SetDefaultCulture("en-US");
+            });
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvcWithDefaultRoute();
-
-            InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
-        }
-
-        private async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken)
-        {
-            // Create a new service scope to ensure the database context is correctly disposed when this methods returns.
-            using (var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-               
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                await context.Database.EnsureCreatedAsync();
-
-                var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication>>();
-
-                if (await manager.FindByClientIdAsync("angular4client", cancellationToken) == null)
-                {
-                    var application = new OpenIddictApplication
-                    {
-                        ClientId = "angular4client",
-                        DisplayName = "Angular 4 client SPA",
-                        PostLogoutRedirectUris = "https://localhost:44308/Unauthorized",
-                        RedirectUris = "https://localhost:44308"
-                    };
-
-                    await manager.CreateAsync(application, cancellationToken);
-                }
-
-                if (await manager.FindByClientIdAsync("dataEventRecords", cancellationToken) == null)
-                {
-                    var application = new OpenIddictApplication
-                    {
-                        ClientId = "dataEventRecords"
-                    };
-
-                    await manager.CreateAsync(application, "77be52c7-06a2-4830-90bc-715b03b97119", cancellationToken);
-                }
-            }
+            app.UseEndpoints(options => options.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"));
         }
     }
 }

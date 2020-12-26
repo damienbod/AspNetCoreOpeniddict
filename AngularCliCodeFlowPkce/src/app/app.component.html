@@ -1,0 +1,24 @@
+<div class="container">
+    <!-- Static navbar -->
+    <nav class="bg-dark mb-4 navbar navbar-dark navbar-expand-md">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a [routerLink]="['/dataeventrecords']" class="navbar-brand"><img src="assets/damienbod.jpg" height="40" style="margin-top:-10px;" /></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="mr-auto navbar-nav">
+                    <li class="nav-item"><a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/dataeventrecords']">DataEventRecords</a></li>
+                    <li class="nav-item"><a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/dataeventrecords/create']">Create DataEventRecord</a></li>
+
+                    <li class="nav-item"><a class="nav-link" *ngIf="!isAuthenticated" (click)="login()">LOGIN</a></li>
+                    <li class="nav-item"><a class="nav-link" *ngIf="isAuthenticated" (click)="logoffAndRevokeTokens()">LOGOUT</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+
+    <router-outlet></router-outlet>
+
+</div>
+
+

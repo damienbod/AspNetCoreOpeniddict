@@ -1,5 +1,0 @@
-﻿{
-  "Production": {
-    "SqliteConnectionString": "Data Source=C:\\git\\damienbod\\AspNetCoreOpeniddictAngularImplicitFlow\\AspNetCoreResourceServer\\dataeventrecords.sqlite"
-  }
-}
