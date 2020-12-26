@@ -23,3 +23,4 @@ AspNetCoreResourceServer/bin
 /.vs/config/applicationhost.config
 **/bin/
 **/obj/
+/APIResourceServer.txt
