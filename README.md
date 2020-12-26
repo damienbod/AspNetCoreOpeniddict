@@ -1,4 +1,4 @@
-# Implementing OpenID ImCode Flow PKCE using OpenIddict and Angular
+# Implementing OpenID Code Flow PKCE using OpenIddict and Angular
 
 ## Blog: 
 
