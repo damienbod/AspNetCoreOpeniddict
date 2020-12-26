@@ -1,4 +1,4 @@
-# Implementing OpenID Implicit Flow using OpenIddict and Angular
+# Implementing OpenID ImCode Flow PKCE using OpenIddict and Angular
 
 ## Blog: 
 
@@ -25,6 +25,8 @@ https://jwt.io/
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
 
 ## History
+
+2020-12-26 Updating to .NET 5
 
 2018-05-27 Updating to .NET Core 2.1
 
