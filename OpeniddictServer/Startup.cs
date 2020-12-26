@@ -57,7 +57,7 @@ namespace OpeniddictServer
             });
 
             // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
-            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+            //services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
             services.AddOpenIddict()
 
@@ -75,7 +75,7 @@ namespace OpeniddictServer
                     //        .UseDatabase(new MongoClient().GetDatabase("openiddict"));
 
                     // Enable Quartz.NET integration.
-                    options.UseQuartz();
+                    //options.UseQuartz();
                 })
 
                 // Register the OpenIddict server components.
@@ -93,7 +93,7 @@ namespace OpeniddictServer
                     // can enable the other flows if you need to support implicit or client credentials.
                     options.AllowAuthorizationCodeFlow()
                            .AllowDeviceCodeFlow()
-                           .AllowPasswordFlow()
+                           .AllowHybridFlow()
                            .AllowRefreshTokenFlow();
 
                     // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.
