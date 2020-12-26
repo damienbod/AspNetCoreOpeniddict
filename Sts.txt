@@ -1,0 +1,207 @@
+2020-12-26 14:55:33.038 +01:00 [INF] User profile is available. Using 'C:\Users\stduser\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2020-12-26 14:55:36.542 +01:00 [INF] Entity Framework Core 5.0.1 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.Sqlite' with options: None
+2020-12-26 14:55:36.753 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2020-12-26 14:55:37.176 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__identifier_0='?' (Size = 3)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2020-12-26 14:55:37.295 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__identifier_0='?' (Size = 3)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2020-12-26 14:55:37.487 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (Size = 36), @p1='?' (Size = 3), @p2='?' (Size = 84), @p3='?' (Size = 36), @p4='?' (Size = 8), @p5='?' (Size = 22), @p6='?' (Size = 35), @p7='?' (Size = 161), @p8='?' (Size = 49), @p9='?', @p10='?' (Size = 39), @p11='?' (Size = 11), @p12='?' (Size = 12)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "OpenIddictApplications" ("Id", "ClientId", "ClientSecret", "ConcurrencyToken", "ConsentType", "DisplayName", "DisplayNames", "Permissions", "PostLogoutRedirectUris", "Properties", "RedirectUris", "Requirements", "Type")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+2020-12-26 14:55:37.548 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__identifier_0='?' (Size = 7)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2020-12-26 14:55:37.551 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__identifier_0='?' (Size = 7)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2020-12-26 14:55:37.557 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 36), @p1='?' (Size = 7), @p2='?', @p3='?' (Size = 36), @p4='?' (Size = 10), @p5='?' (Size = 7), @p6='?', @p7='?' (Size = 202), @p8='?', @p9='?', @p10='?' (Size = 15), @p11='?', @p12='?' (Size = 6)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "OpenIddictApplications" ("Id", "ClientId", "ClientSecret", "ConcurrencyToken", "ConsentType", "DisplayName", "DisplayNames", "Permissions", "PostLogoutRedirectUris", "Properties", "RedirectUris", "Requirements", "Type")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12);
+2020-12-26 14:55:37.611 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__name_0='?' (Size = 16)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ConcurrencyToken", "o"."Description", "o"."Descriptions", "o"."DisplayName", "o"."DisplayNames", "o"."Name", "o"."Properties", "o"."Resources"
+FROM "OpenIddictScopes" AS "o"
+WHERE "o"."Name" = @__name_0
+LIMIT 1
+2020-12-26 14:55:37.643 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__name_0='?' (Size = 16)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ConcurrencyToken", "o"."Description", "o"."Descriptions", "o"."DisplayName", "o"."DisplayNames", "o"."Name", "o"."Properties", "o"."Resources"
+FROM "OpenIddictScopes" AS "o"
+WHERE "o"."Name" = @__name_0
+LIMIT 1
+2020-12-26 14:55:37.671 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 36), @p1='?' (Size = 36), @p2='?', @p3='?', @p4='?' (Size = 27), @p5='?' (Size = 33), @p6='?' (Size = 16), @p7='?', @p8='?' (Size = 19)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "OpenIddictScopes" ("Id", "ConcurrencyToken", "Description", "Descriptions", "DisplayName", "DisplayNames", "Name", "Properties", "Resources")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2020-12-26 14:55:37.909 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-12-26 14:55:37.909 +01:00 [INF] Hosting environment: Development
+2020-12-26 14:55:37.909 +01:00 [INF] Content root path: C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer
+2020-12-26 14:55:37.973 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/ - -
+2020-12-26 14:55:38.301 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:38.303 +01:00 [INF] Executing endpoint 'OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer)'
+2020-12-26 14:55:38.320 +01:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller OpeniddictServer.Controllers.HomeController (OpeniddictServer).
+2020-12-26 14:55:38.405 +01:00 [INF] Executing action method OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:55:38.410 +01:00 [INF] Executed action method OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.6876ms.
+2020-12-26 14:55:38.432 +01:00 [INF] Executing ViewResult, running view Index.
+2020-12-26 14:55:40.051 +01:00 [INF] Executed ViewResult - view Index executed in 1623.3257ms.
+2020-12-26 14:55:40.053 +01:00 [INF] Executed action OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer) in 1732.3764ms
+2020-12-26 14:55:40.054 +01:00 [INF] Executed endpoint 'OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer)'
+2020-12-26 14:55:40.075 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/ - - - 200 - text/html;+charset=utf-8 2104.3677ms
+2020-12-26 14:55:40.109 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - -
+2020-12-26 14:55:40.109 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - -
+2020-12-26 14:55:40.111 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - -
+2020-12-26 14:55:40.134 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:40.140 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:40.140 +01:00 [INF] Executing endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:55:40.144 +01:00 [INF] Route matched with {action = "Error", controller = "Error"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Error() on controller OpeniddictServer.ErrorController (OpeniddictServer).
+2020-12-26 14:55:40.145 +01:00 [INF] Sending file. Request path: '/css/site.min.css'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\css\site.min.css'
+2020-12-26 14:55:40.148 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - - - 200 287 text/css 38.6516ms
+2020-12-26 14:55:40.181 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - -
+2020-12-26 14:55:40.181 +01:00 [INF] Executing action method OpeniddictServer.ErrorController.Error (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:55:40.183 +01:00 [INF] Executed action method OpeniddictServer.ErrorController.Error (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 1.8337ms.
+2020-12-26 14:55:40.185 +01:00 [INF] Executing ViewResult, running view Error.
+2020-12-26 14:55:40.202 +01:00 [INF] Sending file. Request path: '/css/vendor.min.css'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\css\vendor.min.css'
+2020-12-26 14:55:40.202 +01:00 [INF] Sending file. Request path: '/js/vendor.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\vendor.min.js'
+2020-12-26 14:55:44.099 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - -
+2020-12-26 14:55:44.099 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/images/ASP-NET-Banners-01.png - -
+2020-12-26 14:55:44.100 +01:00 [INF] Sending file. Request path: '/js/site.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\site.min.js'
+2020-12-26 14:55:44.103 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - - - 200 184711 text/css 3992.6667ms
+2020-12-26 14:55:44.103 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - - - 200 245888 application/javascript 3922.3527ms
+2020-12-26 14:55:44.103 +01:00 [INF] Executed ViewResult - view Error executed in 3920.095ms.
+2020-12-26 14:55:44.104 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - - - 200 0 application/javascript 4.7476ms
+2020-12-26 14:55:44.104 +01:00 [INF] Executed action OpeniddictServer.ErrorController.Error (OpeniddictServer) in 3959.3037ms
+2020-12-26 14:55:44.104 +01:00 [INF] Executed endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:55:44.106 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - - - 404 - text/html;+charset=utf-8 3994.0992ms
+2020-12-26 14:55:44.121 +01:00 [INF] Sending file. Request path: '/images/ASP-NET-Banners-01.png'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\images\ASP-NET-Banners-01.png'
+2020-12-26 14:55:44.122 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/images/ASP-NET-Banners-01.png - - - 200 8314 image/png 22.5253ms
+2020-12-26 14:55:44.122 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/images/Banner-02-VS.png - -
+2020-12-26 14:55:44.123 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/images/ASP-NET-Banners-02.png - -
+2020-12-26 14:55:44.140 +01:00 [INF] Sending file. Request path: '/images/ASP-NET-Banners-02.png'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\images\ASP-NET-Banners-02.png'
+2020-12-26 14:55:44.140 +01:00 [INF] Sending file. Request path: '/images/Banner-02-VS.png'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\images\Banner-02-VS.png'
+2020-12-26 14:55:44.141 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/images/Banner-02-VS.png - - - 200 12388 image/png 18.7788ms
+2020-12-26 14:55:44.143 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/images/ASP-NET-Banners-02.png - - - 200 8616 image/png 20.1539ms
+2020-12-26 14:55:44.171 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/images/Banner-01-Azure.png - -
+2020-12-26 14:55:44.180 +01:00 [INF] Sending file. Request path: '/images/Banner-01-Azure.png'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\images\Banner-01-Azure.png'
+2020-12-26 14:55:44.181 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/images/Banner-01-Azure.png - - - 200 14436 image/png 9.6129ms
+2020-12-26 14:55:44.255 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/favicon.ico - -
+2020-12-26 14:55:44.265 +01:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\favicon.ico'
+2020-12-26 14:55:44.265 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/favicon.ico - - - 200 32038 image/x-icon 10.3247ms
+2020-12-26 14:55:52.705 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/ - -
+2020-12-26 14:55:52.730 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:52.731 +01:00 [INF] Executing endpoint 'OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer)'
+2020-12-26 14:55:52.732 +01:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller OpeniddictServer.Controllers.HomeController (OpeniddictServer).
+2020-12-26 14:55:52.778 +01:00 [INF] Executing action method OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:55:52.778 +01:00 [INF] Executed action method OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.055ms.
+2020-12-26 14:55:52.779 +01:00 [INF] Executing ViewResult, running view Index.
+2020-12-26 14:55:52.804 +01:00 [INF] Executed ViewResult - view Index executed in 25.2314ms.
+2020-12-26 14:55:52.804 +01:00 [INF] Executed action OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer) in 71.0029ms
+2020-12-26 14:55:52.804 +01:00 [INF] Executed endpoint 'OpeniddictServer.Controllers.HomeController.Index (OpeniddictServer)'
+2020-12-26 14:55:52.805 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/ - - - 200 - text/html;+charset=utf-8 100.1180ms
+2020-12-26 14:55:52.849 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - -
+2020-12-26 14:55:52.855 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:52.856 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:55:52.856 +01:00 [INF] Executing endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:55:52.856 +01:00 [INF] Route matched with {action = "Error", controller = "Error"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Error() on controller OpeniddictServer.ErrorController (OpeniddictServer).
+2020-12-26 14:55:52.913 +01:00 [INF] Executing action method OpeniddictServer.ErrorController.Error (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:55:52.913 +01:00 [INF] Executed action method OpeniddictServer.ErrorController.Error (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.1223ms.
+2020-12-26 14:55:52.914 +01:00 [INF] Executing ViewResult, running view Error.
+2020-12-26 14:55:52.918 +01:00 [INF] Executed ViewResult - view Error executed in 4.6566ms.
+2020-12-26 14:55:52.919 +01:00 [INF] Executed action OpeniddictServer.ErrorController.Error (OpeniddictServer) in 61.9045ms
+2020-12-26 14:55:52.919 +01:00 [INF] Executed endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:55:52.920 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - - - 404 - text/html;+charset=utf-8 70.1279ms
+2020-12-26 14:56:55.461 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/account/Register - -
+2020-12-26 14:56:55.502 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:56:55.504 +01:00 [INF] Executing endpoint 'OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer)'
+2020-12-26 14:56:55.518 +01:00 [INF] Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Register(System.String) on controller OpeniddictServer.Controllers.AccountController (OpeniddictServer).
+2020-12-26 14:56:55.565 +01:00 [INF] Executing action method OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:56:55.566 +01:00 [INF] Executed action method OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.2686ms.
+2020-12-26 14:56:55.567 +01:00 [INF] Executing ViewResult, running view Register.
+2020-12-26 14:56:55.676 +01:00 [INF] Executed ViewResult - view Register executed in 110.7796ms.
+2020-12-26 14:56:55.677 +01:00 [INF] Executed action OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer) in 158.2587ms
+2020-12-26 14:56:55.677 +01:00 [INF] Executed endpoint 'OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer)'
+2020-12-26 14:56:55.677 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/account/Register - - - 200 - text/html;+charset=utf-8 216.3313ms
+2020-12-26 14:56:55.708 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - -
+2020-12-26 14:56:55.709 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - -
+2020-12-26 14:56:55.710 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - -
+2020-12-26 14:56:55.710 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - -
+2020-12-26 14:56:55.711 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - -
+2020-12-26 14:56:55.711 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:56:55.713 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:56:55.713 +01:00 [INF] Executing endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:56:55.735 +01:00 [INF] Route matched with {action = "Error", controller = "Error"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Error() on controller OpeniddictServer.ErrorController (OpeniddictServer).
+2020-12-26 14:56:55.736 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/vendor-validation.min.js?v=C9ZP42eU_1a09tlyYcbgjK9VKa5llAOfFcUKpJhB3Ok - -
+2020-12-26 14:56:55.771 +01:00 [INF] Executing action method OpeniddictServer.ErrorController.Error (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:56:55.773 +01:00 [INF] The file /js/vendor.min.js was not modified
+2020-12-26 14:56:55.773 +01:00 [INF] Executed action method OpeniddictServer.ErrorController.Error (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.7898ms.
+2020-12-26 14:56:55.773 +01:00 [INF] The file /css/vendor.min.css was not modified
+2020-12-26 14:56:55.773 +01:00 [INF] The file /css/site.min.css was not modified
+2020-12-26 14:56:55.773 +01:00 [INF] The file /js/site.min.js was not modified
+2020-12-26 14:56:55.774 +01:00 [INF] Executing ViewResult, running view Error.
+2020-12-26 14:56:55.774 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - - - 304 - text/css 64.7355ms
+2020-12-26 14:56:55.774 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - - - 304 - application/javascript 63.3883ms
+2020-12-26 14:56:55.774 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - - - 304 - text/css 66.2511ms
+2020-12-26 14:56:55.774 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - - - 304 - application/javascript 64.0981ms
+2020-12-26 14:56:55.802 +01:00 [INF] Sending file. Request path: '/js/vendor-validation.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\vendor-validation.min.js'
+2020-12-26 14:56:55.803 +01:00 [INF] Executed ViewResult - view Error executed in 28.9403ms.
+2020-12-26 14:56:55.803 +01:00 [INF] Executed action OpeniddictServer.ErrorController.Error (OpeniddictServer) in 66.8192ms
+2020-12-26 14:56:55.803 +01:00 [INF] Executed endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:56:55.803 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - - - 404 - text/html;+charset=utf-8 93.5599ms
+2020-12-26 14:56:55.804 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/vendor-validation.min.js?v=C9ZP42eU_1a09tlyYcbgjK9VKa5llAOfFcUKpJhB3Ok - - - 200 55686 application/javascript 67.5209ms
+2020-12-26 14:56:59.955 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - -
+2020-12-26 14:56:59.957 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:56:59.957 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:56:59.957 +01:00 [INF] Executing endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:56:59.957 +01:00 [INF] Route matched with {action = "Error", controller = "Error"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Error() on controller OpeniddictServer.ErrorController (OpeniddictServer).
+2020-12-26 14:56:59.983 +01:00 [INF] Executing action method OpeniddictServer.ErrorController.Error (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:56:59.983 +01:00 [INF] Executed action method OpeniddictServer.ErrorController.Error (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.0376ms.
+2020-12-26 14:56:59.983 +01:00 [INF] Executing ViewResult, running view Error.
+2020-12-26 14:56:59.985 +01:00 [INF] Executed ViewResult - view Error executed in 1.7626ms.
+2020-12-26 14:56:59.985 +01:00 [INF] Executed action OpeniddictServer.ErrorController.Error (OpeniddictServer) in 27.4244ms
+2020-12-26 14:56:59.985 +01:00 [INF] Executed endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:56:59.986 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - - - 404 - text/html;+charset=utf-8 30.3668ms
+2020-12-26 14:57:06.252 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/account/Register - -
+2020-12-26 14:57:06.258 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:57:06.258 +01:00 [INF] Executing endpoint 'OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer)'
+2020-12-26 14:57:06.258 +01:00 [INF] Route matched with {action = "Register", controller = "Account"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Register(System.String) on controller OpeniddictServer.Controllers.AccountController (OpeniddictServer).
+2020-12-26 14:57:06.292 +01:00 [INF] Executing action method OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:57:06.293 +01:00 [INF] Executed action method OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.0422ms.
+2020-12-26 14:57:06.293 +01:00 [INF] Executing ViewResult, running view Register.
+2020-12-26 14:57:06.299 +01:00 [INF] Executed ViewResult - view Register executed in 5.8444ms.
+2020-12-26 14:57:06.299 +01:00 [INF] Executed action OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer) in 40.5807ms
+2020-12-26 14:57:06.299 +01:00 [INF] Executed endpoint 'OpeniddictServer.Controllers.AccountController.Register (OpeniddictServer)'
+2020-12-26 14:57:06.301 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/account/Register - - - 200 - text/html;+charset=utf-8 48.2768ms
+2020-12-26 14:57:06.343 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - -
+2020-12-26 14:57:06.352 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - -
+2020-12-26 14:57:06.352 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - -
+2020-12-26 14:57:06.352 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - -
+2020-12-26 14:57:06.353 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - -
+2020-12-26 14:57:06.355 +01:00 [INF] Sending file. Request path: '/css/site.min.css'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\css\site.min.css'
+2020-12-26 14:57:06.356 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/site.min.css?v=HHlOm9t5Lcl6731ap8nshmbI3ymrnc0GmGXWjJydhVQ - - - 200 287 text/css 4.0232ms
+2020-12-26 14:57:06.357 +01:00 [INF] Sending file. Request path: '/js/site.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\site.min.js'
+2020-12-26 14:57:06.359 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:57:06.359 +01:00 [INF] Identity.Application was not authenticated. Failure message: Unprotect ticket failed
+2020-12-26 14:57:06.359 +01:00 [INF] Executing endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:57:06.360 +01:00 [INF] Route matched with {action = "Error", controller = "Error"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Error() on controller OpeniddictServer.ErrorController (OpeniddictServer).
+2020-12-26 14:57:06.360 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU - - - 200 0 application/javascript 5.9234ms
+2020-12-26 14:57:06.367 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44395/js/vendor-validation.min.js?v=C9ZP42eU_1a09tlyYcbgjK9VKa5llAOfFcUKpJhB3Ok - -
+2020-12-26 14:57:06.409 +01:00 [INF] Executing action method OpeniddictServer.ErrorController.Error (OpeniddictServer) - Validation state: "Valid"
+2020-12-26 14:57:06.411 +01:00 [INF] Executed action method OpeniddictServer.ErrorController.Error (OpeniddictServer), returned result Microsoft.AspNetCore.Mvc.ViewResult in 1.1515ms.
+2020-12-26 14:57:06.412 +01:00 [INF] Executing ViewResult, running view Error.
+2020-12-26 14:57:06.412 +01:00 [INF] Sending file. Request path: '/css/vendor.min.css'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\css\vendor.min.css'
+2020-12-26 14:57:06.429 +01:00 [INF] Executed ViewResult - view Error executed in 17.8093ms.
+2020-12-26 14:57:06.430 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/vendor.min.css?v=PbX9vQp_qgIrco17xAixD3RewTNZDE7HcXNjpUHylGg - - - 200 184711 text/css 86.7242ms
+2020-12-26 14:57:06.430 +01:00 [INF] Sending file. Request path: '/js/vendor.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\vendor.min.js'
+2020-12-26 14:57:06.430 +01:00 [INF] Executed action OpeniddictServer.ErrorController.Error (OpeniddictServer) in 70.0478ms
+2020-12-26 14:57:06.430 +01:00 [INF] Sending file. Request path: '/js/vendor-validation.min.js'. Physical path: 'C:\git\damienbod\AspNetCoreOpeniddict\OpeniddictServer\wwwroot\js\vendor-validation.min.js'
+2020-12-26 14:57:06.430 +01:00 [INF] Executed endpoint 'OpeniddictServer.ErrorController.Error (OpeniddictServer)'
+2020-12-26 14:57:06.431 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/css/fontawesome-free-5.4.1-web/css/all.min.css - - - 404 - text/html;+charset=utf-8 78.5777ms
+2020-12-26 14:57:06.432 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/vendor-validation.min.js?v=C9ZP42eU_1a09tlyYcbgjK9VKa5llAOfFcUKpJhB3Ok - - - 200 55686 application/javascript 65.4822ms
+2020-12-26 14:57:06.437 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44395/js/vendor.min.js?v=wNHTPTVKVXBuBXOTXGXVd6M_-Ew7niKBPydj094IUSE - - - 200 245888 application/javascript 84.9566ms
