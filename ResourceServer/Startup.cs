@@ -60,7 +60,7 @@ namespace ResourceServer
                     // Note: the validation handler uses OpenID Connect discovery
                     // to retrieve the address of the introspection endpoint.
                     options.SetIssuer("https://localhost:44395/");
-                    options.AddAudiences("resource_server");
+                    options.AddAudiences("rs_dataEventRecordsApi");
 
                     // Configure the validation handler to use introspection and register the client
                     // credentials used when communicating with the remote introspection endpoint.
@@ -77,15 +77,7 @@ namespace ResourceServer
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("dataEventRecordsAdmin", policyAdmin =>
-                {
-                    policyAdmin.RequireClaim("role", "dataEventRecords.admin");
-                });
-                options.AddPolicy("dataEventRecordsUser", policyUser =>
-                {
-                    policyUser.RequireClaim("role",  "dataEventRecords.user");
-                });
-                options.AddPolicy("dataEventRecords", policyUser =>
+                options.AddPolicy("dataEventRecordsPolicy", policyUser =>
                 {
                     policyUser.RequireClaim("scope", "dataEventRecords");
                 });
@@ -132,7 +124,7 @@ namespace ResourceServer
             services.AddControllers()
                 .AddNewtonsoftJson();
 
-            services.AddScoped<IDataEventRecordRepository, DataEventRecordRepository>();
+            services.AddScoped<DataEventRecordRepository>();
         }
 
         public void Configure(IApplicationBuilder app)

@@ -87,8 +87,6 @@ namespace OpeniddictServer
 
                     await manager.CreateAsync(descriptor);
                 }
-
-
             }
 
             static async Task RegisterScopesAsync(IServiceProvider provider)
@@ -107,7 +105,7 @@ namespace OpeniddictServer
                         Name = "dataEventRecords",
                         Resources =
                         {
-                            "resource_server"
+                            "rs_dataEventRecordsApi"
                         }
                     });
                 }

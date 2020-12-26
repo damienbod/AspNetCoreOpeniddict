@@ -5,46 +5,41 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ResourceServer.Controllers
 {
-    [Authorize("dataEventRecords")]
+    [Authorize("dataEventRecordsPolicy")]
     [Route("api/[controller]")]
     public class DataEventRecordsController : Controller
     {
-        private readonly IDataEventRecordRepository _dataEventRecordRepository;
+        private readonly DataEventRecordRepository _dataEventRecordRepository;
 
-        public DataEventRecordsController(IDataEventRecordRepository dataEventRecordRepository)
+        public DataEventRecordsController(DataEventRecordRepository dataEventRecordRepository)
         {
             _dataEventRecordRepository = dataEventRecordRepository;
         }
 
-        [Authorize("dataEventRecordsUser")]
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_dataEventRecordRepository.GetAll());
         }
 
-        [Authorize("dataEventRecordsAdmin")]
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
             return Ok(_dataEventRecordRepository.Get(id));
         }
 
-        [Authorize("dataEventRecordsAdmin")]
         [HttpPost]
         public void Post([FromBody]DataEventRecord value)
         {
             _dataEventRecordRepository.Post(value);
         }
 
-        [Authorize("dataEventRecordsAdmin")]
         [HttpPut("{id}")]
         public void Put(long id, [FromBody]DataEventRecord value)
         {
             _dataEventRecordRepository.Put(id, value);
         }
 
-        [Authorize("dataEventRecordsAdmin")]
         [HttpDelete("{id}")]
         public void Delete(long id)
         {
