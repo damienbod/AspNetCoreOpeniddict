@@ -38,6 +38,8 @@ Update-Database -Context ApplicationDbContext
 
 https://github.com/openiddict/openiddict-core
 
+https://github.com/robinvanderknaap/authorization-server-openiddict
+
 http://kevinchalet.com/2016/07/13/creating-your-own-openid-connect-server-with-asos-implementing-the-authorization-code-and-implicit-flows/
 
 https://github.com/openiddict/openiddict-core/issues/49
