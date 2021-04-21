@@ -20,6 +20,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2021-04-21 Updated packages, improved scope validation
+
 2020-12-26 Updating to .NET 5, Angular 11
 
 2018-05-27 Updating to .NET Core 2.1
