@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using OpenIddict.Abstractions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,9 +18,10 @@ namespace ResourceServer
             if (requirement == null)
                 throw new ArgumentNullException(nameof(requirement));
 
-            var scopeClaim = context.User.Claims.FirstOrDefault(t => t.Type == "scope");
+            var scopeClaim =  context.User.Claims.FirstOrDefault(t => t.Type == "scope");
 
-            if (scopeClaim != null && scopeClaim.Value.Contains("dataEventRecords"))
+
+            if (scopeClaim != null && (context.User.HasScope("dataEventRecords")))
             {
                 context.Succeed(requirement);
             }
