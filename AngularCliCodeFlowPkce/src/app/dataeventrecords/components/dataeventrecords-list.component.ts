@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { OidcSecurityService, ConfigAuthenticatedResult } from 'angular-auth-oidc-client';
 
 import { DataEventRecordsService } from '../dataeventrecords.service';
 import { DataEventRecord } from '../models/DataEventRecord';
@@ -16,7 +16,7 @@ export class DataEventRecordsListComponent implements OnInit {
     message: string;
     DataEventRecords: DataEventRecord[] = [];
     hasAdminRole = false;
-    isAuthenticated$: Observable<boolean>;
+    isAuthenticated$: Observable<boolean | ConfigAuthenticatedResult[]>;
 
     constructor(
 
@@ -29,7 +29,7 @@ export class DataEventRecordsListComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            switchMap((isAuthorized) => this.getData(isAuthorized))
+            switchMap((isAuthorized) => this.getData(isAuthorized as boolean))
         ).subscribe(
             data => this.DataEventRecords = data,
             () => console.log('getData Get all completed')
