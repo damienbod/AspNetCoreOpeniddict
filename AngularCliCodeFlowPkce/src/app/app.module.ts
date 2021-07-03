@@ -20,7 +20,7 @@ import { AuthModule, OidcConfigService, LogLevel } from 'angular-auth-oidc-clien
       DataEventRecordsModule,
       AuthModule.forRoot({
         config: {
-            stsServer: 'https://localhost:44395',
+            authority: 'https://localhost:44395',
             redirectUrl: window.location.origin,
             postLogoutRedirectUri: window.location.origin,
             clientId: 'angularclient',
