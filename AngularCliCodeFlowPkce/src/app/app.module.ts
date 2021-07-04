@@ -10,21 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthModule, OidcConfigService, LogLevel } from 'angular-auth-oidc-client';
 
-export function configureAuth(oidcConfigService: OidcConfigService): any {
-  return () =>
-      oidcConfigService.withConfig({
-          stsServer: 'https://localhost:44395',
-          redirectUrl: window.location.origin,
-          postLogoutRedirectUri: window.location.origin,
-          clientId: 'angularclient',
-          scope: 'openid profile email dataEventRecords offline_access',
-          responseType: 'code',
-          silentRenew: true,
-          renewTimeBeforeTokenExpiresInSeconds: 10,
-          useRefreshToken: true,
-          logLevel: LogLevel.Debug,
-      });
-}
 
 @NgModule({
   imports: [
@@ -33,7 +18,20 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
       routing,
       HttpClientModule,
       DataEventRecordsModule,
-      AuthModule.forRoot(),
+      AuthModule.forRoot({
+        config: {
+            authority: 'https://localhost:44395',
+            redirectUrl: window.location.origin,
+            postLogoutRedirectUri: window.location.origin,
+            clientId: 'angularclient',
+            scope: 'openid profile email dataEventRecords offline_access',
+            responseType: 'code',
+            silentRenew: true,
+            renewTimeBeforeTokenExpiresInSeconds: 10,
+            useRefreshToken: true,
+            logLevel: LogLevel.Debug,
+        },
+      }),
   ],
   declarations: [
       AppComponent,
@@ -41,15 +39,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): any {
       HomeComponent,
       UnauthorizedComponent
   ],
-  providers: [
-      OidcConfigService,
-      {
-          provide: APP_INITIALIZER,
-          useFactory: configureAuth,
-          deps: [OidcConfigService, HttpClient],
-          multi: true,
-      }
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 
