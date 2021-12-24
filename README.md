@@ -1,3 +1,5 @@
+[![.NET](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml)
+
 # Implementing OpenID Code Flow PKCE using OpenIddict and Angular
 
 ## Blog: 
@@ -19,6 +21,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2021-12-24 Updating .NET 6
 
 2021-07-01 Updating .NET 5, Angular 12
 
