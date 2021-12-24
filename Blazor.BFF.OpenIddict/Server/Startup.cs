@@ -1,12 +1,12 @@
-using Blazor.BFF.OpenIddict.Server.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
 
 namespace Blazor.BFF.OpenIddict.Server
 {
@@ -21,8 +21,6 @@ namespace Blazor.BFF.OpenIddict.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<GraphApiClientService>();
-
             services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-XSRF-TOKEN";
@@ -37,12 +35,32 @@ namespace Blazor.BFF.OpenIddict.Server
             var scopes = Configuration.GetValue<string>("DownstreamApi:Scopes");
             string[] initialScopes = scopes?.Split(' ');
 
-            services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
-                .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
-                .AddMicrosoftGraph("https://graph.microsoft.com/beta", scopes)
-                .AddInMemoryTokenCaches();
+            services.AddTransient<IClaimsTransformation, MyClaimsTransformation>();
 
-            services.AddControllersWithViews(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+           .AddCookie()
+           .AddOpenIdConnect(options =>
+           {
+               options.SignInScheme = "Cookies";
+               options.Authority = "https://localhost:44395";
+               options.RequireHttpsMetadata = true;
+               options.ClientId = "codeflowpkceclient";
+               options.ClientSecret = "codeflow_pkce_client_secret";
+               options.ResponseType = "code";
+               options.UsePkce = true;
+               options.Scope.Add("profile");
+               options.Scope.Add("offline_access");
+               options.SaveTokens = true;
+               options.GetClaimsFromUserInfoEndpoint = true;
+               options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
+               options.ClaimActions.MapUniqueJsonKey("gender", "gender");
+           });
+
+           services.AddControllersWithViews(options =>
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services.AddRazorPages().AddMvcOptions(options =>
@@ -51,7 +69,7 @@ namespace Blazor.BFF.OpenIddict.Server
                 //    .RequireAuthenticatedUser()
                 //    .Build();
                 //options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddMicrosoftIdentityUI();
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -16,9 +16,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" NoWarn="NU1605" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.0" NoWarn="NU1605" />
-		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraphBeta" Version="1.21.0" />
-		<PackageReference Include="Microsoft.Identity.Web" Version="1.21.1" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.21.1" />
 		<PackageReference Include="IdentityModel" Version="5.2.0" />
 		<PackageReference Include="IdentityModel.AspNetCore" Version="4.1.0" />
 		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.16.1" />
