@@ -19,7 +19,7 @@ namespace Blazor.BFF.OpenIddict.Server.Controllers
             });
         }
 
-        // [ValidateAntiForgeryToken] // not needed explicitly due the the Auto global definition.
+        [ValidateAntiForgeryToken] // not needed explicitly due the the Auto global definition.
         [Authorize]
         [HttpPost("Logout")]
         public IActionResult Logout()
