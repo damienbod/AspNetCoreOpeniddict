@@ -3,9 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-oidc-oauth2": {
+    "AngularCliCodeFlowPkce": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-oidc-oauth2",
+            "outputPath": "dist/angular-cli-code-flow-pkce",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -33,34 +37,36 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -72,14 +78,18 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-oidc-oauth2:build:production"
+              "browserTarget": "AngularCliCodeFlowPkce:build:production"
+            },
+            "development": {
+              "browserTarget": "AngularCliCodeFlowPkce:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-oidc-oauth2:build"
+            "browserTarget": "AngularCliCodeFlowPkce:build"
           }
         },
         "test": {
@@ -89,39 +99,18 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets", "src/silent-renew.html"],
-            "styles": ["src/styles.css"],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
             ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-oidc-oauth2:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "angular-oidc-oauth2:serve:production"
-            }
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
           }
         }
       }
     }
   },
-  "defaultProject": "angular-oidc-oauth2",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "AngularCliCodeFlowPkce"
 }
