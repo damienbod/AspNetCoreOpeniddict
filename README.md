@@ -1,3 +1,5 @@
+[![.NET](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml)
+
 # Implementing OpenID Code Flow PKCE using OpenIddict and Angular
 
 ## Blog: 
