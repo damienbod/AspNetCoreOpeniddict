@@ -48,7 +48,7 @@ namespace Blazor.BFF.OpenIddict.Server
                options.SignInScheme = "Cookies";
                options.Authority = "https://localhost:44395";
                options.RequireHttpsMetadata = true;
-               options.ClientId = "codeflowpkceclient";
+               options.ClientId = "blazorcodeflowpkceclient";
                options.ClientSecret = "codeflow_pkce_client_secret";
                options.ResponseType = "code";
                options.UsePkce = true;
