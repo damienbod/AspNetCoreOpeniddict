@@ -103,12 +103,12 @@ namespace OpeniddictServer
                         PostLogoutRedirectUris =
                         {
                             new Uri("https://localhost:44348"),
-                             new Uri("https://localhost:5001")
+                            new Uri("https://localhost:5001")
                         },
                         RedirectUris =
                         {
                             new Uri("https://localhost:44348/signin-oidc"),
-                             new Uri("https://localhost:5001/signin-oidc")
+                            new Uri("https://localhost:5001/signin-oidc")
                         },
                         ClientSecret = "codeflow_pkce_client_secret",
                         Permissions =
