@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets", "src/silent-renew.html"],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
