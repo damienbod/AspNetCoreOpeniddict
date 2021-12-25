@@ -32,9 +32,6 @@ namespace Blazor.BFF.OpenIddict.Server
             services.AddHttpClient();
             services.AddOptions();
 
-            var scopes = Configuration.GetValue<string>("DownstreamApi:Scopes");
-            string[] initialScopes = scopes?.Split(' ');
-
             services.AddTransient<IClaimsTransformation, MyClaimsTransformation>();
 
             services.AddAuthentication(options =>
