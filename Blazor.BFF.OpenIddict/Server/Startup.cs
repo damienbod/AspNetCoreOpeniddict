@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -53,8 +55,7 @@ namespace Blazor.BFF.OpenIddict.Server
                options.Scope.Add("offline_access");
                options.SaveTokens = true;
                options.GetClaimsFromUserInfoEndpoint = true;
-               options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
-               options.ClaimActions.MapUniqueJsonKey("gender", "gender");
+               //options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
            });
 
            services.AddControllersWithViews(options =>
