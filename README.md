@@ -46,6 +46,8 @@ Update-Database -Context ApplicationDbContext
 
 https://documentation.openiddict.com/
 
+https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template
+
 https://github.com/openiddict/openiddict-core
 
 https://github.com/robinvanderknaap/authorization-server-openiddict
