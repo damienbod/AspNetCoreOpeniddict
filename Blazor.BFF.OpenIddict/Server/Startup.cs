@@ -32,8 +32,6 @@ namespace Blazor.BFF.OpenIddict.Server
             services.AddHttpClient();
             services.AddOptions();
 
-            services.AddTransient<IClaimsTransformation, MyClaimsTransformation>();
-
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
