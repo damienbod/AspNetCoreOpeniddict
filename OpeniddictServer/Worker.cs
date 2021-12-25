@@ -102,8 +102,8 @@ namespace OpeniddictServer
                         },
                         PostLogoutRedirectUris =
                         {
-                            new Uri("https://localhost:44348"),
-                            new Uri("https://localhost:5001")
+                            new Uri("https://localhost:44348/signout-callback-oidc"),
+                            new Uri("https://localhost:5001/signout-callback-oidc")
                         },
                         RedirectUris =
                         {
