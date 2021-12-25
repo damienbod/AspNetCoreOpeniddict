@@ -1,6 +1,11 @@
 [![.NET](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml)
 
-# Implementing OpenID Code Flow PKCE using OpenIddict and Angular
+# Implementing OpenID Code Flow PKCE using OpenIddict, Angular and Blazor
+
+- Angular Code flow PKCE public client
+- Blazor WASM, ASP.NET Core hosted BFF Code flow PKCE, trusted client
+- API OAUTH2 introspection and reference tokens
+- OpenID Connect server implemented with OpenIddict
 
 ## Blog: 
 
@@ -21,6 +26,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2021-12-25 Added Blazor BFF WASM ASP.NET Core hosted demo
 
 2021-12-24 Updating .NET 6, Angular 13.1.0
 
