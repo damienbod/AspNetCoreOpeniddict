@@ -32,6 +32,7 @@ namespace Blazor.BFF.OpenIddict.Server
             services.AddHttpClient();
             services.AddOptions();
 
+            // todo get configuation from app settings
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -81,7 +82,7 @@ namespace Blazor.BFF.OpenIddict.Server
 
             app.UseSecurityHeaders(
                 SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment(),
-                    Configuration["AzureAd:Instance"]));
+                    Configuration["OidcSettings:Authority"]));
 
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
