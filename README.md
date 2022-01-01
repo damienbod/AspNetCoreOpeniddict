@@ -7,7 +7,7 @@
 - API OAUTH2 introspection and reference tokens
 - OpenID Connect server implemented with OpenIddict
 
-## Blog: 
+## Blogs: 
 
 https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/
 
@@ -27,7 +27,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
-2021-12-25 Added Blazor BFF WASM ASP.NET Core hosted demo
+2022-01-01 Added Blazor BFF WASM ASP.NET Core hosted demo
 
 2021-12-24 Updating .NET 6, Angular 13.1.0
 
