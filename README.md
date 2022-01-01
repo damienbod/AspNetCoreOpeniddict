@@ -1,8 +1,13 @@
 [![.NET](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreOpeniddict/actions/workflows/dotnet.yml)
 
-# Implementing OpenID Code Flow PKCE using OpenIddict and Angular
+# Implementing OpenID Code Flow PKCE using OpenIddict, Angular and Blazor
 
-## Blog: 
+- Angular Code flow PKCE public client
+- Blazor WASM, ASP.NET Core hosted BFF Code flow PKCE, trusted client
+- API OAUTH2 introspection and reference tokens
+- OpenID Connect server implemented with OpenIddict
+
+## Blogs: 
 
 https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/
 
@@ -21,6 +26,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2022-01-01 Added Blazor BFF WASM ASP.NET Core hosted demo
 
 2021-12-24 Updating .NET 6, Angular 13.1.0
 
@@ -43,6 +50,10 @@ Update-Database -Context ApplicationDbContext
 2017.06.09 Updated Auth Module, and angular to 4.1.3
 
 ## Links:
+
+https://documentation.openiddict.com/
+
+https://github.com/damienbod/Blazor.BFF.OpenIDConnect.Template
 
 https://github.com/openiddict/openiddict-core
 

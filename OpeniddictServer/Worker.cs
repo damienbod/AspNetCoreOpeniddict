@@ -87,6 +87,50 @@ namespace OpeniddictServer
 
                     await manager.CreateAsync(descriptor);
                 }
+
+                // Blazor Hosted
+                if (await manager.FindByClientIdAsync("blazorcodeflowpkceclient") is null)
+                {
+                    await manager.CreateAsync(new OpenIddictApplicationDescriptor
+                    {
+                        ClientId = "blazorcodeflowpkceclient",
+                        ConsentType = ConsentTypes.Explicit,
+                        DisplayName = "Blazor code PKCE",
+                        DisplayNames =
+                        {
+                            [CultureInfo.GetCultureInfo("fr-FR")] = "Application cliente MVC"
+                        },
+                        PostLogoutRedirectUris =
+                        {
+                            new Uri("https://localhost:44348/signout-callback-oidc"),
+                            new Uri("https://localhost:5001/signout-callback-oidc")
+                        },
+                        RedirectUris =
+                        {
+                            new Uri("https://localhost:44348/signin-oidc"),
+                            new Uri("https://localhost:5001/signin-oidc")
+                        },
+                        ClientSecret = "codeflow_pkce_client_secret",
+                        Permissions =
+                        {
+                            Permissions.Endpoints.Authorization,
+                            Permissions.Endpoints.Logout,
+                            Permissions.Endpoints.Token,
+                            Permissions.Endpoints.Revocation,
+                            Permissions.GrantTypes.AuthorizationCode,
+                            Permissions.GrantTypes.RefreshToken,
+                            Permissions.ResponseTypes.Code,
+                            Permissions.Scopes.Email,
+                            Permissions.Scopes.Profile,
+                            Permissions.Scopes.Roles,
+                            Permissions.Prefixes.Scope + "dataEventRecords"
+                        },
+                        Requirements =
+                        {
+                            Requirements.Features.ProofKeyForCodeExchange
+                        }
+                    });
+                }
             }
 
             static async Task RegisterScopesAsync(IServiceProvider provider)
