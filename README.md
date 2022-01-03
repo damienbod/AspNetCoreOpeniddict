@@ -9,7 +9,9 @@
 
 ## Blogs: 
 
-https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/
+[Implementing OpenID Code Flow with PKCE using OpenIddict and Angular](https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/)
+
+[Secure a Blazor WASM ASP.NET Core hosted APP using BFF and OpenIddict](https://damienbod.com/2022/01/03/secure-a-blazor-wasm-asp-net-core-hosted-app-using-bff-and-openiddict/)
 
 ## Creating Migrations
 
