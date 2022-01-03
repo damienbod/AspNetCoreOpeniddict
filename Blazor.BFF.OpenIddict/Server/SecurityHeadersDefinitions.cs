@@ -41,7 +41,7 @@ namespace Blazor.BFF.OpenIddict.Server
                         .UnsafeEval();
 
                     // due to Blazor hot reload requires you to disable script and style CSP protection
-                    // if using hot reload, DO NOT deploy an with an insecure CSP
+                    // if using hot reload, DO NOT deploy with an insecure CSP
                 })
                 .RemoveServerHeader()
                 .AddPermissionsPolicy(builder =>
