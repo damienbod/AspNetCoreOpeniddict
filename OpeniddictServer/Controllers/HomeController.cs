@@ -1,31 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace OpeniddictServer.Controllers
+namespace OpeniddictServer.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        _logger = logger;
+    }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View("~/Views/Shared/Error.cshtml");
-        }
+    public IActionResult Error()
+    {
+        return View();
     }
 }
