@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44319/",
-      "sslPort": 44319
+      "applicationUrl": "https://localhost:44395/",
+      "sslPort": 44395
     }
   },
   "profiles": {
@@ -24,7 +24,7 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:44319/"
+      "applicationUrl": "https://localhost:44395/"
     }
   }
 }
