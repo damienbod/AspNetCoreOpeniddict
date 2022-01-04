@@ -34,7 +34,6 @@ namespace ResourceServer.Repositories
             return dataEventRecord;
         }
 
-        [HttpPost]
         public void Post(DataEventRecord dataEventRecord )
         {
             if(string.IsNullOrWhiteSpace(dataEventRecord.Timestamp))
