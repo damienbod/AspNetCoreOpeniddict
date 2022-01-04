@@ -52,7 +52,6 @@ namespace Blazor.BFF.OpenIddict.Server
                options.ResponseType = "code";
                options.UsePkce = true;
                options.Scope.Add("profile");
-               options.Scope.Add("offline_access");
                options.SaveTokens = true;
                options.GetClaimsFromUserInfoEndpoint = true;
                //options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
