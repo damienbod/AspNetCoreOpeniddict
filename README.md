@@ -29,6 +29,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2022-01-04 Update STS 
+
 2022-01-01 Added Blazor BFF WASM ASP.NET Core hosted demo
 
 2021-12-24 Updating .NET 6, Angular 13.1.0
