@@ -68,6 +68,21 @@ public class Startup
             options.UseInMemoryStore();
         });
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder
+                        .AllowCredentials()
+                        .WithOrigins(
+                            "https://localhost:4200")
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+        });
+
         // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
@@ -96,12 +111,14 @@ public class Startup
                           .SetUserinfoEndpointUris("/connect/userinfo")
                           .SetVerificationEndpointUris("/connect/verify");
 
-                // Mark the "email", "profile" and "roles" scopes as supported scopes.
-                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles);
+                // Note: this sample uses the code, device code, password and refresh token flows, but you
+                // can enable the other flows if you need to support implicit or client credentials.
+                options.AllowAuthorizationCodeFlow()
+                       .AllowHybridFlow()
+                       .AllowRefreshTokenFlow();
 
-                // Note: this sample only uses the authorization code flow but you can enable
-                // the other flows if you need to support implicit, password or client credentials.
-                options.AllowAuthorizationCodeFlow();
+                // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.
+                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
 
                 // Register the signing and encryption credentials.
                 options.AddDevelopmentEncryptionCertificate()
