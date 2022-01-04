@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace OpeniddictServer.ViewModels.Shared
+namespace OpeniddictServer.ViewModels.Shared;
+
+public class ErrorViewModel
 {
-    public class ErrorViewModel
-    {
-        [Display(Name = "Error")]
-        public string Error { get; set; }
+    [Display(Name = "Error")]
+    public string Error { get; set; }
 
-        [Display(Name = "Description")]
-        public string ErrorDescription { get; set; }
-    }
+    [Display(Name = "Description")]
+    public string ErrorDescription { get; set; }
 }
