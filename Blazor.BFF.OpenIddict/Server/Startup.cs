@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Blazor.BFF.OpenIddict.Server
 {
@@ -47,7 +48,7 @@ namespace Blazor.BFF.OpenIddict.Server
                options.ClientId = openIDConnectSettings["ClientId"];
                options.ClientSecret = openIDConnectSettings["ClientSecret"];
                options.RequireHttpsMetadata = true;
-               options.ResponseType = "code";
+               options.ResponseType = OpenIdConnectResponseType.Code;
                options.UsePkce = true;
                options.Scope.Add("profile");
                options.SaveTokens = true;
