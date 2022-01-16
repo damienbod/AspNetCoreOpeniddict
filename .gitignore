@@ -27,3 +27,4 @@ AspNetCoreResourceServer/bin
 **/node_modules/
 /Sts.txt
 /api.txt
+/Blazor.BFF.OpenIddict/Client/Blazor.BFF.OpenIddict.Client.csproj.user
