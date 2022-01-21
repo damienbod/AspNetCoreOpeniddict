@@ -29,6 +29,9 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+
+2022-01-21 Update project
+
 2022-01-04 Update STS 
 
 2022-01-01 Added Blazor BFF WASM ASP.NET Core hosted demo
