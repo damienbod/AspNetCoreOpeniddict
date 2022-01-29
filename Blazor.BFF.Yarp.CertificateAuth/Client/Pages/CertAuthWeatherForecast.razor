@@ -1,10 +1,11 @@
 ﻿@page "/certAuthWeatherForecast"
 @inject IHttpClientFactory httpClientFactory
 @inject IJSRuntime JSRuntime
+@using Blazor.BFF.Yarp.CertificateAuth.Shared
 
-<h1>Data from Direct API</h1>
+<h1>certificate Auth protected data downstream API with YARP</h1>
 
-@if (apiData == null)
+@if (forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -13,14 +14,20 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Data</th>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var data in apiData)
+            @foreach (var forecast in forecasts)
             {
                 <tr>
-                    <td>@data</td>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
                 </tr>
             }
         </tbody>
@@ -28,7 +35,7 @@ else
 }
 
 @code {
-    private string[] apiData;
+    private WeatherForecast[] forecasts;
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,7 +44,6 @@ else
         var client = httpClientFactory.CreateClient("authorizedClient");
         client.DefaultRequestHeaders.Add("X-XSRF-TOKEN", token);
 
-        apiData = await client.GetFromJsonAsync<string[]>("WeatherForecast");
+        forecasts = await client.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
     }
-
 }
