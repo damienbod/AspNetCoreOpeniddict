@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Security.Cryptography.X509Certificates;
+using Yarp.ReverseProxy.Transforms;
 
 namespace Blazor.BFF.Yarp.CertificateAuth.Server
 {
@@ -59,13 +61,16 @@ namespace Blazor.BFF.Yarp.CertificateAuth.Server
             services.AddControllersWithViews(options =>
                  options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
-            services.AddRazorPages().AddMvcOptions(options =>
-            {
-                //var policy = new AuthorizationPolicyBuilder()
-                //    .RequireAuthenticatedUser()
-                //    .Build();
-                //options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            services.AddRazorPages();
+
+            var cert = new X509Certificate2("client.pfx", "1234");
+
+            services.AddReverseProxy()
+                .ConfigureHttpClient((context, handler) =>
+                {
+                    handler.SslOptions.ClientCertificates.Add(cert);
+                })
+               .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -96,6 +101,7 @@ namespace Blazor.BFF.Yarp.CertificateAuth.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapReverseProxy();
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
