@@ -43,23 +43,31 @@ namespace Blazor.BFF.Yarp.CertificateAuth.Server
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-           .AddCookie()
-           .AddOpenIdConnect(options =>
-           {
-               options.SignInScheme = "Cookies";
-               options.Authority = openIDConnectSettings["Authority"];
-               options.ClientId = openIDConnectSettings["ClientId"];
-               options.ClientSecret = openIDConnectSettings["ClientSecret"];
-               options.RequireHttpsMetadata = true;
-               options.ResponseType = OpenIdConnectResponseType.Code;
-               options.UsePkce = true;
-               options.Scope.Add("profile");
-               options.SaveTokens = true;
-               options.GetClaimsFromUserInfoEndpoint = true;
-           });
+            .AddCookie()
+            .AddOpenIdConnect(options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.Authority = openIDConnectSettings["Authority"];
+                options.ClientId = openIDConnectSettings["ClientId"];
+                options.ClientSecret = openIDConnectSettings["ClientSecret"];
+                options.RequireHttpsMetadata = true;
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                options.UsePkce = true;
+                options.Scope.Add("profile");
+                options.SaveTokens = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
+            });
+
+            // Create an authorization policy used by YARP when forwarding requests
+            // from the WASM application to the Dantooine.Api1 resource server.
+            services.AddAuthorization(options => options.AddPolicy("CookieAuthenticationPolicy", builder =>
+            {
+                builder.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
+                builder.RequireAuthenticatedUser();
+            }));
 
             services.AddControllersWithViews(options =>
-                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             services.AddRazorPages();
 
@@ -70,7 +78,7 @@ namespace Blazor.BFF.Yarp.CertificateAuth.Server
                 {
                     handler.SslOptions.ClientCertificates.Add(cert);
                 })
-               .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
+                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
