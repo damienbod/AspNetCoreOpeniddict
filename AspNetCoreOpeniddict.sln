@@ -21,6 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.OpenIddict.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.OpenIddict.Server", "Blazor.BFF.OpenIddict\Server\Blazor.BFF.OpenIddict.Server.csproj", "{FE8FEE2E-8156-4B37-B4A6-0316B4C7DC00}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor.BFF.Yarp.CertificateAuth", "Blazor.BFF.Yarp.CertificateAuth", "{146D59EA-B0DF-4D75-8948-C36E6A046F12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.Yarp.CertificateAuth.Shared", "Blazor.BFF.Yarp.CertificateAuth\Shared\Blazor.BFF.Yarp.CertificateAuth.Shared.csproj", "{8AB88375-F85D-48D8-A48B-D489DCE56B57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.Yarp.CertificateAuth.Client", "Blazor.BFF.Yarp.CertificateAuth\Client\Blazor.BFF.Yarp.CertificateAuth.Client.csproj", "{C2F00859-B5DF-4F01-81F1-DC60749E8CE8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.Yarp.CertificateAuth.Server", "Blazor.BFF.Yarp.CertificateAuth\Server\Blazor.BFF.Yarp.CertificateAuth.Server.csproj", "{A1284319-92AC-46A4-AB85-F6D47E01639B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +55,18 @@ Global
 		{FE8FEE2E-8156-4B37-B4A6-0316B4C7DC00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE8FEE2E-8156-4B37-B4A6-0316B4C7DC00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE8FEE2E-8156-4B37-B4A6-0316B4C7DC00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB88375-F85D-48D8-A48B-D489DCE56B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB88375-F85D-48D8-A48B-D489DCE56B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB88375-F85D-48D8-A48B-D489DCE56B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB88375-F85D-48D8-A48B-D489DCE56B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F00859-B5DF-4F01-81F1-DC60749E8CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F00859-B5DF-4F01-81F1-DC60749E8CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F00859-B5DF-4F01-81F1-DC60749E8CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F00859-B5DF-4F01-81F1-DC60749E8CE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1284319-92AC-46A4-AB85-F6D47E01639B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1284319-92AC-46A4-AB85-F6D47E01639B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1284319-92AC-46A4-AB85-F6D47E01639B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1284319-92AC-46A4-AB85-F6D47E01639B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +75,9 @@ Global
 		{079503F6-C36F-47FF-AB5B-710D6FB432E9} = {E7C9EF07-C69D-4016-A44E-78DEFFE1CC3A}
 		{084E9D07-0B9F-4BBD-9F44-731136621292} = {E7C9EF07-C69D-4016-A44E-78DEFFE1CC3A}
 		{FE8FEE2E-8156-4B37-B4A6-0316B4C7DC00} = {E7C9EF07-C69D-4016-A44E-78DEFFE1CC3A}
+		{8AB88375-F85D-48D8-A48B-D489DCE56B57} = {146D59EA-B0DF-4D75-8948-C36E6A046F12}
+		{C2F00859-B5DF-4F01-81F1-DC60749E8CE8} = {146D59EA-B0DF-4D75-8948-C36E6A046F12}
+		{A1284319-92AC-46A4-AB85-F6D47E01639B} = {146D59EA-B0DF-4D75-8948-C36E6A046F12}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5B55BBC-1EEA-47D2-A4D5-0DBA4EE78F99}
