@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
+using System.Net.Http;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Yarp.ReverseProxy.Transforms;
 
@@ -73,16 +75,19 @@ namespace Blazor.BFF.Yarp.CertificateAuth.Server
             services.AddRazorPages();
 
             var cert = new X509Certificate2("client.pfx", "1234");
-            var cert64 = Convert.ToBase64String(cert.RawData);
-            services.AddReverseProxy()
-                .LoadFromConfig(Configuration.GetSection("ReverseProxy"))
-         
-                .AddTransforms(builder => builder.AddRequestTransform(async context =>
-                {
-                   // context.HttpContext.Connection.ClientCertificate = cert;
 
-                    context.ProxyRequest.Headers.Add("X-ARR-ClientCert", cert64);
-                }));
+            services.AddReverseProxy()
+                 .ConfigureHttpClient((context, handler) =>
+                 {
+                     handler.SslOptions = new SslClientAuthenticationOptions
+                     {
+                        ClientCertificates = new X509CertificateCollection
+                        {
+                            cert
+                        }
+                     };
+                 })
+                .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
