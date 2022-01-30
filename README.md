@@ -82,3 +82,5 @@ https://blogs.msdn.microsoft.com/webdev/2017/04/06/jwt-validation-and-authorizat
 https://jwt.io/
 
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
+
+https://damienbod.com/2022/01/10/comparing-the-backend-for-frontend-bff-security-architecture-with-an-spa-ui-using-a-public-api/
