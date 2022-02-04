@@ -31,6 +31,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2022-02-04 Update solution
+
 2022-01-23 Fix API calls
 
 2022-01-21 Update project
