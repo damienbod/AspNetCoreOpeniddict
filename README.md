@@ -13,6 +13,8 @@
 
 [Secure a Blazor WASM ASP.NET Core hosted APP using BFF and OpenIddict](https://damienbod.com/2022/01/03/secure-a-blazor-wasm-asp-net-core-hosted-app-using-bff-and-openiddict/)
 
+[Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com)
+
 ## Creating Migrations
 
 ### Console
