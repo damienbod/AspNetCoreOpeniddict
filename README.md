@@ -13,6 +13,8 @@
 
 [Secure a Blazor WASM ASP.NET Core hosted APP using BFF and OpenIddict](https://damienbod.com/2022/01/03/secure-a-blazor-wasm-asp-net-core-hosted-app-using-bff-and-openiddict/)
 
+[Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com)
+
 ## Creating Migrations
 
 ### Console
@@ -28,6 +30,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2022-02-07 Update solution
 
 2022-01-23 Fix API calls
 
@@ -82,3 +86,5 @@ https://blogs.msdn.microsoft.com/webdev/2017/04/06/jwt-validation-and-authorizat
 https://jwt.io/
 
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
+
+https://damienbod.com/2022/01/10/comparing-the-backend-for-frontend-bff-security-architecture-with-an-spa-ui-using-a-public-api/
