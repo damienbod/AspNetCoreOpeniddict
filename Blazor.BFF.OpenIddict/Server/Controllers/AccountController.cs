@@ -4,30 +4,29 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Blazor.BFF.OpenIddict.Server.Controllers
-{
-    // orig src https://github.com/berhir/BlazorWebAssemblyCookieAuth
-    [Route("api/[controller]")]
-    public class AccountController : ControllerBase
-    {
-        [HttpGet("Login")]
-        public ActionResult Login(string returnUrl)
-        {
-            return Challenge(new AuthenticationProperties
-            {
-                RedirectUri = !string.IsNullOrEmpty(returnUrl) ? returnUrl : "/"
-            });
-        }
+namespace Blazor.BFF.OpenIddict.Server.Controllers;
 
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        [HttpPost("Logout")]
-        public IActionResult Logout()
+// orig src https://github.com/berhir/BlazorWebAssemblyCookieAuth
+[Route("api/[controller]")]
+public class AccountController : ControllerBase
+{
+    [HttpGet("Login")]
+    public ActionResult Login(string returnUrl)
+    {
+        return Challenge(new AuthenticationProperties
         {
-            return SignOut(
-                new AuthenticationProperties { RedirectUri = "/" },
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                OpenIdConnectDefaults.AuthenticationScheme);
-        }
+            RedirectUri = !string.IsNullOrEmpty(returnUrl) ? returnUrl : "/"
+        });
+    }
+
+    [ValidateAntiForgeryToken]
+    [Authorize]
+    [HttpPost("Logout")]
+    public IActionResult Logout()
+    {
+        return SignOut(
+            new AuthenticationProperties { RedirectUri = "/" },
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            OpenIdConnectDefaults.AuthenticationScheme);
     }
 }
