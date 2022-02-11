@@ -3,47 +3,46 @@ using ResourceServer.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ResourceServer.Controllers
+namespace ResourceServer.Controllers;
+
+[Authorize("dataEventRecordsPolicy")]
+[Route("api/[controller]")]
+public class DataEventRecordsController : Controller
 {
-    [Authorize("dataEventRecordsPolicy")]
-    [Route("api/[controller]")]
-    public class DataEventRecordsController : Controller
+    private readonly DataEventRecordRepository _dataEventRecordRepository;
+
+    public DataEventRecordsController(DataEventRecordRepository dataEventRecordRepository)
     {
-        private readonly DataEventRecordRepository _dataEventRecordRepository;
+        _dataEventRecordRepository = dataEventRecordRepository;
+    }
 
-        public DataEventRecordsController(DataEventRecordRepository dataEventRecordRepository)
-        {
-            _dataEventRecordRepository = dataEventRecordRepository;
-        }
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(_dataEventRecordRepository.GetAll());
+    }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_dataEventRecordRepository.GetAll());
-        }
+    [HttpGet("{id}")]
+    public IActionResult Get(long id)
+    {
+        return Ok(_dataEventRecordRepository.Get(id));
+    }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(long id)
-        {
-            return Ok(_dataEventRecordRepository.Get(id));
-        }
+    [HttpPost]
+    public void Post([FromBody]DataEventRecord value)
+    {
+        _dataEventRecordRepository.Post(value);
+    }
 
-        [HttpPost]
-        public void Post([FromBody]DataEventRecord value)
-        {
-            _dataEventRecordRepository.Post(value);
-        }
+    [HttpPut("{id}")]
+    public void Put(long id, [FromBody]DataEventRecord value)
+    {
+        _dataEventRecordRepository.Put(id, value);
+    }
 
-        [HttpPut("{id}")]
-        public void Put(long id, [FromBody]DataEventRecord value)
-        {
-            _dataEventRecordRepository.Put(id, value);
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(long id)
-        {
-            _dataEventRecordRepository.Delete(id);
-        }
+    [HttpDelete("{id}")]
+    public void Delete(long id)
+    {
+        _dataEventRecordRepository.Delete(id);
     }
 }
