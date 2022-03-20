@@ -20,7 +20,7 @@ public class UserController : ControllerBase
         return Ok(User.Identity.IsAuthenticated ? CreateUserInfo(User) : UserInfo.Anonymous);
     }
 
-    private UserInfo CreateUserInfo(ClaimsPrincipal claimsPrincipal)
+    private static UserInfo CreateUserInfo(ClaimsPrincipal claimsPrincipal)
     {
         if (!claimsPrincipal.Identity.IsAuthenticated)
         {

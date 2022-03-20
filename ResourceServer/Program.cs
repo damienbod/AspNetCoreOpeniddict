@@ -51,13 +51,13 @@ public class Program
                 //.AddUserSecrets("your user secret....");
 
             })
+            .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                .ReadFrom.Configuration(hostingContext.Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .WriteTo.File("../api.txt"))
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>()
-                    .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .ReadFrom.Configuration(hostingContext.Configuration)
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                    .WriteTo.File("../api.txt"));
+                webBuilder.UseStartup<Startup>(); 
             });
 }

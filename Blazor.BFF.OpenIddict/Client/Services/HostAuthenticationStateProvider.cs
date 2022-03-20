@@ -23,7 +23,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
     private readonly ILogger<HostAuthenticationStateProvider> _logger;
 
     private DateTimeOffset _userLastCheck = DateTimeOffset.FromUnixTimeSeconds(0);
-    private ClaimsPrincipal _cachedUser = new ClaimsPrincipal(new ClaimsIdentity());
+    private ClaimsPrincipal _cachedUser = new(new ClaimsIdentity());
 
     public HostAuthenticationStateProvider(NavigationManager navigation, HttpClient client, ILogger<HostAuthenticationStateProvider> logger)
     {
@@ -67,7 +67,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
         try
         {
-            _logger.LogInformation(_client.BaseAddress.ToString());
+            _logger.LogInformation("{clientBaseAddress}", _client.BaseAddress.ToString());
             user = await _client.GetFromJsonAsync<UserInfo>("api/User");
         }
         catch (Exception exc)
