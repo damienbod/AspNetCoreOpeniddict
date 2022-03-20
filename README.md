@@ -31,6 +31,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2022-03-20 Update , using nullable
+
 2022-02-07 Update solution
 
 2022-01-23 Fix API calls

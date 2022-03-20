@@ -37,7 +37,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
         return new AuthenticationState(await GetUser(useCache: true));
     }
 
-    public void SignIn(string customReturnUrl = null)
+    public void SignIn(string? customReturnUrl = null)
     {
         var returnUrl = customReturnUrl != null ? _navigation.ToAbsoluteUri(customReturnUrl).ToString() : null;
         var encodedReturnUrl = Uri.EscapeDataString(returnUrl ?? _navigation.Uri);
@@ -63,11 +63,11 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
     private async Task<ClaimsPrincipal> FetchUser()
     {
-        UserInfo user = null;
+        UserInfo? user = null;
 
         try
         {
-            _logger.LogInformation("{clientBaseAddress}", _client.BaseAddress.ToString());
+            _logger.LogInformation("{clientBaseAddress}", _client.BaseAddress?.ToString());
             user = await _client.GetFromJsonAsync<UserInfo>("api/User");
         }
         catch (Exception exc)

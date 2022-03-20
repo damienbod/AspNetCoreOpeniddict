@@ -17,12 +17,13 @@ public class UserController : ControllerBase
     [AllowAnonymous]
     public IActionResult GetCurrentUser()
     {
-        return Ok(User.Identity.IsAuthenticated ? CreateUserInfo(User) : UserInfo.Anonymous);
+        var userAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
+        return Ok(userAuthenticated ? CreateUserInfo(User) : UserInfo.Anonymous);
     }
 
     private static UserInfo CreateUserInfo(ClaimsPrincipal claimsPrincipal)
     {
-        if (!claimsPrincipal.Identity.IsAuthenticated)
+        if (claimsPrincipal.Identity != null && !claimsPrincipal.Identity.IsAuthenticated)
         {
             return UserInfo.Anonymous;
         }
