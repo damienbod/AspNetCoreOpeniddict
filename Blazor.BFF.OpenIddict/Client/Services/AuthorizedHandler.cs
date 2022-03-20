@@ -21,7 +21,7 @@ public class AuthorizedHandler : DelegatingHandler
     {
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         HttpResponseMessage responseMessage;
-        if (!authState.User.Identity.IsAuthenticated)
+        if (authState.User.Identity != null && !authState.User.Identity.IsAuthenticated)
         {
             // if user is not authenticated, immediately set response status to 401 Unauthorized
             responseMessage = new HttpResponseMessage(HttpStatusCode.Unauthorized);
