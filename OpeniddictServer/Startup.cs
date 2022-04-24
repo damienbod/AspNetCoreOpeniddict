@@ -8,6 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using OpeniddictServer.Data;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace OpeniddictServer;
 
@@ -85,6 +90,53 @@ public class Startup
 
         // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie()
+            .AddOpenIdConnect(options =>
+            {
+                /*
+                 * ASP.NET core uses the http://*:5000 and https://*:5001 ports for default communication with the OIDC middleware
+                 * The app requires load balancing services to work with :80 or :443
+                 * These needs to be added to the keycloak client, in order for the redirect to work.
+                 * If you however intend to use the app by itself then,
+                 * Change the ports in launchsettings.json, but beware to also change the options.CallbackPath and options.SignedOutCallbackPath!
+                 * Use LB services whenever possible, to reduce the config hazzle :)
+                */
+
+                //Use default signin scheme
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                //Keycloak server
+                options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
+                //Keycloak client ID
+                options.ClientId = Configuration.GetSection("Keycloak")["ClientId"];
+                //Keycloak client secret
+                options.ClientSecret = Configuration.GetSection("Keycloak")["ClientSecret"];
+                //Keycloak .wellknown config origin to fetch config
+                options.MetadataAddress = Configuration.GetSection("Keycloak")["Metadata"];
+                //Require keycloak to use SSL
+                options.RequireHttpsMetadata = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                //Save the token
+                options.SaveTokens = true;
+                //Token response type, will sometimes need to be changed to IdToken, depending on config.
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                //SameSite is needed for Chrome/Firefox, as they will give http error 500 back, if not set to unspecified.
+                options.NonceCookie.SameSite = SameSiteMode.Unspecified;
+                options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = ClaimTypes.Role,
+                    ValidateIssuer = true
+                };
+
+                options.RequireHttpsMetadata = false;
+            });
+
 
         services.AddOpenIddict()
 
