@@ -137,7 +137,6 @@ public class Startup
                 options.RequireHttpsMetadata = false;
             });
 
-
         services.AddOpenIddict()
 
             // Register the OpenIddict core components.
