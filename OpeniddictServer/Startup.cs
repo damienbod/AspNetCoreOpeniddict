@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Logging;
 
 namespace OpeniddictServer;
 
@@ -92,7 +93,6 @@ public class Startup
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie()
             .AddOpenIdConnect(options =>
             {
                 /*
@@ -105,7 +105,7 @@ public class Startup
                 */
 
                 //Use default signin scheme
-                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.SignInScheme = "Identity.External";
                 //Keycloak server
                 options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
                 //Keycloak client ID
@@ -201,6 +201,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        IdentityModelEventSource.ShowPII = true;
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
