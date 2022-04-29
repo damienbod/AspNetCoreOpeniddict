@@ -93,7 +93,7 @@ public class Startup
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddOpenIdConnect(options =>
+            .AddOpenIdConnect("KeyCloak", "KeyCloak", options =>
             {
                 /*
                  * ASP.NET core uses the http://*:5000 and https://*:5001 ports for default communication with the OIDC middleware
