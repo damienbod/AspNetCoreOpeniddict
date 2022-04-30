@@ -95,16 +95,6 @@ public class Startup
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddOpenIdConnect("KeyCloak", "KeyCloak", options =>
             {
-                /*
-                 * ASP.NET core uses the http://*:5000 and https://*:5001 ports for default communication with the OIDC middleware
-                 * The app requires load balancing services to work with :80 or :443
-                 * These needs to be added to the keycloak client, in order for the redirect to work.
-                 * If you however intend to use the app by itself then,
-                 * Change the ports in launchsettings.json, but beware to also change the options.CallbackPath and options.SignedOutCallbackPath!
-                 * Use LB services whenever possible, to reduce the config hazzle :)
-                */
-
-                //Use default signin scheme
                 options.SignInScheme = "Identity.External";
                 //Keycloak server
                 options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
@@ -115,13 +105,11 @@ public class Startup
                 //Keycloak .wellknown config origin to fetch config
                 options.MetadataAddress = Configuration.GetSection("Keycloak")["Metadata"];
                 //Require keycloak to use SSL
-                options.RequireHttpsMetadata = true;
+                options.RequireHttpsMetadata = false; //dev
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
-                //Save the token
                 options.SaveTokens = true;
-                //Token response type, will sometimes need to be changed to IdToken, depending on config.
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 //SameSite is needed for Chrome/Firefox, as they will give http error 500 back, if not set to unspecified.
                 options.NonceCookie.SameSite = SameSiteMode.Unspecified;
@@ -133,8 +121,6 @@ public class Startup
                     RoleClaimType = ClaimTypes.Role,
                     ValidateIssuer = true
                 };
-
-                options.RequireHttpsMetadata = false;
             });
 
         services.AddOpenIddict()
