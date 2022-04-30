@@ -90,3 +90,11 @@ https://jwt.io/
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
 
 https://damienbod.com/2022/01/10/comparing-the-backend-for-frontend-bff-security-architecture-with-an-spa-ui-using-a-public-api/
+
+## Keycloak links
+
+https://docs.microsoft.com/en-us/java/openjdk/download
+
+>https://github.com/tuxiem/AspNetCore-keycloak
+
+https://wjw465150.gitbooks.io/keycloak-documentation/content/server_installation/topics/network/https.html
