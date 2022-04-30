@@ -100,20 +100,18 @@ public class Startup
                 options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
                 //Keycloak client ID
                 options.ClientId = Configuration.GetSection("Keycloak")["ClientId"];
-                //Keycloak client secret
+                //Keycloak client secret in user secrets for dev
                 options.ClientSecret = Configuration.GetSection("Keycloak")["ClientSecret"];
                 //Keycloak .wellknown config origin to fetch config
                 options.MetadataAddress = Configuration.GetSection("Keycloak")["Metadata"];
                 //Require keycloak to use SSL
-                options.RequireHttpsMetadata = false; //dev
+                
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.SaveTokens = true;
                 options.ResponseType = OpenIdConnectResponseType.Code;
-                //SameSite is needed for Chrome/Firefox, as they will give http error 500 back, if not set to unspecified.
-                options.NonceCookie.SameSite = SameSiteMode.Unspecified;
-                options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+                options.RequireHttpsMetadata = false; //dev
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
