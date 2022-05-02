@@ -15,7 +15,7 @@
 
 [Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com/2022/02/07/using-blazor-with-a-yarp-downstream-api-protected-using-certificate-authentication/)
 
-[Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation]()
+[Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation](https://damienbod.com/2022/05/02/implement-an-openiddict-identity-provider-using-asp-net-core-identity-with-keycloak-federation/)
 
 ## Creating Migrations
 
