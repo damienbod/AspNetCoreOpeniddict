@@ -15,6 +15,8 @@
 
 [Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com/2022/02/07/using-blazor-with-a-yarp-downstream-api-protected-using-certificate-authentication/)
 
+[Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation]()
+
 ## Creating Migrations
 
 ### Console
@@ -31,7 +33,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
-2022-05-01 Update packages, add external provider
+2022-05-02 Update packages, add external provider
 
 2022-03-20 Update , using nullable
 
