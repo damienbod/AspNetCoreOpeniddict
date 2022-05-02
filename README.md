@@ -15,6 +15,8 @@
 
 [Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com/2022/02/07/using-blazor-with-a-yarp-downstream-api-protected-using-certificate-authentication/)
 
+[Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation]()
+
 ## Creating Migrations
 
 ### Console
@@ -30,6 +32,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2022-05-02 Update packages, add external provider
 
 2022-03-20 Update , using nullable
 
@@ -90,3 +94,11 @@ https://jwt.io/
 https://www.scottbrady91.com/OpenID-Connect/OpenID-Connect-Flows
 
 https://damienbod.com/2022/01/10/comparing-the-backend-for-frontend-bff-security-architecture-with-an-spa-ui-using-a-public-api/
+
+## Keycloak links
+
+https://docs.microsoft.com/en-us/java/openjdk/download
+
+>https://github.com/tuxiem/AspNetCore-keycloak
+
+https://wjw465150.gitbooks.io/keycloak-documentation/content/server_installation/topics/network/https.html

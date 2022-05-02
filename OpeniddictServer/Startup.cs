@@ -8,6 +8,12 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using OpeniddictServer.Data;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Logging;
 
 namespace OpeniddictServer;
 
@@ -86,6 +92,35 @@ public class Startup
         // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddOpenIdConnect("KeyCloak", "KeyCloak", options =>
+            {
+                options.SignInScheme = "Identity.External";
+                //Keycloak server
+                options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
+                //Keycloak client ID
+                options.ClientId = Configuration.GetSection("Keycloak")["ClientId"];
+                //Keycloak client secret in user secrets for dev
+                options.ClientSecret = Configuration.GetSection("Keycloak")["ClientSecret"];
+                //Keycloak .wellknown config origin to fetch config
+                options.MetadataAddress = Configuration.GetSection("Keycloak")["Metadata"];
+                //Require keycloak to use SSL
+                
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.SaveTokens = true;
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                options.RequireHttpsMetadata = false; //dev
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = ClaimTypes.Role,
+                    ValidateIssuer = true
+                };
+            });
+
         services.AddOpenIddict()
 
             // Register the OpenIddict core components.
@@ -150,6 +185,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        IdentityModelEventSource.ShowPII = true;
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
