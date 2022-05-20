@@ -33,6 +33,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2022-05-20 Update packages
+
 2022-05-02 Update packages, add external provider
 
 2022-03-20 Update , using nullable
