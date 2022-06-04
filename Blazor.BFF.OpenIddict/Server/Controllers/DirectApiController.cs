@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +11,5 @@ namespace Blazor.BFF.OpenIddict.Server.Controllers;
 public class DirectApiController : ControllerBase
 {
     [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new List<string> { "some data", "more data", "loads of data" };
-    }
+    public IEnumerable<string> Get() => new List<string> { "some data", "more data", "loads of data" };
 }

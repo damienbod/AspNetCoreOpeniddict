@@ -1,12 +1,10 @@
 ﻿using Blazor.BFF.OpenIddict.Shared.Authorization;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Net.Http;
+
 using System.Net.Http.Json;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Blazor.BFF.OpenIddict.Client.Services;
 
@@ -33,9 +31,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
-    {
-        return new AuthenticationState(await GetUser(useCache: true));
-    }
+        => new AuthenticationState(await GetUser(useCache: true));
 
     public void SignIn(string? customReturnUrl = null)
     {
@@ -87,10 +83,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
         if (user.Claims != null)
         {
-            foreach (var claim in user.Claims)
-            {
-                identity.AddClaim(new Claim(claim.Type, claim.Value));
-            }
+            identity.AddClaims(user.Claims.Select(c => new Claim(c.Type, c.Value)));
         }
 
         return new ClaimsPrincipal(identity);

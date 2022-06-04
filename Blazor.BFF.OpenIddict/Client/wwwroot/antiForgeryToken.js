@@ -1,4 +1,3 @@
-
 function getAntiForgeryToken() {
     var elements = document.getElementsByName('__RequestVerificationToken');
     if (elements.length > 0) {
