@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using Blazor.BFF.OpenIddict.Shared.Authorization;
-using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,8 +39,8 @@ public class UserController : ControllerBase
         }
         else
         {
-            userInfo.NameClaimType = JwtClaimTypes.Name;
-            userInfo.RoleClaimType = JwtClaimTypes.Role;
+            userInfo.NameClaimType = "name";
+            userInfo.RoleClaimType = "role";
         }
 
         if (claimsPrincipal.Claims.Any())
