@@ -1,7 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Blazor.BFF.OpenIddict.Client.Services;
 
@@ -11,9 +8,7 @@ public class AuthorizedHandler : DelegatingHandler
     private readonly HostAuthenticationStateProvider _authenticationStateProvider;
 
     public AuthorizedHandler(HostAuthenticationStateProvider authenticationStateProvider)
-    {
-        _authenticationStateProvider = authenticationStateProvider;
-    }
+        => _authenticationStateProvider = authenticationStateProvider;
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
