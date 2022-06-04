@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Net.Http.Headers;
 
-// ReSharper disable once CheckNamespace
-namespace Microsoft.AspNetCore.Builder;
+namespace Blazor.BFF.OpenIddict.Server.Services;
 
 public static class ApplicationBuilderExtensions
 {
@@ -17,7 +10,7 @@ public static class ApplicationBuilderExtensions
         {
             if (segments.Any(s => httpContext.Request.Path.StartsWithSegments(s)))
             {
-                httpContext.Request.Headers[HeaderNames.XRequestedWith] = "XMLHttpRequest"; 
+                httpContext.Request.Headers[HeaderNames.XRequestedWith] = "XMLHttpRequest";
             }
 
             await func();

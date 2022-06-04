@@ -1,14 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Routing.Patterns;
-
-// ReSharper disable once CheckNamespace
-namespace Microsoft.AspNetCore.Builder;
+namespace Blazor.BFF.OpenIddict.Server.Services;
 
 public static class EndpointRouteBuilderExtensions
 {
