@@ -227,6 +227,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseSession();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
