@@ -29,3 +29,4 @@ AspNetCoreResourceServer/bin
 /api.txt
 /Blazor.BFF.OpenIddict/Client/Blazor.BFF.OpenIddict.Client.csproj.user
 /oidc-server.txt
+/OpeniddictServer/OpeniddictServer.csproj.user

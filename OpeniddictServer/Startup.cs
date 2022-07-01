@@ -52,8 +52,9 @@ public class Startup
 
         services.Configure<Fido2Configuration>(Configuration.GetSection("fido2"));
         services.AddScoped<Fido2Store>();
-        // Adds a default in-memory implementation of IDistributedCache.
+
         services.AddDistributedMemoryCache();
+
         services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(2);
