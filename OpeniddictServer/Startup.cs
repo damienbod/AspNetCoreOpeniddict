@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Logging;
+using Fido2Identity;
+using Fido2NetLib;
 
 namespace OpeniddictServer;
 
@@ -42,10 +44,28 @@ public class Startup
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
+        var connectionString = Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(connectionString));
+
         services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders()
-            .AddDefaultUI();
+          .AddEntityFrameworkStores<ApplicationDbContext>()
+          .AddDefaultTokenProviders()
+          .AddDefaultUI()
+          .AddTokenProvider<Fifo2UserTwoFactorTokenProvider>("FIDO2");
+
+        services.Configure<Fido2Configuration>(Configuration.GetSection("fido2"));
+        services.AddScoped<Fido2Store>();
+        // Adds a default in-memory implementation of IDistributedCache.
+        services.AddDistributedMemoryCache();
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(2);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
 
         services.Configure<IdentityOptions>(options =>
         {
