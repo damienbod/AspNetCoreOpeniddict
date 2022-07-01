@@ -48,7 +48,7 @@ public class Startup
           .AddEntityFrameworkStores<ApplicationDbContext>()
           .AddDefaultTokenProviders()
           .AddDefaultUI()
-          .AddTokenProvider<Fifo2UserTwoFactorTokenProvider>("FIDO2");
+          .AddTokenProvider<Fido2UserTwoFactorTokenProvider>("FIDO2");
 
         services.Configure<Fido2Configuration>(Configuration.GetSection("fido2"));
         services.AddScoped<Fido2Store>();
