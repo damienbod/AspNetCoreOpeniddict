@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Fido2NetLib.Fido2;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using OpeniddictServer.Data;
 
 namespace Fido2Identity;
 
@@ -14,12 +15,12 @@ public class MfaFido2RegisterController : Controller
     private readonly Fido2 _lib;
     public static IMetadataService? _mds;
     private readonly Fido2Store _fido2Store;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IOptions<Fido2Configuration> _optionsFido2Configuration;
 
     public MfaFido2RegisterController(
         Fido2Store fido2Store,
-        UserManager<IdentityUser> userManager,
+        UserManager<ApplicationUser> userManager,
         IOptions<Fido2Configuration> optionsFido2Configuration)
     {
         _userManager = userManager;
@@ -52,16 +53,16 @@ public class MfaFido2RegisterController : Controller
                 username = $"{displayName} (Usernameless user created at {DateTime.UtcNow})";
             }
 
-            var identityUser = await _userManager.FindByEmailAsync(username);
+            var ApplicationUser = await _userManager.FindByEmailAsync(username);
             var user = new Fido2User
             {
-                DisplayName = identityUser.UserName,
-                Name = identityUser.UserName,
-                Id = Encoding.UTF8.GetBytes(identityUser.UserName) // byte representation of userID is required
+                DisplayName = ApplicationUser.UserName,
+                Name = ApplicationUser.UserName,
+                Id = Encoding.UTF8.GetBytes(ApplicationUser.UserName) // byte representation of userID is required
             };
 
             // 2. Get user existing keys by username
-            var items = await _fido2Store.GetCredentialsByUserNameAsync(identityUser.UserName);
+            var items = await _fido2Store.GetCredentialsByUserNameAsync(ApplicationUser.UserName);
             var existingKeys = new List<PublicKeyCredentialDescriptor>();
             foreach (var publicKeyCredentialDescriptor in items)
             {

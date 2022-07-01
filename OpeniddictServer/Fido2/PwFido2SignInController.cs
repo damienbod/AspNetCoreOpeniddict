@@ -4,6 +4,7 @@ using Fido2NetLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using OpeniddictServer.Data;
 
 namespace Fido2Identity;
 
@@ -12,14 +13,14 @@ public class PwFido2SignInController : Controller
 {
     private readonly Fido2 _lib;
     private readonly Fido2Store _fido2Store;
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IOptions<Fido2Configuration> _optionsFido2Configuration;
 
     public PwFido2SignInController(
         Fido2Store fido2Store,
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
         IOptions<Fido2Configuration> optionsFido2Configuration)
     {
         _userManager = userManager;
@@ -54,18 +55,18 @@ public class PwFido2SignInController : Controller
 
             if (!string.IsNullOrEmpty(username))
             {
-                var identityUser = await _userManager.FindByNameAsync(username);
+                var ApplicationUser = await _userManager.FindByNameAsync(username);
                 var user = new Fido2User
                 {
-                    DisplayName = identityUser.UserName,
-                    Name = identityUser.UserName,
-                    Id = Encoding.UTF8.GetBytes(identityUser.UserName) // byte representation of userID is required
+                    DisplayName = ApplicationUser.UserName,
+                    Name = ApplicationUser.UserName,
+                    Id = Encoding.UTF8.GetBytes(ApplicationUser.UserName) // byte representation of userID is required
                 };
 
                 if (user == null) throw new ArgumentException("Username was not registered");
 
                 // 2. Get registered credentials from database
-                var items = await _fido2Store.GetCredentialsByUserNameAsync(identityUser.UserName);
+                var items = await _fido2Store.GetCredentialsByUserNameAsync(ApplicationUser.UserName);
                 existingCredentials = items.Select(c => c.Descriptor).NotNull().ToList();
             }
 
@@ -136,13 +137,13 @@ public class PwFido2SignInController : Controller
             // 6. Store the updated counter
             await _fido2Store.UpdateCounterAsync(res.CredentialId, res.Counter);
 
-            var identityUser = await _userManager.FindByNameAsync(creds.UserName);
-            if (identityUser == null)
+            var ApplicationUser = await _userManager.FindByNameAsync(creds.UserName);
+            if (ApplicationUser == null)
             {
                 throw new InvalidOperationException($"Unable to load user.");
             }
 
-            await _signInManager.SignInAsync(identityUser, isPersistent: false);
+            await _signInManager.SignInAsync(ApplicationUser, isPersistent: false);
 
             // 7. return OK to client
             return Json(res);

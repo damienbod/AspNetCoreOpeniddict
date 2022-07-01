@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Fido2NetLib.Fido2;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using OpeniddictServer.Data;
 
 namespace Fido2Identity;
 
@@ -13,13 +14,13 @@ public class PwFido2RegisterController : Controller
 {
     private readonly Fido2 _lib;
     private readonly Fido2Store _fido2Store;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IOptions<Fido2Configuration> _optionsFido2Configuration;
 
 
     public PwFido2RegisterController(
         Fido2Store fido2Store,
-        UserManager<IdentityUser> userManager,
+        UserManager<ApplicationUser> userManager,
         IOptions<Fido2Configuration> optionsFido2Configuration)
     {
         _userManager = userManager;
@@ -160,9 +161,9 @@ public class PwFido2RegisterController : Controller
         }
     }
 
-    private async Task<IdentityUser> CreateUser(string userEmail)
+    private async Task<ApplicationUser> CreateUser(string userEmail)
     {
-        var user = new IdentityUser { UserName = userEmail, Email = userEmail, EmailConfirmed = true };
+        var user = new ApplicationUser { UserName = userEmail, Email = userEmail, EmailConfirmed = true };
         var result = await _userManager.CreateAsync(user);
         if (result.Succeeded)
         {

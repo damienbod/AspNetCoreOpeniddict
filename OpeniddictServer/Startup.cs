@@ -16,6 +16,8 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Logging;
 using Fido2Identity;
 using Fido2NetLib;
+using OpeniddictServer.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace OpeniddictServer;
 
@@ -43,11 +45,6 @@ public class Startup
         });
 
         services.AddDatabaseDeveloperPageExceptionFilter();
-
-        var connectionString = Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
-
-        services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(connectionString));
 
         services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>()

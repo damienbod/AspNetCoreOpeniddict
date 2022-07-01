@@ -4,6 +4,7 @@ using Fido2NetLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using OpeniddictServer.Data;
 
 namespace Fido2Identity;
 
@@ -12,12 +13,12 @@ public class MfaFido2SignInFidoController : Controller
 {
     private readonly Fido2 _lib;
     private readonly Fido2Store _fido2Store;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IOptions<Fido2Configuration> _optionsFido2Configuration;
 
     public MfaFido2SignInFidoController(
         Fido2Store fido2Store,
-        SignInManager<IdentityUser> signInManager,
+        SignInManager<ApplicationUser> signInManager,
         IOptions<Fido2Configuration> optionsFido2Configuration)
     {
         _optionsFido2Configuration = optionsFido2Configuration;
@@ -45,28 +46,28 @@ public class MfaFido2SignInFidoController : Controller
     {
         try
         {
-            var identityUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (identityUser == null)
+            var ApplicationUser = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+            if (ApplicationUser == null)
             {
                 throw new InvalidOperationException($"Unable to load two-factor authentication user.");
             }
 
             var existingCredentials = new List<PublicKeyCredentialDescriptor>();
 
-            if (!string.IsNullOrEmpty(identityUser.UserName))
+            if (!string.IsNullOrEmpty(ApplicationUser.UserName))
             {
 
                 var user = new Fido2User
                 {
-                    DisplayName = identityUser.UserName,
-                    Name = identityUser.UserName,
-                    Id = Encoding.UTF8.GetBytes(identityUser.UserName) // byte representation of userID is required
+                    DisplayName = ApplicationUser.UserName,
+                    Name = ApplicationUser.UserName,
+                    Id = Encoding.UTF8.GetBytes(ApplicationUser.UserName) // byte representation of userID is required
                 };
 
                 if (user == null) throw new ArgumentException("Username was not registered");
 
                 // 2. Get registered credentials from database
-                var items = await _fido2Store.GetCredentialsByUserNameAsync(identityUser.UserName);
+                var items = await _fido2Store.GetCredentialsByUserNameAsync(ApplicationUser.UserName);
                 existingCredentials = items.Select(c => c.Descriptor).NotNull().ToList();
             }
 

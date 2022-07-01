@@ -12,7 +12,7 @@ using OpeniddictServer.Data;
 namespace OpeniddictServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220701093116_aspnet_core_identity_fido2")]
+    [Migration("20220701100521_aspnet_core_identity_fido2")]
     partial class aspnet_core_identity_fido2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,12 +209,10 @@ namespace OpeniddictServer.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -251,12 +249,10 @@ namespace OpeniddictServer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
