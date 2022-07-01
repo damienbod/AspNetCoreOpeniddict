@@ -16,8 +16,6 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Logging;
 using Fido2Identity;
 using Fido2NetLib;
-using OpeniddictServer.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace OpeniddictServer;
 
