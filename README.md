@@ -17,6 +17,9 @@
 
 [Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation](https://damienbod.com/2022/05/02/implement-an-openiddict-identity-provider-using-asp-net-core-identity-with-keycloak-federation/)
 
+[Add Fido2 MFA to an OpenIddict identity provider using ASP.NET Core Identity](https://damienbod.com/2022/07/04/add-fido2-mfa-to-an-openiddict-identity-provider-using-asp-net-core-identity/)
+
+
 ## Creating Migrations
 
 ### Console
