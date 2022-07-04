@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Logging;
+using Fido2Identity;
+using Fido2NetLib;
 
 namespace OpeniddictServer;
 
@@ -43,9 +45,23 @@ public class Startup
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders()
-            .AddDefaultUI();
+          .AddEntityFrameworkStores<ApplicationDbContext>()
+          .AddDefaultTokenProviders()
+          .AddDefaultUI()
+          .AddTokenProvider<Fido2UserTwoFactorTokenProvider>("FIDO2");
+
+        services.Configure<Fido2Configuration>(Configuration.GetSection("fido2"));
+        services.AddScoped<Fido2Store>();
+
+        services.AddDistributedMemoryCache();
+
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(2);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -210,6 +226,8 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseSession();
 
         app.UseEndpoints(endpoints =>
         {
