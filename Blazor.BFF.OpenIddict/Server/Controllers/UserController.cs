@@ -41,14 +41,14 @@ public class UserController : ControllerBase
 
         if (claimsPrincipal?.Claims?.Any() ?? false)
         {
+            // Add just the name claim
             var claims = claimsPrincipal.FindAll(userInfo.NameClaimType)
                                         .Select(u => new ClaimValue(userInfo.NameClaimType, u.Value))
                                         .ToList();
 
             // Uncomment this code if you want to send additional claims to the client.
-            //var allClaims = claimsPrincipal.Claims.Select(u => new ClaimValue(userInfo.NameClaimType, u.Value))
+            //var claims = claimsPrincipal.Claims.Select(u => new ClaimValue(u.Type, u.Value))
             //                                      .ToList();
-            //claims.AddRange(allclaims).Distinct();
 
             userInfo.Claims = claims;
         }
