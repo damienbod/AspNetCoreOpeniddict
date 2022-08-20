@@ -6,10 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.6" NoWarn="NU1605" />
-		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.16.1" />
-		<PackageReference Include="Yarp.ReverseProxy" Version="1.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.8" NoWarn="NU1605" />
+		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.17.0" />
+		<PackageReference Include="Yarp.ReverseProxy" Version="1.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>

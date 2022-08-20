@@ -19,7 +19,6 @@
 
 [Add Fido2 MFA to an OpenIddict identity provider using ASP.NET Core Identity](https://damienbod.com/2022/07/04/add-fido2-mfa-to-an-openiddict-identity-provider-using-asp-net-core-identity/)
 
-
 ## Creating Migrations
 
 ### Console
@@ -35,6 +34,8 @@ Add-Migration "init_sts" -c ApplicationDbContext
 Update-Database -Context ApplicationDbContext
 
 ## History
+
+2022-08-20 Updated packages
 
 2022-07-01 Add support for FIDO2 to the OpenIddict server
 
