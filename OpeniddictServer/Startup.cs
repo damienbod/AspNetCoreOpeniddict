@@ -166,6 +166,7 @@ public class Startup
                 // can enable the other flows if you need to support implicit or client credentials.
                 options.AllowAuthorizationCodeFlow()
                        .AllowHybridFlow()
+                       .AllowClientCredentialsFlow()
                        .AllowRefreshTokenFlow();
 
                 // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.

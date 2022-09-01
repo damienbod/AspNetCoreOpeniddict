@@ -1,9 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using System.Globalization;
 using OpenIddict.Abstractions;
 using OpeniddictServer.Data;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -69,6 +64,24 @@ namespace OpeniddictServer
                         {
                             Requirements.Features.ProofKeyForCodeExchange
                         }
+                    });
+                }
+
+                // API application CC
+                if (await manager.FindByClientIdAsync("CC") == null)
+                {
+                    await manager.CreateAsync(new OpenIddictApplicationDescriptor
+                    {
+                        ClientId = "CC",
+                        ClientSecret = "cc_secret",
+                        DisplayName = "CC for protected API",
+                        Permissions =
+                    {
+                        Permissions.Endpoints.Authorization,
+                        Permissions.Endpoints.Token,
+                        Permissions.GrantTypes.ClientCredentials,
+                        Permissions.Prefixes.Scope + "dataEventRecords"
+                    }
                     });
                 }
 
