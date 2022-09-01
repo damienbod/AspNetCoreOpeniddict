@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GrpcAzureAppServiceAppAuth;
 
-[Authorize(Policy = "ValidateAccessTokenPolicy", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize("dataEventRecordsPolicy")]
 public class GreeterService : Greeter.GreeterBase
 {
     public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)

@@ -14,7 +14,7 @@ var clientCredentialAccessTokenClient
     = new ClientCredentialAccessTokenClient(configuration, new HttpClient());
 
 // 2. Get access token
-var accessToken = clientCredentialAccessTokenClient.GetAccessToken(
+var accessToken = await clientCredentialAccessTokenClient.GetAccessToken(
     "CC",
     "dataEventRecords",
     "cc_secret"
