@@ -18,9 +18,9 @@ builder.Services.AddOpenIddict()
 
         // Configure the validation handler to use introspection and register the client
         // credentials used when communicating with the remote introspection endpoint.
-        //options.UseIntrospection()
-        //        .SetClientId("rs_dataEventRecordsApi")
-        //        .SetClientSecret("dataEventRecordsSecret");
+        options.UseIntrospection()
+                .SetClientId("rs_dataEventRecordsApi")
+                .SetClientSecret("dataEventRecordsSecret");
 
         // disable access token encyption for this
         options.UseAspNetCore();
