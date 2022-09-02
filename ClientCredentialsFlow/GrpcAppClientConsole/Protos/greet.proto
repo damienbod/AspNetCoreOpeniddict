@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "GrpcAzureAppServiceAppAuth";
+option csharp_namespace = "GrpcApi";
 
 package greet;
 
