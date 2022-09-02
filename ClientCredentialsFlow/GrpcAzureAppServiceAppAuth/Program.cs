@@ -1,4 +1,4 @@
-using GrpcAzureAppServiceAppAuth;
+using GrpcApi;
 using OpenIddict.Validation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

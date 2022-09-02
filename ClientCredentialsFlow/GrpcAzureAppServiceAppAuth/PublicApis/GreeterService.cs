@@ -1,8 +1,7 @@
 using Grpc.Core;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 
-namespace GrpcAzureAppServiceAppAuth;
+namespace GrpcApi;
 
 [Authorize("dataEventRecordsPolicy")]
 public class GreeterService : Greeter.GreeterBase

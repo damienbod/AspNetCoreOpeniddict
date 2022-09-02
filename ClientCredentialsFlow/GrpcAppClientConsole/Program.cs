@@ -1,5 +1,5 @@
 ﻿using Grpc.Net.Client;
-using GrpcAzureAppServiceAppAuth;
+using GrpcApi;
 using Microsoft.Extensions.Configuration;
 using Grpc.Core;
 using GrpcAppClientConsole;

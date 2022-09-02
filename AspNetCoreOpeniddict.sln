@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.BFF.Yarp.Certificate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientCredentials", "ClientCredentials", "{09B82D4D-926C-42A2-9522-F635D51B893C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcAzureAppServiceAppAuth", "ClientCredentialsFlow\GrpcAzureAppServiceAppAuth\GrpcAzureAppServiceAppAuth.csproj", "{36312E6A-AEE7-4680-BE1B-BEF8DFE21363}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcApi", "ClientCredentialsFlow\GrpcAzureAppServiceAppAuth\GrpcApi.csproj", "{36312E6A-AEE7-4680-BE1B-BEF8DFE21363}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcAppClientConsole", "ClientCredentialsFlow\GrpcAppClientConsole\GrpcAppClientConsole.csproj", "{FE3573C8-F01C-4822-963C-CEAD63316A13}"
 EndProject
