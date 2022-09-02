@@ -16,8 +16,8 @@ public class ClientCredentialAccessTokenClient
         _httpClient = httpClient;
     }
 
-
-    public async Task<string> GetAccessToken(string api_name, string api_scope, string secret)
+    public async Task<string> GetAccessToken(
+        string api_name, string api_scope, string secret)
     {
         try
         {
