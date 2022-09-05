@@ -19,6 +19,8 @@
 
 [Add Fido2 MFA to an OpenIddict identity provider using ASP.NET Core Identity](https://damienbod.com/2022/07/04/add-fido2-mfa-to-an-openiddict-identity-provider-using-asp-net-core-identity/)
 
+[Implement a GRPC API with OpenIddict and the OAuth client credentials flow](https://damienbod.com/2022/09/05/implement-a-grpc-api-with-openiddict-and-oauth-the-client-credentials-flow/)
+
 ## Creating Migrations
 
 ### Console
