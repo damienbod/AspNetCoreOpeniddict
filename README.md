@@ -35,6 +35,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2022-09-02 Updated packages, added client credentials flows
+
 2022-08-20 Updated packages
 
 2022-07-01 Add support for FIDO2 to the OpenIddict server

@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using OpeniddictServer.Data;
@@ -300,47 +301,99 @@ public class AuthorizationController : Controller
 
         if (request.IsAuthorizationCodeGrantType() || request.IsRefreshTokenGrantType())
         {
-            // Retrieve the claims principal stored in the authorization code/device code/refresh token.
-            var principal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
+            return await HandleExchangeCodeGrantType();
+        }
 
-            // Retrieve the user profile corresponding to the authorization code/refresh token.
-            // Note: if you want to automatically invalidate the authorization code/refresh token
-            // when the user password/roles change, use the following line instead:
-            // var user = _signInManager.ValidateSecurityStampAsync(info.Principal);
-            var user = await _userManager.GetUserAsync(principal);
-            if (user == null)
-            {
-                return Forbid(
-                    authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                    properties: new AuthenticationProperties(new Dictionary<string, string>
-                    {
-                        [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
-                        [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The token is no longer valid."
-                    }));
-            }
+        if (request.IsClientCredentialsGrantType())
+        {
+            // Note: the client credentials are automatically validated by OpenIddict:
+            // if client_id or client_secret are invalid, this action won't be invoked.
 
-            // Ensure the user is still allowed to sign in.
-            if (!await _signInManager.CanSignInAsync(user))
-            {
-                return Forbid(
-                    authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                    properties: new AuthenticationProperties(new Dictionary<string, string>
-                    {
-                        [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
-                        [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The user is no longer allowed to sign in."
-                    }));
-            }
-
-            foreach (var claim in principal.Claims)
-            {
-                claim.SetDestinations(GetDestinations(claim, principal));
-            }
-
-            // Returning a SignInResult will ask OpenIddict to issue the appropriate access/identity tokens.
-            return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+            return await HandleExchangeClientCredentialsGrantType(request);
         }
 
         throw new InvalidOperationException("The specified grant type is not supported.");
+    }
+
+    private async Task<IActionResult> HandleExchangeClientCredentialsGrantType(OpenIddictRequest request)
+    {
+        var application = await _applicationManager.FindByClientIdAsync(request.ClientId);
+        if (application == null)
+        {
+            throw new InvalidOperationException("The application details cannot be found in the database.");
+        }
+
+        // Create the claims-based identity that will be used by OpenIddict to generate tokens.
+        var identity = new ClaimsIdentity(
+            authenticationType: TokenValidationParameters.DefaultAuthenticationType,
+            nameType: Claims.Name,
+            roleType: Claims.Role);
+
+        // Add the claims that will be persisted in the tokens (use the client_id as the subject identifier).
+        identity.AddClaim(Claims.Subject, await _applicationManager.GetClientIdAsync(application));
+        identity.AddClaim(Claims.Name, await _applicationManager.GetDisplayNameAsync(application));
+
+        // Note: In the original OAuth 2.0 specification, the client credentials grant
+        // doesn't return an identity token, which is an OpenID Connect concept.
+        //
+        // As a non-standardized extension, OpenIddict allows returning an id_token
+        // to convey information about the client application when the "openid" scope
+        // is granted (i.e specified when calling principal.SetScopes()). When the "openid"
+        // scope is not explicitly set, no identity token is returned to the client application.
+
+        // Set the list of scopes granted to the client application in access_token.
+        var principal = new ClaimsPrincipal(identity);
+        principal.SetScopes(request.GetScopes());
+        principal.SetResources(await _scopeManager.ListResourcesAsync(principal.GetScopes()).ToListAsync());
+
+        foreach (var claim in principal.Claims)
+        {
+            claim.SetDestinations(GetDestinations(claim, principal));
+        }
+
+        return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+    }
+
+    private async Task<IActionResult> HandleExchangeCodeGrantType()
+    {
+        // Retrieve the claims principal stored in the authorization code/device code/refresh token.
+        var principal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
+
+        // Retrieve the user profile corresponding to the authorization code/refresh token.
+        // Note: if you want to automatically invalidate the authorization code/refresh token
+        // when the user password/roles change, use the following line instead:
+        // var user = _signInManager.ValidateSecurityStampAsync(info.Principal);
+        var user = await _userManager.GetUserAsync(principal);
+        if (user == null)
+        {
+            return Forbid(
+                authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+                properties: new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
+                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The token is no longer valid."
+                }));
+        }
+
+        // Ensure the user is still allowed to sign in.
+        if (!await _signInManager.CanSignInAsync(user))
+        {
+            return Forbid(
+                authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+                properties: new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
+                    [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "The user is no longer allowed to sign in."
+                }));
+        }
+
+        foreach (var claim in principal.Claims)
+        {
+            claim.SetDestinations(GetDestinations(claim, principal));
+        }
+
+        // Returning a SignInResult will ask OpenIddict to issue the appropriate access/identity tokens.
+        return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
 
     private IEnumerable<string> GetDestinations(Claim claim, ClaimsPrincipal principal)
