@@ -98,7 +98,7 @@ public class Startup
                     builder
                         .AllowCredentials()
                         .WithOrigins(
-                            "https://localhost:4200")
+                            "https://localhost:4200", "https://localhost:4204")
                         .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
@@ -150,6 +150,7 @@ public class Startup
                 options.SetAuthorizationEndpointUris("/connect/authorize")
                         .SetLogoutEndpointUris("/connect/logout")
                         .SetIntrospectionEndpointUris("/connect/introspect")
+                        .SetRevocationEndpointUris("/connect/revocation")
                         .SetTokenEndpointUris("/connect/token")
                         .SetUserinfoEndpointUris("/connect/userinfo")
                         .SetVerificationEndpointUris("/connect/verify");
