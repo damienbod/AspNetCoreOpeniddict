@@ -46,6 +46,11 @@ services.AddAuthentication(options =>
 
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = "name",
+        RoleClaimType = "role"
+    };
 });
 
 services.AddControllersWithViews(options =>
