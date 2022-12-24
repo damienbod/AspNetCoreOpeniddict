@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
@@ -55,6 +56,11 @@ public class Startup
             options.Scope.Add("profile");
             options.SaveTokens = true;
             options.GetClaimsFromUserInfoEndpoint = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                NameClaimType = "name",
+                RoleClaimType = "role"
+            };
         });
 
         // Create an authorization policy used by YARP when forwarding requests

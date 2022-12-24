@@ -147,13 +147,14 @@ public class Startup
             })
             .AddServer(options =>
             {
-                options.SetAuthorizationEndpointUris("/connect/authorize")
-                        .SetLogoutEndpointUris("/connect/logout")
-                        .SetIntrospectionEndpointUris("/connect/introspect")
-                        .SetRevocationEndpointUris("/connect/revocation")
-                        .SetTokenEndpointUris("/connect/token")
-                        .SetUserinfoEndpointUris("/connect/userinfo")
-                        .SetVerificationEndpointUris("/connect/verify");
+                // Enable the authorization, logout, token and userinfo endpoints.
+                options.SetAuthorizationEndpointUris("connect/authorize")
+                   //.SetDeviceEndpointUris("connect/device")
+                   .SetIntrospectionEndpointUris("connect/introspect")
+                   .SetLogoutEndpointUris("connect/logout")
+                   .SetTokenEndpointUris("connect/token")
+                   .SetUserinfoEndpointUris("connect/userinfo")
+                   .SetVerificationEndpointUris("connect/verify");
 
                 options.AllowAuthorizationCodeFlow()
                        .AllowHybridFlow()

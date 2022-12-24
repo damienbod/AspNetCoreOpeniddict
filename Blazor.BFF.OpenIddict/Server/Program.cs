@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,11 @@ services.AddAuthentication(options =>
 
     options.SaveTokens = true;
     options.GetClaimsFromUserInfoEndpoint = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = "name",
+        RoleClaimType = "role"
+    };
 });
 
 services.AddControllersWithViews(options =>
@@ -73,7 +79,7 @@ else
 
 app.UseSecurityHeaders(
     SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment(),
-        configuration["OpenIDConnectSettings:Authority"]));
+        configuration["OpenIDConnectSettings:Authority"]!));
 
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
