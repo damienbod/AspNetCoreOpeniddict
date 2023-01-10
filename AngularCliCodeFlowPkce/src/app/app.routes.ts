@@ -11,4 +11,4 @@ const appRoutes: Routes = [
     { path: 'unauthorized', component: UnauthorizedComponent }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' });
+export const routing = RouterModule.forRoot(appRoutes, {});
