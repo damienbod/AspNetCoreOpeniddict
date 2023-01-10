@@ -8,8 +8,7 @@ import { DataEventRecordsModule } from './dataeventrecords/dataeventrecords.modu
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { AuthModule, OidcConfigService, LogLevel } from 'angular-auth-oidc-client';
-
+import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 @NgModule({
   imports: [

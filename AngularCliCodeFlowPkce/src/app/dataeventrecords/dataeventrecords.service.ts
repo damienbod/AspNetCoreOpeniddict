@@ -20,11 +20,12 @@ export class DataEventRecordsService {
         this.headers = this.headers.set('Content-Type', 'application/json');
         this.headers = this.headers.set('Accept', 'application/json');
 
-        const token = this.securityService.getAccessToken();
-        if (token !== '') {
+        this.securityService.getAccessToken().subscribe((token) => {
+          if (token !== '') {
             const tokenValue = 'Bearer ' + token;
             this.headers = this.headers.append('Authorization', tokenValue);
-        }
+          }
+        });
     }
 
     public GetAll = (): Observable<DataEventRecord[]> => {
