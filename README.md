@@ -37,6 +37,8 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+2023-04-28 Updated packages
+
 2023-01-10 Updated packages
 
 2022-12-24 Updated .NET 7, OpenIddict v4
