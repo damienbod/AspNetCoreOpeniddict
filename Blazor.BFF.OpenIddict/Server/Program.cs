@@ -42,6 +42,7 @@ services.AddAuthentication(options =>
     options.ClientId = configuration["OpenIDConnectSettings:ClientId"];
     options.ClientSecret = configuration["OpenIDConnectSettings:ClientSecret"];
 
+    options.CallbackPath = "/signin-oidc";
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ResponseType = OpenIdConnectResponseType.Code;
 
