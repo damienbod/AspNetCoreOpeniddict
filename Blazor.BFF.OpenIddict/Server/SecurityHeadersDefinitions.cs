@@ -7,7 +7,6 @@ public static class SecurityHeadersDefinitions
     {
         var policy = new HeaderPolicyCollection()
             .AddFrameOptionsDeny()
-            .AddXssProtectionBlock()
             .AddContentTypeOptionsNoSniff()
             .AddReferrerPolicyStrictOriginWhenCrossOrigin()
             .AddCrossOriginOpenerPolicy(builder => builder.SameOrigin())
@@ -57,6 +56,8 @@ public static class SecurityHeadersDefinitions
             // maxage = one year in seconds
             policy.AddStrictTransportSecurityMaxAgeIncludeSubDomains(maxAgeInSeconds: 60 * 60 * 24 * 365);
         }
+
+        policy.ApplyDocumentHeadersToAllResponses();
 
         return policy;
     }
