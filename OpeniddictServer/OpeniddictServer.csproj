@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <UserSecretsId>728e892b-c8e1-40df-a44c-805a4a138e98</UserSecretsId>
 	<ImplicitUsings>enable</ImplicitUsings>
@@ -9,26 +9,26 @@
 
   <ItemGroup>
     <PackageReference Include="Fido2" Version="3.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="All" Version="7.0.13" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="4.9.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="4.9.0" />
-    <PackageReference Include="OpenIddict.Quartz" Version="4.9.0" />
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="All" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="4.10.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="4.10.0" />
+    <PackageReference Include="OpenIddict.Quartz" Version="4.10.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
 
-	  <PackageReference Include="Serilog" Version="3.0.1" />
-	  <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
-	  <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
-	  <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.1" />
-	  <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+	  <PackageReference Include="Serilog" Version="3.1.1" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+	  <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+	  <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+	  <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
 	  <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-	  <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.3" />
+	  <PackageReference Include="Serilog.Sinks.Seq" Version="6.0.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
