@@ -11,7 +11,7 @@ public class MfaModel : PageModel
     public bool RememberMe { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? ReturnUrl { get; set; }
+    public string? ReturnUrl { get; set; } = string.Empty;
 
     public void OnGet()
     {

@@ -37,7 +37,7 @@ else
     var handler = new HttpClientHandler();
 
     var channel = GrpcChannel.ForAddress(
-        configuration["ProtectedApiUrl"], 
+        configuration["ProtectedApiUrl"]!, 
         new GrpcChannelOptions
     {
         HttpClient = new HttpClient(handler)

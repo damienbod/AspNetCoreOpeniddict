@@ -45,7 +45,7 @@ public class ClientCredentialAccessTokenClient
                 throw new ApplicationException($"Status code: {tokenResponse.IsError}, Error: {tokenResponse.Error}");
             }
 
-            return tokenResponse.AccessToken;
+            return tokenResponse.AccessToken!;
             
         }
         catch (Exception e)
