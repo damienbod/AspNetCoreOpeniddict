@@ -1,4 +1,4 @@
-﻿namespace BlazorBffAzureAD.Server;
+﻿namespace Blazor.BFF.OpenIddict.Server;
 
 public static class SecurityHeadersDefinitions
 {
