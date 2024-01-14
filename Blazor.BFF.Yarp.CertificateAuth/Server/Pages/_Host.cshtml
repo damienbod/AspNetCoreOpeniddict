@@ -2,6 +2,7 @@
 @namespace Blazor.BFF.Yarp.CertificateAuth.Pages
 @using Blazor.BFF.Yarp.CertificateAuth.Client
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, NetEscapades.AspNetCore.SecurityHeaders.TagHelpers
 @{
     Layout = null;
 }
@@ -40,8 +41,8 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.webassembly.js" ></script>
-    <script src="antiForgeryToken.js" ></script>
+    <script asp-add-nonce src="_framework/blazor.webassembly.js"></script>
+    <script asp-add-nonce src="antiForgeryToken.js"></script>
     @Html.AntiForgeryToken()
 </body>
 </html>

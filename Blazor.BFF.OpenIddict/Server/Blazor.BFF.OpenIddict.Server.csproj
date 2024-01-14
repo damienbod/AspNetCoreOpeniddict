@@ -8,9 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.1" NoWarn="NU1605" />
 		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.21.0" />
+		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.21.0" />
 	</ItemGroup>
 
 	<ItemGroup>
