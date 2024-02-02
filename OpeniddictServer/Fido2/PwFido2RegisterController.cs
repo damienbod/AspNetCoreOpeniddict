@@ -1,11 +1,11 @@
-﻿using System.Text;
+﻿using Fido2NetLib;
 using Fido2NetLib.Objects;
-using Fido2NetLib;
-using Microsoft.AspNetCore.Mvc;
-using static Fido2NetLib.Fido2;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpeniddictServer.Data;
+using System.Text;
+using static Fido2NetLib.Fido2;
 
 namespace Fido2Identity;
 
@@ -122,7 +122,7 @@ public class PwFido2RegisterController : Controller
             // 2. Verify and make the credentials
             var success = await _lib.MakeNewCredentialAsync(attestationResponse, options, callback);
 
-            if(success.Result != null)
+            if (success.Result != null)
             {
                 // 3. Store the credentials in db
                 await _fido2Store.AddCredentialToUserAsync(options.User, new FidoStoredCredential
@@ -146,8 +146,8 @@ public class PwFido2RegisterController : Controller
             if (user == null)
             {
                 return Json(new CredentialMakeResult("error",
-                    $"Unable to load user with ID '{_userManager.GetUserId(User)}'.", 
-                    success.Result ));
+                    $"Unable to load user with ID '{_userManager.GetUserId(User)}'.",
+                    success.Result));
             }
 
             //await _userManager.SetTwoFactorEnabledAsync(user, true);

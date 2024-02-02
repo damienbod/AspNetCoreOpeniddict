@@ -58,6 +58,6 @@ public class Program
                 .WriteTo.File("../api.txt"))
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>(); 
+                webBuilder.UseStartup<Startup>();
             });
 }

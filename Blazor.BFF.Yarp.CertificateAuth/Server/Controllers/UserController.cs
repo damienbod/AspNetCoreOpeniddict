@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using Blazor.BFF.Yarp.CertificateAuth.Shared.Authorization;
+﻿using Blazor.BFF.Yarp.CertificateAuth.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Blazor.BFF.Yarp.CertificateAuth.Server.Controllers;
 

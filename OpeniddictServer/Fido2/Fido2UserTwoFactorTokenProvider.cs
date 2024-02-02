@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using OpeniddictServer.Data;
-using System.Threading.Tasks;
 
 namespace Fido2Identity;
 

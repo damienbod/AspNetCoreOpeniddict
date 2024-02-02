@@ -20,7 +20,7 @@ public class FidoStoredCredential
     /// </summary>
     public virtual string? UserName { get; set; }
 
-    public virtual byte[]? UserId { get; set; } 
+    public virtual byte[]? UserId { get; set; }
 
     /// <summary>
     /// Gets or sets the public key for this user.
@@ -35,7 +35,7 @@ public class FidoStoredCredential
     public virtual uint SignatureCounter { get; set; }
 
     public virtual string? CredType { get; set; }
-    
+
     /// <summary>
     /// Gets or sets the registration date for this user.
     /// </summary>

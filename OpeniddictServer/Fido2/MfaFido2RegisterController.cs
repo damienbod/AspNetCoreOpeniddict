@@ -1,11 +1,11 @@
-﻿using System.Text;
+﻿using Fido2NetLib;
 using Fido2NetLib.Objects;
-using Fido2NetLib;
-using Microsoft.AspNetCore.Mvc;
-using static Fido2NetLib.Fido2;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpeniddictServer.Data;
+using System.Text;
+using static Fido2NetLib.Fido2;
 
 namespace Fido2Identity;
 
@@ -66,7 +66,7 @@ public class MfaFido2RegisterController : Controller
             var existingKeys = new List<PublicKeyCredentialDescriptor>();
             foreach (var publicKeyCredentialDescriptor in items)
             {
-                if(publicKeyCredentialDescriptor.Descriptor != null)
+                if (publicKeyCredentialDescriptor.Descriptor != null)
                     existingKeys.Add(publicKeyCredentialDescriptor.Descriptor);
             }
 
@@ -81,13 +81,13 @@ public class MfaFido2RegisterController : Controller
                 authenticatorSelection.AuthenticatorAttachment = authType.ToEnum<AuthenticatorAttachment>();
 
             var exts = new AuthenticationExtensionsClientInputs
-            { 
-                Extensions = true, 
-                UserVerificationMethod = true, 
+            {
+                Extensions = true,
+                UserVerificationMethod = true,
             };
 
             var options = _lib.RequestNewCredential(
-                user, existingKeys, 
+                user, existingKeys,
                 authenticatorSelection, attType.ToEnum<AttestationConveyancePreference>(), exts);
 
             // 4. Temporarily store options, session/in-memory cache/redis/db
@@ -125,7 +125,7 @@ public class MfaFido2RegisterController : Controller
             // 2. Verify and make the credentials
             var success = await _lib.MakeNewCredentialAsync(attestationResponse, options, callback);
 
-            if(success.Result != null)
+            if (success.Result != null)
             {
                 // 3. Store the credentials in db
                 await _fido2Store.AddCredentialToUserAsync(options.User, new FidoStoredCredential
@@ -146,7 +146,7 @@ public class MfaFido2RegisterController : Controller
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return Json(new CredentialMakeResult("error",  
+                return Json(new CredentialMakeResult("error",
                         $"Unable to load user with ID '{_userManager.GetUserId(User)}'.",
                         success.Result));
             }
