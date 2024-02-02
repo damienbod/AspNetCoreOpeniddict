@@ -29,9 +29,11 @@ public static class SecurityHeadersDefinitions
 
                 // due to Blazor
                 builder.AddScriptSrc()
-                    // .Self() Add this if you want to use the visual studio debugging tools
+                    .WithHash256("sha256-wTSw2ZoYOVpX8Sl5cEiYcCF8ddvCbjJhiX+oYQqD1s4=")
                     .WithNonce()
-                    .UnsafeEval();
+                    .UnsafeEval() // due to Blazor WASM
+                    .StrictDynamic()
+                    .UnsafeInline(); // only a fallback for older browsers when the nonce is used 
             })
             .RemoveServerHeader()
             .AddPermissionsPolicy(builder =>
