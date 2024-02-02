@@ -17,13 +17,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="All" Version="8.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="5.0.1" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="5.0.1" />
-	<PackageReference Include="OpenIddict.Quartz" Version="5.0.1" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="5.1.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="5.1.0" />
+	<PackageReference Include="OpenIddict.Quartz" Version="5.1.0" />
 	<PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
 
 	<PackageReference Include="Serilog" Version="3.1.1" />
-	<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+	<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 	<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
 	<PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
 	<PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />

@@ -14,11 +14,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.60.0" />
-    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.0.1" />
-    <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="5.0.1" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="5.1.0" />
+    <PackageReference Include="OpenIddict.Validation.SystemNetHttp" Version="5.1.0" />
     
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
