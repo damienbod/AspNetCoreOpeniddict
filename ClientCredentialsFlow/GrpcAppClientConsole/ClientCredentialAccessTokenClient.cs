@@ -46,7 +46,7 @@ public class ClientCredentialAccessTokenClient
             }
 
             return tokenResponse.AccessToken!;
-            
+
         }
         catch (Exception e)
         {

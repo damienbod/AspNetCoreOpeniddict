@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using Fido2NetLib;
 using Fido2NetLib.Objects;
-using Fido2NetLib;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OpeniddictServer.Data;
+using System.Text;
 
 namespace Fido2Identity;
 
@@ -125,7 +125,7 @@ public class PwFido2SignInController : Controller
                 return storedCreds.Any(c => c.Descriptor != null && c.Descriptor.Id.SequenceEqual(args.CredentialId));
             };
 
-            if(creds.PublicKey == null)
+            if (creds.PublicKey == null)
             {
                 throw new InvalidOperationException($"No public key");
             }

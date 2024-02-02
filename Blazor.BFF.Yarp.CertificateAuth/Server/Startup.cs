@@ -83,7 +83,7 @@ public class Startup
                 {
                     handler.SslOptions = new SslClientAuthenticationOptions
                     {
-                    ClientCertificates = new X509CertificateCollection
+                        ClientCertificates = new X509CertificateCollection
                     {
                         cert
                     }

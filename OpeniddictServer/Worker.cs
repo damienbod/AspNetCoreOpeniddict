@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using OpenIddict.Abstractions;
+﻿using OpenIddict.Abstractions;
 using OpeniddictServer.Data;
+using System.Globalization;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace OpeniddictServer

@@ -16,7 +16,7 @@ public class RequireScopeHandler : AuthorizationHandler<RequireScope>
         if (requirement == null)
             throw new ArgumentNullException(nameof(requirement));
 
-        var scopeClaim =  context.User.Claims.FirstOrDefault(t => t.Type == "scope");
+        var scopeClaim = context.User.Claims.FirstOrDefault(t => t.Type == "scope");
 
 
         if (scopeClaim != null && (context.User.HasScope("dataEventRecords")))

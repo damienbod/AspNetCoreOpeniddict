@@ -61,7 +61,7 @@ public class Fido2Store
         var cred = await _applicationDbContext.FidoStoredCredential
             .Where(c => c.DescriptorJson != null && c.DescriptorJson.Contains(credentialIdString)).FirstOrDefaultAsync();
 
-        if(cred != null)
+        if (cred != null)
         {
             cred.SignatureCounter = counter;
             await _applicationDbContext.SaveChangesAsync();

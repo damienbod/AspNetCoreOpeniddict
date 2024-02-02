@@ -1,8 +1,8 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using GrpcApi;
-using Microsoft.Extensions.Configuration;
-using Grpc.Core;
 using GrpcAppClientConsole;
+using Microsoft.Extensions.Configuration;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -10,7 +10,7 @@ var builder = new ConfigurationBuilder()
 
 var configuration = builder.Build();
 
-var clientCredentialAccessTokenClient 
+var clientCredentialAccessTokenClient
     = new ClientCredentialAccessTokenClient(configuration, new HttpClient());
 
 // 2. Get access token
@@ -37,12 +37,12 @@ else
     var handler = new HttpClientHandler();
 
     var channel = GrpcChannel.ForAddress(
-        configuration["ProtectedApiUrl"]!, 
+        configuration["ProtectedApiUrl"]!,
         new GrpcChannelOptions
-    {
-        HttpClient = new HttpClient(handler)
-        
-    });
+        {
+            HttpClient = new HttpClient(handler)
+
+        });
 
     CallOptions callOptions = new(metadata);
 
