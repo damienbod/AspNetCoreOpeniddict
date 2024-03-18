@@ -194,12 +194,12 @@ public class Startup
             //app.UseHsts();
         }
 
-        app.UseCors("AllowAllOrigins");
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
+
+        app.UseCors("AllowAllOrigins");
 
         app.UseAuthentication();
         app.UseAuthorization();
