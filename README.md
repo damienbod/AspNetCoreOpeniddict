@@ -37,6 +37,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+- 2024-04-14 Updated packages
 - 2024-01-14 Updated packages, fixed CSP
 - 2024-01-04 Updated packages
 - 2023-11-26 Updated .NET 8
