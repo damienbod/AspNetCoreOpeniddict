@@ -24,10 +24,10 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
 		<PackageReference Include="IdentityModel" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
-		<PackageReference Include="Google.Protobuf" Version="3.26.1" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.62.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.62.0">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.8" />
+		<PackageReference Include="Google.Protobuf" Version="3.27.3" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.65.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
