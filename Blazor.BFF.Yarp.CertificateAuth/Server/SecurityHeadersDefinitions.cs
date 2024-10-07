@@ -35,31 +35,13 @@ public static class SecurityHeadersDefinitions
                     .UnsafeInline(); // only a fallback for older browsers when the nonce is used 
             })
             .RemoveServerHeader()
-            .AddPermissionsPolicy(builder =>
-            {
-                builder.AddAccelerometer().None();
-                builder.AddAutoplay().None();
-                builder.AddCamera().None();
-                builder.AddEncryptedMedia().None();
-                builder.AddFullscreen().All();
-                builder.AddGeolocation().None();
-                builder.AddGyroscope().None();
-                builder.AddMagnetometer().None();
-                builder.AddMicrophone().None();
-                builder.AddMidi().None();
-                builder.AddPayment().None();
-                builder.AddPictureInPicture().None();
-                builder.AddSyncXHR().None();
-                builder.AddUsb().None();
-            });
+            .AddPermissionsPolicyWithDefaultSecureDirectives();
 
         if (!isDev)
         {
             // maxage = one year in seconds
             policy.AddStrictTransportSecurityMaxAgeIncludeSubDomains();
         }
-
-        policy.ApplyDocumentHeadersToAllResponses();
 
         return policy;
     }

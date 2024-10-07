@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
+using System;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
@@ -25,6 +27,15 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
+        services.AddSecurityHeaderPolicies()
+          .SetPolicySelector((PolicySelectorContext ctx) =>
+          {
+              return SecurityHeadersDefinitions.GetHeaderPolicyCollection(isDevelopment,
+                Configuration["OpenIDConnectSettings:Authority"]!);
+          });
+
         services.AddAntiforgery(options =>
         {
             options.HeaderName = "X-XSRF-TOKEN";
@@ -104,9 +115,7 @@ public class Startup
             app.UseExceptionHandler("/Error");
         }
 
-        app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment(),
-                Configuration["OpenIDConnectSettings:Authority"]!));
+        app.UseSecurityHeaders();
 
         app.UseHttpsRedirection();
         app.UseBlazorFrameworkFiles();
