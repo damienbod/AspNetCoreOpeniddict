@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,13 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 var services = builder.Services;
 var configuration = builder.Configuration;
 var env = builder.Environment;
+
+services.AddSecurityHeaderPolicies()
+  .SetPolicySelector((PolicySelectorContext ctx) =>
+  {
+      return SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment(),
+        configuration["OpenIDConnectSettings:Authority"]!);
+  });
 
 services.AddAntiforgery(options =>
 {
@@ -78,9 +86,7 @@ else
     app.UseExceptionHandler("/Error");
 }
 
-app.UseSecurityHeaders(
-    SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment(),
-        configuration["OpenIDConnectSettings:Authority"]!));
+app.UseSecurityHeaders();
 
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
