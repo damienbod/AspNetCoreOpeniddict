@@ -2,11 +2,17 @@
 
 public static class SecurityHeadersDefinitions
 {
+    private static HeaderPolicyCollection? policy;
+
     public static HeaderPolicyCollection GetHeaderPolicyCollection(bool isDev, string? idpHost)
     {
         ArgumentNullException.ThrowIfNull(idpHost);
 
-        var policy = new HeaderPolicyCollection()
+        // Avoid building a new HeaderPolicyCollection on every request for performance reasons.
+        // Where possible, cache and reuse HeaderPolicyCollection instances.
+        if (policy != null) return policy;
+
+        policy = new HeaderPolicyCollection()
             .AddFrameOptionsDeny()
             .AddContentTypeOptionsNoSniff()
             .AddReferrerPolicyStrictOriginWhenCrossOrigin()
