@@ -37,6 +37,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+- 2024-11-15 .NET 9
 - 2024-11-01 Updated packages
 - 2024-10-18 Updated packages
 - 2024-10-07 Updated packages, updated security headers
