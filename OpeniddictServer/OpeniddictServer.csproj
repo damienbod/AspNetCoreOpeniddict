@@ -9,18 +9,18 @@
 
   <ItemGroup>
     <PackageReference Include="Fido2" Version="3.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="All" Version="8.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="All" Version="9.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="OpenIddict.AspNetCore" Version="5.8.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="5.8.0" />
 	<PackageReference Include="OpenIddict.Quartz" Version="5.8.0" />
-	<PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.0" />
+	<PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
 
 	<PackageReference Include="Serilog" Version="4.1.0" />
 	<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
@@ -29,7 +29,7 @@
 	<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
 	<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
 	<PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
