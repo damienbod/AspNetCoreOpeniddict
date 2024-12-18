@@ -49,7 +49,7 @@ namespace OpeniddictServer
                         Permissions =
                         {
                             Permissions.Endpoints.Authorization,
-                            Permissions.Endpoints.Logout,
+                            Permissions.Endpoints.EndSession,
                             Permissions.Endpoints.Token,
                             Permissions.Endpoints.Revocation,
                             Permissions.GrantTypes.AuthorizationCode,
@@ -127,7 +127,7 @@ namespace OpeniddictServer
                         Permissions =
                         {
                             Permissions.Endpoints.Authorization,
-                            Permissions.Endpoints.Logout,
+                            Permissions.Endpoints.EndSession,
                             Permissions.Endpoints.Token,
                             Permissions.Endpoints.Revocation,
                             Permissions.GrantTypes.AuthorizationCode,
