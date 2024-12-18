@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <UserSecretsId>728e892b-c8e1-40df-a44c-805a4a138e98</UserSecretsId>
-	<ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,17 +19,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="OpenIddict.AspNetCore" Version="6.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="6.0.0" />
-	<PackageReference Include="OpenIddict.Quartz" Version="6.0.0" />
-	<PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
+    <PackageReference Include="OpenIddict.Quartz" Version="6.0.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
 
-	<PackageReference Include="Serilog" Version="4.2.0" />
-	<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-	<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
-	<PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
-	<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-	<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
-	<PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
   </ItemGroup>
 
   <ItemGroup>
