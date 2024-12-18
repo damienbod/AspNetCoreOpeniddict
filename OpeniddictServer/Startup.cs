@@ -144,10 +144,10 @@ public class Startup
                 options.SetAuthorizationEndpointUris("connect/authorize")
                    //.SetDeviceEndpointUris("connect/device")
                    .SetIntrospectionEndpointUris("connect/introspect")
-                   .SetLogoutEndpointUris("connect/logout")
+                   .SetEndSessionEndpointUris("connect/logout")
                    .SetTokenEndpointUris("connect/token")
-                   .SetUserinfoEndpointUris("connect/userinfo")
-                   .SetVerificationEndpointUris("connect/verify");
+                   .SetUserInfoEndpointUris("connect/userinfo")
+                   .SetEndUserVerificationEndpointUris("connect/verify");
 
                 options.AllowAuthorizationCodeFlow()
                        .AllowHybridFlow()
@@ -161,9 +161,9 @@ public class Startup
 
                 options.UseAspNetCore()
                        .EnableAuthorizationEndpointPassthrough()
-                       .EnableLogoutEndpointPassthrough()
+                       .EnableEndSessionEndpointPassthrough()         
                        .EnableTokenEndpointPassthrough()
-                       .EnableUserinfoEndpointPassthrough()
+                       .EnableUserInfoEndpointPassthrough()
                        .EnableStatusCodePagesIntegration();
             })
             .AddValidation(options =>
