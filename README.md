@@ -9,17 +9,12 @@
 
 ## Blogs: 
 
-[Implementing OpenID Code Flow with PKCE using OpenIddict and Angular](https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/)
-
-[Secure a Blazor WASM ASP.NET Core hosted APP using BFF and OpenIddict](https://damienbod.com/2022/01/03/secure-a-blazor-wasm-asp-net-core-hosted-app-using-bff-and-openiddict/)
-
-[Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com/2022/02/07/using-blazor-with-a-yarp-downstream-api-protected-using-certificate-authentication/)
-
-[Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation](https://damienbod.com/2022/05/02/implement-an-openiddict-identity-provider-using-asp-net-core-identity-with-keycloak-federation/)
-
-[Add Fido2 MFA to an OpenIddict identity provider using ASP.NET Core Identity](https://damienbod.com/2022/07/04/add-fido2-mfa-to-an-openiddict-identity-provider-using-asp-net-core-identity/)
-
-[Implement a GRPC API with OpenIddict and the OAuth client credentials flow](https://damienbod.com/2022/09/05/implement-a-grpc-api-with-openiddict-and-oauth-the-client-credentials-flow/)
+- [Implementing OpenID Code Flow with PKCE using OpenIddict and Angular](https://damienbod.com/2017/04/11/implementing-openid-implicit-flow-using-openiddict-and-angular/)
+- [Secure a Blazor WASM ASP.NET Core hosted APP using BFF and OpenIddict](https://damienbod.com/2022/01/03/secure-a-blazor-wasm-asp-net-core-hosted-app-using-bff-and-openiddict/)
+- [Using Blazor with a YARP downstream API protected using certificate authentication](https://damienbod.com/2022/02/07/using-blazor-with-a-yarp-downstream-api-protected-using-certificate-authentication/)
+- [Implement an OpenIddict identity provider using ASP.NET Core Identity with Keycloak federation](https://damienbod.com/2022/05/02/implement-an-openiddict-identity-provider-using-asp-net-core-identity-with-keycloak-federation/)
+- [Add Fido2 MFA to an OpenIddict identity provider using ASP.NET Core Identity](https://damienbod.com/2022/07/04/add-fido2-mfa-to-an-openiddict-identity-provider-using-asp-net-core-identity/)
+- [Implement a GRPC API with OpenIddict and the OAuth client credentials flow](https://damienbod.com/2022/09/05/implement-a-grpc-api-with-openiddict-and-oauth-the-client-credentials-flow/)
 
 ## Creating Migrations
 
@@ -37,6 +32,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+- 2024-12-31 Fix script loading
 - 2024-12-18 Updated OpenIddict 6.0
 - 2024-11-15 .NET 9
 - 2024-11-01 Updated packages
