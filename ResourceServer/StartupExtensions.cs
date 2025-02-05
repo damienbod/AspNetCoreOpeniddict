@@ -8,7 +8,7 @@ using WebApiDuende;
 
 namespace ResourceServer;
 
-internal static class HostingExtensions
+internal static class StartupExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
@@ -106,6 +106,16 @@ internal static class HostingExtensions
         });
 
         services.AddControllers();
+
+        services.AddScoped<IAuthorizationHandler, RequireScopeHandler>();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("dataEventRecordsPolicy", policyUser =>
+            {
+                policyUser.Requirements.Add(new RequireScope());
+            });
+        });
 
         services.AddScoped<IDataEventRecordRepository, DataEventRecordRepository>();
 
