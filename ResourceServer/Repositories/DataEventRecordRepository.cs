@@ -29,12 +29,14 @@ public class DataEventRecordRepository : IDataEventRecordRepository
     [HttpPost]
     public void Post(DataEventRecord dataEventRecord)
     {
+        dataEventRecord.Timestamp = DateTime.UtcNow.ToString("s");
         _context.DataEventRecords.Add(dataEventRecord);
         _context.SaveChanges();
     }
 
     public void Put(long id, [FromBody] DataEventRecord dataEventRecord)
     {
+        dataEventRecord.Timestamp = DateTime.UtcNow.ToString("s");
         _context.DataEventRecords.Update(dataEventRecord);
         _context.SaveChanges();
     }
