@@ -93,6 +93,8 @@ internal static class StartupExtensions
             options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
         });
 
+        services.AddScoped<IAuthorizationHandler, RequireScopeHandler>();
+
         services.AddAuthorization(options =>
         {
             options.AddPolicy("dataEventRecordsAdmin", policyAdmin =>
@@ -103,19 +105,13 @@ internal static class StartupExtensions
             {
                 policyUser.RequireClaim("role", "dataEventRecords.user");
             });
-        });
-
-        services.AddControllers();
-
-        services.AddScoped<IAuthorizationHandler, RequireScopeHandler>();
-
-        services.AddAuthorization(options =>
-        {
             options.AddPolicy("dataEventRecordsPolicy", policyUser =>
             {
                 policyUser.Requirements.Add(new RequireScope());
             });
         });
+
+        services.AddControllers();
 
         services.AddScoped<IDataEventRecordRepository, DataEventRecordRepository>();
 
