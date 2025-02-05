@@ -1,63 +1,33 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+﻿using ResourceServer;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
-using System;
+using System.Globalization;
 
-namespace ResourceServer;
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
+    .CreateBootstrapLogger();
 
-public class Program
+Log.Information("Starting API resource server");
+
+try
 {
-    public static int Main(string[] args)
-    {
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .CreateLogger();
+    var builder = WebApplication.CreateBuilder(args);
 
-        try
-        {
-            Log.Information("Starting web host");
-            CreateHostBuilder(args).Build().Run();
-            return 0;
-        }
-        catch (Exception ex)
-        {
-            Log.Fatal(ex, "Host terminated unexpectedly");
-            return 1;
-        }
-        finally
-        {
-            Log.CloseAndFlush();
-        }
-    }
+    builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", formatProvider: CultureInfo.InvariantCulture)
+        .ReadFrom.Configuration(context.Configuration));
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((context, config) =>
-            {
-                var builder = config.Build();
+    var app = builder
+        .ConfigureServices()
+        .ConfigurePipeline();
 
-                IHostEnvironment env = context.HostingEnvironment;
-
-                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables();
-                //.AddUserSecrets("your user secret....");
-
-            })
-            .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                .ReadFrom.Configuration(hostingContext.Configuration)
-                .Enrich.FromLogContext()
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                .WriteTo.File("../api.txt"))
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+    await app.RunAsync();
+}
+catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException" && ex.GetType().Name is not "HostAbortedException")
+{
+    Log.Fatal(ex, "Unhandled exception");
+}
+finally
+{
+    Log.Information("Shut down complete");
+    await Log.CloseAndFlushAsync();
 }

@@ -1,30 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using ResourceServer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ResourceServer.Repositories;
 
-public class DataEventRecordRepository
+public class DataEventRecordRepository : IDataEventRecordRepository
 {
     private readonly DataEventRecordContext _context;
     private readonly ILogger _logger;
 
-    public DataEventRecordRepository(DataEventRecordContext context,
-        ILoggerFactory loggerFactory)
+    public DataEventRecordRepository(DataEventRecordContext context, ILoggerFactory loggerFactory)
     {
         _context = context;
-        _logger = loggerFactory.CreateLogger("DataEventRecordResporitory");
+        _logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
     }
 
     public List<DataEventRecord> GetAll()
     {
         _logger.LogCritical("Getting a the existing records");
-        var data = _context.DataEventRecords.ToList();
-
-        return data;
+        return _context.DataEventRecords.ToList();
     }
 
     public DataEventRecord Get(long id)
@@ -33,19 +26,15 @@ public class DataEventRecordRepository
         return dataEventRecord;
     }
 
+    [HttpPost]
     public void Post(DataEventRecord dataEventRecord)
     {
-        if (string.IsNullOrWhiteSpace(dataEventRecord.Timestamp))
-        {
-            dataEventRecord.Timestamp = DateTime.UtcNow.ToString("o");
-        };
         _context.DataEventRecords.Add(dataEventRecord);
         _context.SaveChanges();
     }
 
     public void Put(long id, [FromBody] DataEventRecord dataEventRecord)
     {
-        dataEventRecord.Timestamp = DateTime.UtcNow.ToString("o");
         _context.DataEventRecords.Update(dataEventRecord);
         _context.SaveChanges();
     }
