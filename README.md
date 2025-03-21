@@ -32,6 +32,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
+- 2025-03-21 Updated packages
 - 2024-12-31 Updated bootstrap 5 in OpenIddict project
 - 2024-12-31 Fix script loading
 - 2024-12-18 Updated OpenIddict 6.0
