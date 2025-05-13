@@ -149,7 +149,16 @@ public class Startup
                 oidcOptions.Events = new OpenIdConnectEvents
                 {
                     // Add event handlers            
+                    OnMessageReceived = async context =>
+                    {
+                        if (!string.IsNullOrEmpty(context.ProtocolMessage.Error))
+                        {
+                            context.HandleResponse();
+                            context.Response.Redirect($"/Home/Error?remoteError={context.ProtocolMessage.Error}");
+                        }
 
+                        await Task.CompletedTask;
+                    }
                 };
             });
 
