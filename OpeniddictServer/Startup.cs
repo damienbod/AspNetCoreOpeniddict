@@ -1,6 +1,7 @@
 using Fido2Identity;
 using Fido2NetLib;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
@@ -8,6 +9,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using OpeniddictServer.Data;
 using Quartz;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
@@ -127,6 +129,27 @@ public class Startup
                     NameClaimType = "name",
                     RoleClaimType = ClaimTypes.Role,
                     ValidateIssuer = true
+                };
+            })
+            .AddOpenIdConnect("EntraID", "EntraID", oidcOptions =>
+            {
+                oidcOptions.SignInScheme = "entraidcookie";
+                oidcOptions.Scope.Add(OpenIdConnectScope.OpenIdProfile);
+                oidcOptions.Scope.Add("user.read");
+                oidcOptions.Scope.Add(OpenIdConnectScope.OfflineAccess);
+                oidcOptions.Authority = $"https://login.microsoftonline.com/{Configuration["AzureAd:TenantId"]}/v2.0/";
+                oidcOptions.ClientId = Configuration["AzureAd:ClientId"];
+                oidcOptions.ClientSecret = Configuration["AzureAd:ClientSecret"];
+                oidcOptions.ResponseType = OpenIdConnectResponseType.Code;
+                oidcOptions.MapInboundClaims = false;
+                oidcOptions.SaveTokens = true;
+                oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
+                oidcOptions.TokenValidationParameters.RoleClaimType = "role";
+
+                oidcOptions.Events = new OpenIdConnectEvents
+                {
+                    // Add event handlers            
+
                 };
             });
 
