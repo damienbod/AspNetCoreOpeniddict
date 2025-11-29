@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.userData$ = this.oidcSecurityService.userData$;
 
-        this.oidcSecurityService.checkAuth().subscribe((isAuthenticated: any) => {
-          this.isAuthenticated = isAuthenticated;
+        this.oidcSecurityService.isAuthenticated$.subscribe((isAuthenticated) => {
+          this.isAuthenticated = isAuthenticated.isAuthenticated;
           console.log('app authenticated', isAuthenticated);
         });
     }

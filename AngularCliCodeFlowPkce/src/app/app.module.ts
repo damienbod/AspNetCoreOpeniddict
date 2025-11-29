@@ -8,7 +8,11 @@ import { DataEventRecordsModule } from './dataeventrecords/dataeventrecords.modu
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { AuthModule, LogLevel, OidcSecurityService } from 'angular-auth-oidc-client';
+
+export function configureAuth(oidcSecurityService: OidcSecurityService) {
+  return () => oidcSecurityService.checkAuth();
+}
 
 @NgModule({ declarations: [
         AppComponent,
@@ -33,7 +37,15 @@ import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
                 useRefreshToken: true,
                 logLevel: LogLevel.Debug,
             },
-        })], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        })], providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: configureAuth,
+            deps: [OidcSecurityService],
+            multi: true,
+        }
+    ] })
 
 export class AppModule {
   constructor() {
