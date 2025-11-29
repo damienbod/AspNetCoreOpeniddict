@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using ResourceServer.Model;
 using ResourceServer.Repositories;
@@ -99,11 +100,13 @@ internal static class StartupExtensions
         {
             options.AddPolicy("dataEventRecordsAdmin", policyAdmin =>
             {
-                policyAdmin.RequireClaim("role", "dataEventRecords.admin");
+                //policyAdmin.RequireClaim("role", "dataEventRecords.admin");
+                policyAdmin.Requirements.Add(new RequireScope());
             });
             options.AddPolicy("dataEventRecordsUser", policyUser =>
             {
-                policyUser.RequireClaim("role", "dataEventRecords.user");
+                //policyUser.RequireClaim("role", "dataEventRecords.user");
+                policyUser.Requirements.Add(new RequireScope());
             });
             options.AddPolicy("dataEventRecordsPolicy", policyUser =>
             {
@@ -120,6 +123,8 @@ internal static class StartupExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        IdentityModelEventSource.ShowPII = true;
+
         var deploySwaggerUI = app.Configuration.GetValue<bool>("DeploySwaggerUI");
         app.UseCors("AllowAllOrigins");
 
