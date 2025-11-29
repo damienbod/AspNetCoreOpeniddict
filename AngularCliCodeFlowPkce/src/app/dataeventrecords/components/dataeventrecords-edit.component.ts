@@ -38,9 +38,9 @@ export class DataEventRecordsEditComponent implements OnInit   {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            map((isAuthenticated: any) => {
-                console.log('isAuthorized: ' + isAuthenticated);
-            }));
+            map((isAuthenticated: AuthenticatedResult) => {
+                console.log('isAuthorized: ' + isAuthenticated.isAuthenticated);
+            })).subscribe();
 
         this._route.params.subscribe((params:any) => {
             const id = +params['id']; // (+) converts string 'id' to a number

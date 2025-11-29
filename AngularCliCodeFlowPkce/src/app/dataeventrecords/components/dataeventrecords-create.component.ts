@@ -32,9 +32,9 @@ export class DataEventRecordsCreateComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            map((isAuthenticated: any) => {
-                console.log('isAuthorized: ' + isAuthenticated);
-            }));
+            map((isAuthenticated: AuthenticatedResult) => {
+                console.log('isAuthorized: ' + isAuthenticated.isAuthenticated);
+            })).subscribe();
 
         this.DataEventRecord = { id: 0, name: '', description: '', timestamp: '' };
     }
