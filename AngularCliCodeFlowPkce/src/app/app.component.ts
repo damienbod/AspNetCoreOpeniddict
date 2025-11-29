@@ -1,6 +1,6 @@
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +12,7 @@ import { Observable, of } from 'rxjs';
 export class AppComponent implements OnInit {
 
     title = '';
-    userData$: Observable<any> = of({});
+    userData$!: Observable<any>;
     isAuthenticated = false;
 
     constructor(private oidcSecurityService: OidcSecurityService) {
