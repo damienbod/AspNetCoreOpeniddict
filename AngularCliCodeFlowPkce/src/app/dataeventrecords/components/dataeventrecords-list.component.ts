@@ -8,7 +8,8 @@ import { DataEventRecord } from '../models/DataEventRecord';
 
 @Component({
     selector: 'app-dataeventrecords-list',
-    templateUrl: 'dataeventrecords-list.component.html'
+    templateUrl: 'dataeventrecords-list.component.html',
+    standalone: false
 })
 
 export class DataEventRecordsListComponent implements OnInit {
@@ -29,13 +30,13 @@ export class DataEventRecordsListComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            switchMap(({ isAuthenticated }) => this.getData(isAuthenticated))
+            switchMap((isAuthenticated: any) => this.getData(isAuthenticated))
         ).subscribe(
-            data => this.DataEventRecords = data,
+            (data: any) => this.DataEventRecords = data,
             () => console.log('getData Get all completed')
         );
 
-        this.oidcSecurityService.userData$.subscribe(({userData}) => {
+        this.oidcSecurityService.userData$.subscribe((userData: any) => {
             console.log('Get userData: ', userData);
             if (userData) {
                 console.log('userData: ', userData);
@@ -57,7 +58,7 @@ export class DataEventRecordsListComponent implements OnInit {
         console.log('Try to delete' + id);
         this.dataEventRecordsService.Delete(id).pipe(
             switchMap(() => this.getData(true))
-        ).subscribe((data) => this.DataEventRecords = data,
+        ).subscribe((data: any) => this.DataEventRecords = data,
             () => console.log('getData Get all completed')
         );
     }

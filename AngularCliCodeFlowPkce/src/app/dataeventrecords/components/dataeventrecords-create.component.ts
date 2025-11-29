@@ -9,7 +9,8 @@ import { DataEventRecord } from '../models/DataEventRecord';
 
 @Component({
     selector: 'app-dataeventrecords-create',
-    templateUrl: 'dataeventrecords-create.component.html'
+    templateUrl: 'dataeventrecords-create.component.html',
+    standalone: false
 })
 
 export class DataEventRecordsCreateComponent implements OnInit {
@@ -31,7 +32,7 @@ export class DataEventRecordsCreateComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            map(({isAuthenticated}) => {
+            map((isAuthenticated: any) => {
                 console.log('isAuthorized: ' + isAuthenticated);
             }));
 

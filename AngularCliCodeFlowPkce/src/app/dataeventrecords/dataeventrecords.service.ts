@@ -20,7 +20,7 @@ export class DataEventRecordsService {
         this.headers = this.headers.set('Content-Type', 'application/json');
         this.headers = this.headers.set('Accept', 'application/json');
 
-        this.securityService.getAccessToken().subscribe((token) => {
+        this.securityService.getAccessToken().subscribe((token: any) => {
           if (token !== '') {
             const tokenValue = 'Bearer ' + token;
             this.headers = this.headers.append('Authorization', tokenValue);

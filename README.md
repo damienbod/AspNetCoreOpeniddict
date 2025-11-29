@@ -32,7 +32,7 @@ Update-Database -Context ApplicationDbContext
 
 ## History
 
-- 2025-11-29 Updated .NET 10
+- 2025-11-29 Updated .NET 10, Angular 21, Update Angular OIDC
 - 2025-05-13 Updated packages
 - 2025-04-30 Updated packages
 - 2025-03-21 Updated packages
