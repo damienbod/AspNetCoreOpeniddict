@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { OidcSecurityService, ConfigAuthenticatedResult, AuthenticatedResult } from 'angular-auth-oidc-client';
 
@@ -32,7 +32,7 @@ export class DataEventRecordsCreateComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            map(({isAuthenticated}) => {
+            map((isAuthenticated: any) => {
                 console.log('isAuthorized: ' + isAuthenticated);
             }));
 

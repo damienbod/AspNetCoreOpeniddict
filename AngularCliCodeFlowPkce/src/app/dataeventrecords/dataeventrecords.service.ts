@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { DataEventRecord } from './models/DataEventRecord';
 

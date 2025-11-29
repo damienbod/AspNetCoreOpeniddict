@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.userData$ = this.oidcSecurityService.userData$;
 
-        this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
+        this.oidcSecurityService.checkAuth().subscribe((isAuthenticated: any) => {
           this.isAuthenticated = isAuthenticated;
           console.log('app authenticated', isAuthenticated);
         });
@@ -39,14 +39,14 @@ export class AppComponent implements OnInit {
     }
 
     logoffAndRevokeTokens(): void {
-        this.oidcSecurityService.logoffAndRevokeTokens().subscribe((result) => console.log(result));
+        this.oidcSecurityService.logoffAndRevokeTokens().subscribe((result: any) => console.log(result));
     }
 
     revokeRefreshToken(): void {
-        this.oidcSecurityService.revokeRefreshToken().subscribe((result) => console.log(result));
+        this.oidcSecurityService.revokeRefreshToken().subscribe((result: any) => console.log(result));
     }
 
     revokeAccessToken(): void {
-        this.oidcSecurityService.revokeAccessToken().subscribe((result) => console.log(result));
+        this.oidcSecurityService.revokeAccessToken().subscribe((result: any) => console.log(result));
     }
 }
