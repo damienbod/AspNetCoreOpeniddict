@@ -182,6 +182,8 @@ public class Startup
                        .EnableTokenEndpointPassthrough()
                        .EnableUserInfoEndpointPassthrough()
                        .EnableStatusCodePagesIntegration();
+
+                options.DisableAccessTokenEncryption();
             })
             .AddValidation(options =>
             {
