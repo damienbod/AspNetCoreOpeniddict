@@ -8,7 +8,8 @@ import { DataEventRecord } from '../models/DataEventRecord';
 
 @Component({
     selector: 'app-dataeventrecords-list',
-    templateUrl: 'dataeventrecords-list.component.html'
+    templateUrl: 'dataeventrecords-list.component.html',
+    standalone: false
 })
 
 export class DataEventRecordsListComponent implements OnInit {

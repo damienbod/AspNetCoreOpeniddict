@@ -9,7 +9,8 @@ import { DataEventRecord } from '../models/DataEventRecord';
 
 @Component({
     selector: 'app-dataeventrecords-edit',
-    templateUrl: 'dataeventrecords-edit.component.html'
+    templateUrl: 'dataeventrecords-edit.component.html',
+    standalone: false
 })
 
 export class DataEventRecordsEditComponent implements OnInit   {
