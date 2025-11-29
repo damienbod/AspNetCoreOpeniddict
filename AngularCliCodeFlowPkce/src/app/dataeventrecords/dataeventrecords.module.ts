@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -9,29 +9,20 @@ import { DataEventRecordsCreateComponent } from './components/dataeventrecords-c
 import { DataEventRecordsEditComponent } from './components/dataeventrecords-edit.component';
 import { DataEventRecordsRoutes } from './dataeventrecords.routes';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        DataEventRecordsRoutes
-    ],
-
-    declarations: [
+@NgModule({ declarations: [
         DataEventRecordsListComponent,
         DataEventRecordsCreateComponent,
         DataEventRecordsEditComponent
     ],
-
-    providers: [
-        DataEventRecordsService
-    ],
-
     exports: [
         DataEventRecordsListComponent,
         DataEventRecordsCreateComponent,
         DataEventRecordsEditComponent
-    ]
-})
+    ], imports: [CommonModule,
+        FormsModule,
+        DataEventRecordsRoutes], providers: [
+        DataEventRecordsService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 
 export class DataEventRecordsModule { }
