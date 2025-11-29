@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OidcSecurityService, AuthenticatedResult } from 'angular-auth-oidc-client';
 
@@ -37,10 +36,9 @@ export class DataEventRecordsEditComponent implements OnInit   {
     }
 
     ngOnInit() {
-        this.isAuthenticated$.pipe(
-            map((isAuthenticated: any) => {
-                console.log('isAuthorized: ' + isAuthenticated);
-            }));
+        this.isAuthenticated$.subscribe((isAuthenticated: AuthenticatedResult) => {
+            console.log('isAuthorized: ' + isAuthenticated.isAuthenticated);
+        });
 
         this._route.params.subscribe((params:any) => {
             const id = +params['id']; // (+) converts string 'id' to a number

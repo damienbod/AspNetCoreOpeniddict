@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { OidcSecurityService, ConfigAuthenticatedResult, AuthenticatedResult } from 'angular-auth-oidc-client';
 
 import { DataEventRecordsService } from '../dataeventrecords.service';
@@ -31,10 +30,9 @@ export class DataEventRecordsCreateComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isAuthenticated$.pipe(
-            map((isAuthenticated: any) => {
-                console.log('isAuthorized: ' + isAuthenticated);
-            }));
+        this.isAuthenticated$.subscribe((isAuthenticated: AuthenticatedResult) => {
+            console.log('isAuthorized: ' + isAuthenticated.isAuthenticated);
+        });
 
         this.DataEventRecord = { id: 0, name: '', description: '', timestamp: '' };
     }

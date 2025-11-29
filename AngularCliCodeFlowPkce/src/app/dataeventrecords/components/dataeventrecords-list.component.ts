@@ -30,7 +30,7 @@ export class DataEventRecordsListComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated$.pipe(
-            switchMap((isAuthenticated: any) => this.getData(isAuthenticated))
+            switchMap((isAuthenticated: AuthenticatedResult) => this.getData(isAuthenticated.isAuthenticated))
         ).subscribe(
             (data: any) => this.DataEventRecords = data,
             () => console.log('getData Get all completed')
