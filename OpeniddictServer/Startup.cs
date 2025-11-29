@@ -145,21 +145,6 @@ public class Startup
                 oidcOptions.SaveTokens = true;
                 oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
                 oidcOptions.TokenValidationParameters.RoleClaimType = "role";
-
-                oidcOptions.Events = new OpenIdConnectEvents
-                {
-                    // Add event handlers            
-                    OnMessageReceived = async context =>
-                    {
-                        if (!string.IsNullOrEmpty(context.ProtocolMessage.Error))
-                        {
-                            context.HandleResponse();
-                            context.Response.Redirect($"/Home/Error?remoteError={context.ProtocolMessage.Error}");
-                        }
-
-                        await Task.CompletedTask;
-                    }
-                };
             });
 
         services.AddOpenIddict()
