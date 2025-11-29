@@ -9,9 +9,10 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthModule, LogLevel, OidcSecurityService } from 'angular-auth-oidc-client';
+import { firstValueFrom } from 'rxjs';
 
 export function configureAuth(oidcSecurityService: OidcSecurityService) {
-  return () => oidcSecurityService.checkAuth();
+  return () => firstValueFrom(oidcSecurityService.checkAuth());
 }
 
 @NgModule({ declarations: [
